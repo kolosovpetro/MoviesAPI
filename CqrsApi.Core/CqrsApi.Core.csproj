@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>CqrsApi</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CqrsApi.Commands\CqrsApi.Commands.csproj" />
+      <ProjectReference Include="..\CqrsApi.Data\CqrsApi.Data.csproj" />
+      <ProjectReference Include="..\CqrsApi.Queries\CqrsApi.Queries.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="9.0.0" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+      <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
+      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.3" />
+      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.6.3" />
+    </ItemGroup>
+
+
+</Project>
