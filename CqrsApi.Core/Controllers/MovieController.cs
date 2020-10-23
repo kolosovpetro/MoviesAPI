@@ -24,5 +24,13 @@ namespace CqrsApi.Controllers
             var response = await _mediator.Send(request);
             return Ok(response);
         }
+
+        [HttpGet("{id}", Name = "GetMovieById")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var query = new GetByIdQuery(id);
+            var response = await _mediator.Send(query);
+            return response != null ? (IActionResult) Ok(response) : NotFound();
+        }
     }
 }
