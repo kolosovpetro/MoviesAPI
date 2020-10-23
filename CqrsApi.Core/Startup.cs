@@ -1,6 +1,6 @@
 using System.Reflection;
 using CqrsApi.Data.Extensions;
-using CqrsApi.Queries.Queries.Handlers;
+using CqrsApi.Queries.Handlers;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

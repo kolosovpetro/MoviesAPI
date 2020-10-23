@@ -2,10 +2,11 @@
 using System.Threading.Tasks;
 using CqrsApi.Data.Context;
 using CqrsApi.Models.Models;
+using CqrsApi.Queries.Queries;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CqrsApi.Queries.Queries.Handlers
+namespace CqrsApi.Queries.Handlers
 {
     public class GetByIdQueryHandler : IRequestHandler<GetByIdQuery, Movie>
     {
