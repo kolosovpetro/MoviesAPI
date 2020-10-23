@@ -1,4 +1,5 @@
 using System.Reflection;
+using AutoMapper;
 using CqrsApi.Data.Extensions;
 using CqrsApi.Queries.Handlers;
 using MediatR;
@@ -24,7 +25,8 @@ namespace CqrsApi
             services.AddControllers();
             services.AddDataLayerWithPostgreSql(Configuration);
             services.AddSwaggerGen();
-            services.AddMediatR(typeof(GetAllHandler).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(GetAllMoviesHandler).GetTypeInfo().Assembly);
+            services.AddAutoMapper(typeof(Startup));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

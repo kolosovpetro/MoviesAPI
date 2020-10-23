@@ -3,11 +3,11 @@ using MediatR;
 
 namespace CqrsApi.Queries.Queries
 {
-    public class GetByIdQuery : IRequest<Movie>
+    public class GetMovieByIdQuery : IRequest<Movie>
     {
         public int Id { get; }
 
-        public GetByIdQuery(int id)
+        public GetMovieByIdQuery(int id)
         {
             Id = id;
         }

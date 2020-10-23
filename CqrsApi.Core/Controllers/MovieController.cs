@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using CqrsApi.Abstractions;
 using CqrsApi.Queries.Queries;
+using CqrsApi.Queries.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,26 +14,30 @@ namespace CqrsApi.Controllers
     public class MovieController : Controller, IMovieController
     {
         private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public MovieController(IMediator mediator)
+        public MovieController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllMoviesQuery()
         {
-            var request = new GetAllQuery();
+            var request = new GetAllMoviesQuery();
             var response = await _mediator.Send(request);
-            return Ok(response);
+            var mappedResponse = _mapper.Map<IList<MovieGetResponse>>(response);
+            return mappedResponse != null ? (IActionResult) Ok(mappedResponse) : NotFound();
         }
 
         [HttpGet("{id}", Name = "GetMovieById")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetMovieByIdQuery(int id)
         {
-            var query = new GetByIdQuery(id);
+            var query = new GetMovieByIdQuery(id);
             var response = await _mediator.Send(query);
-            return response != null ? (IActionResult) Ok(response) : NotFound();
+            var mappedResponse = _mapper.Map<MovieGetResponse>(response);
+            return response != null ? (IActionResult) Ok(mappedResponse) : NotFound();
         }
     }
 }

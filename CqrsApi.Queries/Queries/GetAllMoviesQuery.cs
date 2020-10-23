@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CqrsApi.Queries.Queries
 {
-    public class GetAllQuery : IRequest<IList<Movie>>
+    public class GetAllMoviesQuery : IRequest<IList<Movie>>
     {
     }
 }

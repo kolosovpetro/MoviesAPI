@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CqrsApi.Queries.Handlers
 {
-    public class GetByIdQueryHandler : IRequestHandler<GetByIdQuery, Movie>
+    public class GetByIdQueryHandler : IRequestHandler<GetMovieByIdQuery, Movie>
     {
         private readonly PostgreContext _context;
 
@@ -17,7 +17,7 @@ namespace CqrsApi.Queries.Handlers
             _context = context;
         }
 
-        public async Task<Movie> Handle(GetByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Movie> Handle(GetMovieByIdQuery request, CancellationToken cancellationToken)
         {
             return await _context
                 .Movies

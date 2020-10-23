@@ -1,6 +1,6 @@
 ﻿namespace CqrsApi.Queries.Responses
 {
-    public class MovieResponse
+    public class MovieGetResponse
     {
         public int MovieId { get; set; }
         public string Title { get; set; }

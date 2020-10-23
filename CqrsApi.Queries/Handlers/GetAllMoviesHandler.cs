@@ -9,16 +9,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CqrsApi.Queries.Handlers
 {
-    public class GetAllHandler : IRequestHandler<GetAllQuery, IList<Movie>>
+    public class GetAllMoviesHandler : IRequestHandler<GetAllMoviesQuery, IList<Movie>>
     {
         private readonly PostgreContext _context;
 
-        public GetAllHandler(PostgreContext context)
+        public GetAllMoviesHandler(PostgreContext context)
         {
             _context = context;
         }
 
-        public async Task<IList<Movie>> Handle(GetAllQuery request, CancellationToken cancellationToken)
+        public async Task<IList<Movie>> Handle(GetAllMoviesQuery request, CancellationToken cancellationToken)
         {
             return await _context.Movies.ToListAsync(cancellationToken);
         }
