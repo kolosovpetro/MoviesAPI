@@ -37,8 +37,11 @@ namespace CqrsApi.Controllers
         {
             var query = new GetMovieByIdQuery(id);
             var response = await _mediator.Send(query);
+            if (response == null)
+                return NotFound(new MovieNotFoundResponse(id));
+
             var mappedResponse = _mapper.Map<MovieGetResponse>(response);
-            return response != null ? (IActionResult) Ok(mappedResponse) : NotFound();
+            return Ok(mappedResponse);
         }
 
         [HttpPost]
