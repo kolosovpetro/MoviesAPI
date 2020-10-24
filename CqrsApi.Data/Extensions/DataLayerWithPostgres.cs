@@ -12,7 +12,7 @@ namespace CqrsApi.Data.Extensions
         public static IServiceCollection AddDataLayerWithPostgreSql(this IServiceCollection services,
             IConfiguration configuration)
         {
-            var environmentConnectionString = Environment.GetEnvironmentVariable("HEROKU_POSTGRE_CONNECTION_STRING");
+            var environmentConnectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
 
             services.AddDbContext<PostgreContext>(options =>
                 options.UseNpgsql(
