@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsApi.Queries", "CqrsApi.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsApi.Tests", "CqrsApi.Tests\CqrsApi.Tests.csproj", "{18AA4A60-B201-417D-94BF-3790F4B993F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsApi.Dto", "CqrsApi.Dto\CqrsApi.Dto.csproj", "{474E2B3C-436E-46F4-BC21-056969EB2326}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsApi.Responses", "CqrsApi.Responses\CqrsApi.Responses.csproj", "{474E2B3C-436E-46F4-BC21-056969EB2326}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

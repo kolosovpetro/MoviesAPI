@@ -8,8 +8,8 @@
     <ItemGroup>
       <ProjectReference Include="..\CqrsApi.Commands\CqrsApi.Commands.csproj" />
       <ProjectReference Include="..\CqrsApi.Data\CqrsApi.Data.csproj" />
-      <ProjectReference Include="..\CqrsApi.Dto\CqrsApi.Dto.csproj" />
       <ProjectReference Include="..\CqrsApi.Queries\CqrsApi.Queries.csproj" />
+      <ProjectReference Include="..\CqrsApi.Responses\CqrsApi.Responses.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -10,7 +10,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CqrsApi.Data\CqrsApi.Data.csproj" />
-      <ProjectReference Include="..\CqrsApi.Dto\CqrsApi.Dto.csproj" />
+      <ProjectReference Include="..\CqrsApi.Responses\CqrsApi.Responses.csproj" />
     </ItemGroup>
 
 </Project>
