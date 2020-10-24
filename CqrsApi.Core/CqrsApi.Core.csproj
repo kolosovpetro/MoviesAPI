@@ -3,6 +3,8 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <RootNamespace>CqrsApi</RootNamespace>
+        <UserSecretsId>eb0675df-a5e2-4825-8c88-8b2567c5d727</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,6 +19,7 @@
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
       <PackageReference Include="MediatR" Version="9.0.0" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+      <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
       <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
       <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.3" />
       <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.6.3" />

@@ -55,6 +55,20 @@ namespace CqrsApi.Controllers
             return Ok(mappedResponse);
         }
 
+        [HttpPatch]
+        public async Task<IActionResult> UpdateMovie(UpdateMovieCommand command)
+        {
+            if (command.MovieId < 0)
+                return BadRequest(new InvalidIdResponse());
+
+            var response = await _mediator.Send(command);
+
+            if (response == null)
+                return BadRequest(new MovieNotFoundResponse(command.MovieId));
+
+            return Ok(new UpdateSuccessResponse(command.MovieId));
+        }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteMovie(int id)
         {

@@ -9,6 +9,17 @@ namespace CqrsApi.Models.Models
             Copies = new HashSet<Copy>();
             Starrings = new HashSet<Starring>();
         }
+        
+        // new Movie(1, "Star Wars Episode IV: A New Hope", 1979, 12, 10f),
+
+        public Movie(int movieId, string title, int year, int ageRestriction, float price)
+        {
+            MovieId = movieId;
+            Title = title;
+            Year = year;
+            AgeRestriction = ageRestriction;
+            Price = price;
+        }
 
         public int MovieId { get; set; }
         public string Title { get; set; }
