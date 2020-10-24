@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CqrsApi.Dto.Dto;
 using CqrsApi.Models.Models;
+using CqrsApi.Responses.Responses;
 
 namespace CqrsApi.Profiles
 {

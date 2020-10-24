@@ -1,4 +1,4 @@
-﻿namespace CqrsApi.Dto.Dto
+﻿namespace CqrsApi.Responses.Responses
 {
     public class MovieGetResponse
     {
