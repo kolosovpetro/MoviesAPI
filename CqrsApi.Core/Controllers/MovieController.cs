@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using CqrsApi.Abstractions;
+using CqrsApi.Commands.Commands;
 using CqrsApi.Dto.Dto;
 using CqrsApi.Queries.Queries;
 using MediatR;
@@ -38,6 +39,14 @@ namespace CqrsApi.Controllers
             var response = await _mediator.Send(query);
             var mappedResponse = _mapper.Map<MovieGetResponse>(response);
             return response != null ? (IActionResult) Ok(mappedResponse) : NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMovie(AddMovieCommand command)
+        {
+            var response = await _mediator.Send(command);
+            var mappedResponse = _mapper.Map<MovieGetResponse>(response);
+            return mappedResponse != null ? (IActionResult) Ok(mappedResponse) : BadRequest();
         }
     }
 }

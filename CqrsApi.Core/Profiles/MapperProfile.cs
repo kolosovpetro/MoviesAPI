@@ -10,7 +10,6 @@ namespace CqrsApi.Profiles
         {
             // source -> target
             CreateMap<Movie, MovieGetResponse>();
-            CreateMap<AddMovieRequestDto, Movie>();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Reflection;
 using AutoMapper;
+using CqrsApi.Commands.Commands;
 using CqrsApi.Data.Extensions;
 using CqrsApi.Queries.Handlers;
 using MediatR;
@@ -18,7 +19,7 @@ namespace CqrsApi
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -26,6 +27,7 @@ namespace CqrsApi
             services.AddDataLayerWithPostgreSql(Configuration);
             services.AddSwaggerGen();
             services.AddMediatR(typeof(GetAllMoviesHandler).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(AddMovieCommand).GetTypeInfo().Assembly);
             services.AddAutoMapper(typeof(Startup));
         }
 
