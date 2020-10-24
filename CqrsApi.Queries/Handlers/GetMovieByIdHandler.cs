@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CqrsApi.Queries.Handlers
 {
-    public class GetByIdQueryHandler : IRequestHandler<GetMovieByIdQuery, Movie>
+    public class GetMovieByIdHandler : IRequestHandler<GetMovieByIdQuery, Movie>
     {
         private readonly PostgreContext _context;
 
-        public GetByIdQueryHandler(PostgreContext context)
+        public GetMovieByIdHandler(PostgreContext context)
         {
             _context = context;
         }

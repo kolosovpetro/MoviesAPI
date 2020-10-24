@@ -54,5 +54,16 @@ namespace CqrsApi.Controllers
             var mappedResponse = _mapper.Map<MovieGetResponse>(response);
             return Ok(mappedResponse);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteMovie(int id)
+        {
+            var command = new DeleteMovieCommand(id);
+            var response = await _mediator.Send(command);
+            if (response == null)
+                return BadRequest(new MovieNotFoundResponse(command.MovieId));
+
+            return Ok(response);
+        }
     }
 }
