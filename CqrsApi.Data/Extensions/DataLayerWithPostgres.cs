@@ -1,4 +1,5 @@
 ﻿using System;
+using CqrsApi.Auxiliaries.Auxiliaries;
 using CqrsApi.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +16,7 @@ namespace CqrsApi.Data.Extensions
 
             services.AddDbContext<PostgreContext>(options =>
                 options.UseNpgsql(
-                    environmentConnectionString ??
+                    StringParser.Convert(environmentConnectionString) ??
                     configuration.GetConnectionString("LOCAL_POSTGRES_CONNECTION_STRING")));
 
             services.AddTransient<DbContext, PostgreContext>();

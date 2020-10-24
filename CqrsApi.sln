@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsApi.Tests", "CqrsApi.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsApi.Responses", "CqrsApi.Responses\CqrsApi.Responses.csproj", "{7D039397-0A25-45DC-A8A7-8210E99F2435}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsApi.Auxiliaries", "CqrsApi.Auxiliaries\CqrsApi.Auxiliaries.csproj", "{EA9B9D51-F62B-4080-99B5-0ED53A5C40C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{7D039397-0A25-45DC-A8A7-8210E99F2435}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D039397-0A25-45DC-A8A7-8210E99F2435}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D039397-0A25-45DC-A8A7-8210E99F2435}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA9B9D51-F62B-4080-99B5-0ED53A5C40C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA9B9D51-F62B-4080-99B5-0ED53A5C40C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA9B9D51-F62B-4080-99B5-0ED53A5C40C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA9B9D51-F62B-4080-99B5-0ED53A5C40C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

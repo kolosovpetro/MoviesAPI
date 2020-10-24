@@ -1,12 +1,12 @@
-﻿namespace CqrsApi.Auxiliaries
+﻿namespace CqrsApi.Auxiliaries.Auxiliaries
 {
     public static class StringParser
     {
         public static string Convert(string databaseUrl)
         {
-            if (!databaseUrl.Contains("postgres"))
+            if (!databaseUrl.Contains("postgres") || string.IsNullOrEmpty(databaseUrl))
             {
-                return string.Empty;
+                return null;
             }
 
             var temp = databaseUrl.Split(@"://");		
