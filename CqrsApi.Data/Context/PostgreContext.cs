@@ -27,7 +27,9 @@ namespace CqrsApi.Data.Context
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseNpgsql(
-                    "Server=ec2-52-203-165-126.compute-1.amazonaws.com;User Id=psajiwtsuypith;Password=fd3e5f4a7c04871450bc608bb8451d00f63f654563a788df7ddfb0686679cc17;Database=deglced74b0i79;sslmode=Require;Trust Server Certificate=true;");
+                    //"Server=ec2-52-203-165-126.compute-1.amazonaws.com;User Id=psajiwtsuypith;Password=fd3e5f4a7c04871450bc608bb8451d00f63f654563a788df7ddfb0686679cc17;Database=deglced74b0i79;sslmode=Require;Trust Server Certificate=true;"
+                    "Server=localhost;User Id=postgres;Password=postgres;Database=ApiDatabase;"
+                );
             }
         }
 
@@ -106,6 +108,18 @@ namespace CqrsApi.Data.Context
                 entity.Property(e => e.Title).HasColumnName("title");
 
                 entity.Property(e => e.Year).HasColumnName("year");
+
+                entity.HasData(
+                    new Movie(1, "Star Wars Episode IV: A New Hope", 1979, 12, 10f),
+                    new Movie(2, "Ghostbusters", 1984, 12, 5.5f),
+                    new Movie(3, "Terminator", 1984, 15, 8.5f),
+                    new Movie(4, "Taxi Driver", 1976, 17, 5f),
+                    new Movie(5, "Platoon", 1986, 18, 5f),
+                    new Movie(6, "Frantic", 1988, 15, 8.5f),
+                    new Movie(7, "Ronin", 1998, 13, 9.5f),
+                    new Movie(8, "Analyze This", 1999, 16, 10.5f),
+                    new Movie(9, "Leon: the Professional", 1994, 16, 8.5f),
+                    new Movie(10, "Mission Impossible", 1996, 13, 8.5f));
             });
 
             modelBuilder.Entity<Rental>(entity =>
