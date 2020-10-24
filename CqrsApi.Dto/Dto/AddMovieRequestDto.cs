@@ -1,8 +1,7 @@
-﻿namespace CqrsApi.Queries.Responses
+﻿namespace CqrsApi.Dto.Dto
 {
-    public class MovieGetResponse
+    public class AddMovieRequestDto
     {
-        public int MovieId { get; set; }
         public string Title { get; set; }
         public int Year { get; set; }
         public int AgeRestriction { get; set; }

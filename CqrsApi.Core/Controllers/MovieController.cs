@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using CqrsApi.Abstractions;
+using CqrsApi.Dto.Dto;
 using CqrsApi.Queries.Queries;
-using CqrsApi.Queries.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using CqrsApi.Dto.Dto;
 using CqrsApi.Models.Models;
-using CqrsApi.Queries.Responses;
 
 namespace CqrsApi.Profiles
 {
@@ -8,7 +8,9 @@ namespace CqrsApi.Profiles
     {
         public MapperProfile()
         {
+            // source -> target
             CreateMap<Movie, MovieGetResponse>();
+            CreateMap<AddMovieRequestDto, Movie>();
         }
     }
 }
