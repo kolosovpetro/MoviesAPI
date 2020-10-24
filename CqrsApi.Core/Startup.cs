@@ -27,7 +27,7 @@ namespace CqrsApi
             services.AddDataLayerWithPostgreSql(Configuration);
             services.AddSwaggerGen();
             services.AddMediatR(typeof(GetAllMoviesHandler).GetTypeInfo().Assembly);
-            services.AddMediatR(typeof(AddMovieCommand).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(CreateMovieCommand).GetTypeInfo().Assembly);
             services.AddAutoMapper(typeof(Startup));
         }
 

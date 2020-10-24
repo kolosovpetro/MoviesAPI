@@ -8,7 +8,7 @@ using MediatR;
 
 namespace CqrsApi.Commands.Handlers
 {
-    public class AddMovieHandler : IRequestHandler<AddMovieCommand, Movie>
+    public class AddMovieHandler : IRequestHandler<CreateMovieCommand, Movie>
     {
         private readonly PostgreContext _context;
 
@@ -17,7 +17,7 @@ namespace CqrsApi.Commands.Handlers
             _context = context;
         }
 
-        public async Task<Movie> Handle(AddMovieCommand request, CancellationToken cancellationToken)
+        public async Task<Movie> Handle(CreateMovieCommand request, CancellationToken cancellationToken)
         {
             var movieId = _context.Movies.Max(x => x.MovieId) + 1; // new id
 

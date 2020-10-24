@@ -9,7 +9,7 @@ namespace CqrsApi.Abstractions
         Task<IActionResult> GetAllMoviesQuery();
 
         Task<IActionResult> GetMovieByIdQuery(int movieId);
-        Task<IActionResult> AddMovie(AddMovieCommand command);
+        Task<IActionResult> AddMovie(CreateMovieCommand command);
         // Task<IActionResult> UpdateMovie(UpdateMovieCommand command);
         // Task<IActionResult> DeleteMovie(DeleteMovieCommand command);
     }

@@ -2,18 +2,12 @@
 {
     public class MovieNotFoundResponse
     {
-        public int MovieId { get; set; }
-        public string Message { get; set; }
-        public int StatusCode { get; set; }
-
-        public MovieNotFoundResponse()
-        {
-        }
+        public string Message { get; }
+        public int StatusCode { get; }
 
         public MovieNotFoundResponse(int movieId)
         {
-            MovieId = movieId;
-            Message = $"Movie with id {MovieId} not found.";
+            Message = $"Movie with id {movieId} not found.";
             StatusCode = 404;
         }
     }

@@ -36,6 +36,9 @@ namespace CqrsApi.Controllers
         public async Task<IActionResult> GetMovieByIdQuery(int id)
         {
             var query = new GetMovieByIdQuery(id);
+            if (query.Id < 0)
+                return BadRequest(new InvalidIdResponse());
+
             var response = await _mediator.Send(query);
             if (response == null)
                 return NotFound(new MovieNotFoundResponse(id));
@@ -45,11 +48,11 @@ namespace CqrsApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddMovie(AddMovieCommand command)
+        public async Task<IActionResult> AddMovie(CreateMovieCommand command)
         {
             var response = await _mediator.Send(command);
             var mappedResponse = _mapper.Map<MovieGetResponse>(response);
-            return mappedResponse != null ? (IActionResult) Ok(mappedResponse) : BadRequest();
+            return Ok(mappedResponse);
         }
     }
 }
