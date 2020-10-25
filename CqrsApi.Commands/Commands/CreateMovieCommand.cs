@@ -1,10 +1,10 @@
-﻿using CqrsApi.Models.Models;
+﻿using CqrsApi.Responses.Responses;
 using MediatR;
 
 namespace CqrsApi.Commands.Commands
 {
     // POST
-    public class CreateMovieCommand : IRequest<Movie>
+    public class CreateMovieCommand : IRequest<MovieAddSuccessResponse>
     {
         public string Title { get; set; }
         public int Year { get; set; }

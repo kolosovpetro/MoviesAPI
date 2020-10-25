@@ -4,11 +4,12 @@ using System.Threading.Tasks;
 using CqrsApi.Commands.Commands;
 using CqrsApi.Data.Context;
 using CqrsApi.Models.Models;
+using CqrsApi.Responses.Responses;
 using MediatR;
 
 namespace CqrsApi.Commands.Handlers
 {
-    public class AddMovieHandler : IRequestHandler<CreateMovieCommand, Movie>
+    public class AddMovieHandler : IRequestHandler<CreateMovieCommand, MovieAddSuccessResponse>
     {
         private readonly PostgreContext _context;
 
@@ -17,7 +18,8 @@ namespace CqrsApi.Commands.Handlers
             _context = context;
         }
 
-        public async Task<Movie> Handle(CreateMovieCommand request, CancellationToken cancellationToken)
+        public async Task<MovieAddSuccessResponse> Handle(CreateMovieCommand request,
+            CancellationToken cancellationToken)
         {
             var movieId = _context.Movies.Max(x => x.MovieId) + 1; // new id
 
@@ -32,7 +34,7 @@ namespace CqrsApi.Commands.Handlers
 
             await _context.Movies.AddAsync(movie, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
-            return movie;
+            return new MovieAddSuccessResponse(request.Title);
         }
     }
 }

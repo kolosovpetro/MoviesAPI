@@ -2,7 +2,7 @@
 {
     public class InvalidAgeRestrictionResponse
     {
-        public string Message { get; set; } = "Age restriction has invalid format. Id should be non-negative integer";
+        public string Message { get; set; } = "Age restriction has invalid format. Age restriction should be non-negative integer";
         public int StatusCode { get; set; } = 500;
     }
 }
