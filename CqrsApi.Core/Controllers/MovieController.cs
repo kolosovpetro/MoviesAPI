@@ -50,9 +50,17 @@ namespace CqrsApi.Controllers
         [HttpPost]
         public async Task<IActionResult> AddMovie(CreateMovieCommand command)
         {
+            if (command.Year < 1888)
+                return BadRequest(new InvalidYearResponse());
+
+            if (command.Price <= 0)
+                return BadRequest(new InvalidPriceResponse());
+
+            if (command.AgeRestriction <= 0)
+                return BadRequest(new InvalidAgeRestrictionResponse());
+
             var response = await _mediator.Send(command);
-            var mappedResponse = _mapper.Map<MovieGetResponse>(response);
-            return Ok(mappedResponse);
+            return Ok(response);
         }
 
         [HttpPatch]
@@ -64,7 +72,7 @@ namespace CqrsApi.Controllers
             var response = await _mediator.Send(command);
 
             if (response == null)
-                return BadRequest(new MovieNotFoundResponse(command.MovieId));
+                return NotFound(new MovieNotFoundResponse(command.MovieId));
 
             return Ok(new UpdateSuccessResponse(command.MovieId));
         }
@@ -75,7 +83,7 @@ namespace CqrsApi.Controllers
             var command = new DeleteMovieCommand(id);
             var response = await _mediator.Send(command);
             if (response == null)
-                return BadRequest(new MovieNotFoundResponse(command.MovieId));
+                return NotFound(new MovieNotFoundResponse(command.MovieId));
 
             return Ok(response);
         }
