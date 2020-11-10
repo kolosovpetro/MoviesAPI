@@ -1,17 +1,13 @@
 # CQRS Api
 
-## Description 
-
 ASP NET Core WEB API with CQRS Architecture.
-
-## Screenshot
 
 ![StorePicture](CqrsApi.Core/Picture.JPG?raw=true)
 
 ## Online
 
-- Github: 
-- Heroku: 
+- Github: https://github.com/kolosovpetro/CQRS-Api
+- Heroku: https://cqrs-movies-api.herokuapp.com/swagger
 
 ## To do
 
