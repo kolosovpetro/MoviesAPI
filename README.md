@@ -2,8 +2,6 @@
 
 ASP NET Core WEB API with CQRS Architecture.
 
-![StorePicture](CqrsApi.Core/Picture.JPG?raw=true)
-
 ## Online
 
 - Github: https://github.com/kolosovpetro/CQRS-Api
