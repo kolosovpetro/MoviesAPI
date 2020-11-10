@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace CqrsApi
 {
@@ -25,10 +26,14 @@ namespace CqrsApi
         {
             services.AddControllers();
             services.AddDataLayerWithPostgreSql(Configuration);
-            services.AddSwaggerGen();
             services.AddMediatR(typeof(GetAllMoviesHandler).GetTypeInfo().Assembly);
             services.AddMediatR(typeof(CreateMovieCommand).GetTypeInfo().Assembly);
             services.AddAutoMapper(typeof(Startup));
+            services.AddSwaggerGen(c =>
+            {
+                c.EnableAnnotations();
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "CQRS API", Version = "v1"});
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

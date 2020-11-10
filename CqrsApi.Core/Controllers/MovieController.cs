@@ -7,6 +7,7 @@ using CqrsApi.Queries.Queries;
 using CqrsApi.Responses.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace CqrsApi.Controllers
 {
@@ -23,7 +24,11 @@ namespace CqrsApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Returns list of all the movies in database.
+        /// </summary>
         [HttpGet]
+        [SwaggerOperation(Summary = "Returns list of all the movies in database.")]
         public async Task<IActionResult> GetAllMoviesQuery()
         {
             var request = new GetAllMoviesQuery();
@@ -32,7 +37,11 @@ namespace CqrsApi.Controllers
             return mappedResponse != null ? (IActionResult) Ok(mappedResponse) : NotFound();
         }
 
+        /// <summary>
+        /// Returns movie by Id.
+        /// </summary>
         [HttpGet("{id}", Name = "GetMovieById")]
+        [SwaggerOperation(Summary = "Returns movie by Id.")]
         public async Task<IActionResult> GetMovieByIdQuery(int id)
         {
             var query = new GetMovieByIdQuery(id);
@@ -47,7 +56,11 @@ namespace CqrsApi.Controllers
             return Ok(mappedResponse);
         }
 
+        /// <summary>
+        /// Adds new movie to database. Returns response with report.
+        /// </summary>
         [HttpPost]
+        [SwaggerOperation(Summary = "Adds new movie to database. Returns response with report.")]
         public async Task<IActionResult> AddMovie(CreateMovieCommand command)
         {
             if (command.Year < 1888)
@@ -63,7 +76,11 @@ namespace CqrsApi.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Modifies an existing movie in database. Returns response.
+        /// </summary>
         [HttpPatch]
+        [SwaggerOperation(Summary = "Modifies an existing movie in database. Returns response.")]
         public async Task<IActionResult> UpdateMovie(UpdateMovieCommand command)
         {
             if (command.MovieId < 0)
@@ -77,7 +94,11 @@ namespace CqrsApi.Controllers
             return Ok(new UpdateSuccessResponse(command.MovieId));
         }
 
+        /// <summary>
+        /// Deletes movie from database by Id. Returns response.
+        /// </summary>
         [HttpDelete]
+        [SwaggerOperation(Summary = "Deletes movie from database by Id. Returns response.")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
             var command = new DeleteMovieCommand(id);
