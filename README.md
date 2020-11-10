@@ -1,6 +1,17 @@
 # CQRS Api
 
-## Description
+## Description 
+
+ASP NET Core WEB API with CQRS Architecture.
+
+## Screenshot
+
+![StorePicture](CqrsApi.Core/Picture.JPG?raw=true)
+
+## Online
+
+- Github: 
+- Heroku: 
 
 ## To do
 
