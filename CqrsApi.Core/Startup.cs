@@ -34,6 +34,9 @@ namespace CqrsApi
                 c.EnableAnnotations();
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "CQRS API", Version = "v1"});
             });
+
+            // allows to connect from front end to api
+            services.AddCors();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -48,6 +51,16 @@ namespace CqrsApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // allows to connect from front end to api
+            app.UseCors(builder =>
+            {
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+
 
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
