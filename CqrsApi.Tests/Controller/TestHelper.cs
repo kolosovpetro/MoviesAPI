@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using CqrsApi.Core.Profiles;
 using CqrsApi.Models.Models;
-using CqrsApi.Profiles;
-using CqrsApi.Responses.Responses;
+using CqrsApi.Requests.QueryResponses;
 
 namespace CqrsApi.Tests.Controller
 {

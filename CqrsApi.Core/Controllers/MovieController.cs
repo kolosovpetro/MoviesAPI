@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using CqrsApi.Abstractions;
-using CqrsApi.Commands.Commands;
-using CqrsApi.Queries.Queries;
-using CqrsApi.Responses.Responses;
+using CqrsApi.Core.Abstractions;
+using CqrsApi.Requests.Command;
+using CqrsApi.Requests.CommandResponses;
+using CqrsApi.Requests.Query;
+using CqrsApi.Requests.QueryResponses;
+using CqrsApi.Requests.ValidationResponses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace CqrsApi.Controllers
+namespace CqrsApi.Core.Controllers
 {
     [ApiController]
     [Route("api/movies")]

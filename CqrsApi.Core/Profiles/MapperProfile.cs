@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using CqrsApi.Models.Models;
-using CqrsApi.Responses.Responses;
+using CqrsApi.Requests.QueryResponses;
 
-namespace CqrsApi.Profiles
+namespace CqrsApi.Core.Profiles
 {
     public class MapperProfile : Profile
     {

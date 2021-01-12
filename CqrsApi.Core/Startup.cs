@@ -1,8 +1,8 @@
 using System.Reflection;
 using AutoMapper;
-using CqrsApi.Commands.Commands;
-using CqrsApi.Data.Extensions;
-using CqrsApi.Queries.Handlers;
+using CqrsApi.Core.Extensions;
+using CqrsApi.Requests.Command;
+using CqrsApi.Requests.QueryHandlers;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

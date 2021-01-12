@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using CqrsApi.Commands.Commands;
+using CqrsApi.Requests.Command;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CqrsApi.Abstractions
+namespace CqrsApi.Core.Abstractions
 {
     public interface IMovieController
     {

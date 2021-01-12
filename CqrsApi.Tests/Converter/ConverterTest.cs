@@ -1,4 +1,4 @@
-﻿using CqrsApi.Auxiliaries.Auxiliaries;
+﻿using CqrsApi.Core.Services;
 using FluentAssertions;
 using NUnit.Framework;
 

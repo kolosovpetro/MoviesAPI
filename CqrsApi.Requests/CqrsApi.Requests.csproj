@@ -2,20 +2,16 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>CqrsApi.Requests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="MediatR" Version="9.0.0" />
-      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\CqrsApi.Data\CqrsApi.Data.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Handlers" />
-      <Folder Include="Queries" />
+      <ProjectReference Include="..\CqrsApi.Responses\CqrsApi.Responses.csproj" />
     </ItemGroup>
 
 </Project>
