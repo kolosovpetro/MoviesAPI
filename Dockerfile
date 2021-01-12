@@ -8,12 +8,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["CqrsApi.Core/CqrsApi.Core.csproj", "CqrsApi.Core/"]
-COPY ["CqrsApi.Responses/CqrsApi.Responses.csproj", "CqrsApi.Responses/"]
-COPY ["CqrsApi.Queries/CqrsApi.Queries.csproj", "CqrsApi.Queries/"]
+COPY ["CqrsApi.Requests/CqrsApi.Requests.csproj", "CqrsApi.Requests/"]
 COPY ["CqrsApi.Data/CqrsApi.Data.csproj", "CqrsApi.Data/"]
-COPY ["CqrsApi.Auxiliaries/CqrsApi.Auxiliaries.csproj", "CqrsApi.Auxiliaries/"]
 COPY ["CqrsApi.Models/CqrsApi.Models.csproj", "CqrsApi.Models/"]
-COPY ["CqrsApi.Commands/CqrsApi.Commands.csproj", "CqrsApi.Commands/"]
 RUN dotnet restore "CqrsApi.Core/CqrsApi.Core.csproj"
 COPY . .
 WORKDIR "/src/CqrsApi.Core"
