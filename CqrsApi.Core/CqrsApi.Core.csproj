@@ -2,15 +2,15 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <RootNamespace>CqrsApi</RootNamespace>
+        <RootNamespace>CqrsApi.Core</RootNamespace>
         <UserSecretsId>eb0675df-a5e2-4825-8c88-8b2567c5d727</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CqrsApi.Commands\CqrsApi.Commands.csproj" />
       <ProjectReference Include="..\CqrsApi.Data\CqrsApi.Data.csproj" />
       <ProjectReference Include="..\CqrsApi.Queries\CqrsApi.Queries.csproj" />
+      <ProjectReference Include="..\CqrsApi.Requests\CqrsApi.Requests.csproj" />
       <ProjectReference Include="..\CqrsApi.Responses\CqrsApi.Responses.csproj" />
     </ItemGroup>
 

@@ -1,16 +1,16 @@
 ﻿using System.Threading.Tasks;
-using CqrsApi.Commands.Commands;
+using CqrsApi.Requests.Command;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CqrsApi.Abstractions
+namespace CqrsApi.Core.Abstractions
 {
     public interface IMovieController
     {
-        Task<IActionResult> GetAllMoviesQuery();
+        Task<IActionResult> GetAllMoviesAsync();
 
-        Task<IActionResult> GetMovieByIdQuery(int movieId);
-        Task<IActionResult> AddMovie(CreateMovieCommand command);
-        Task<IActionResult> UpdateMovie(UpdateMovieCommand command);
-        Task<IActionResult> DeleteMovie(int id);
+        Task<IActionResult> GetMovieByIdAsync(int movieId);
+        Task<IActionResult> PostMovieAsync(PostMovieCommand command);
+        Task<IActionResult> PatchMovieAsync(PatchMovieCommand command);
+        Task<IActionResult> DeleteMovieAsync(int id);
     }
 }

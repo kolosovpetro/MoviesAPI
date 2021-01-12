@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>CqrsApi.Requests</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="9.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CqrsApi.Data\CqrsApi.Data.csproj" />
+      <ProjectReference Include="..\CqrsApi.Responses\CqrsApi.Responses.csproj" />
+    </ItemGroup>
+
+</Project>

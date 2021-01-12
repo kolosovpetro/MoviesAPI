@@ -1,8 +1,8 @@
 using System.Reflection;
 using AutoMapper;
-using CqrsApi.Commands.Commands;
-using CqrsApi.Data.Extensions;
-using CqrsApi.Queries.Handlers;
+using CqrsApi.Core.Extensions;
+using CqrsApi.Requests.Command;
+using CqrsApi.Requests.QueryHandlers;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +27,7 @@ namespace CqrsApi
             services.AddControllers();
             services.AddDataLayerWithPostgreSql(Configuration);
             services.AddMediatR(typeof(GetAllMoviesHandler).GetTypeInfo().Assembly);
-            services.AddMediatR(typeof(CreateMovieCommand).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(PostMovieCommand).GetTypeInfo().Assembly);
             services.AddAutoMapper(typeof(Startup));
             services.AddSwaggerGen(c =>
             {
