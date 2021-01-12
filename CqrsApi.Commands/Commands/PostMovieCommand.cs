@@ -4,7 +4,7 @@ using MediatR;
 namespace CqrsApi.Commands.Commands
 {
     // POST
-    public class CreateMovieCommand : IRequest<MovieAddSuccessResponse>
+    public class PostMovieCommand : IRequest<PostMovieSuccessResponse>
     {
         public string Title { get; set; }
         public int Year { get; set; }

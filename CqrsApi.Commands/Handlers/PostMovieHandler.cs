@@ -9,16 +9,16 @@ using MediatR;
 
 namespace CqrsApi.Commands.Handlers
 {
-    public class AddMovieHandler : IRequestHandler<CreateMovieCommand, MovieAddSuccessResponse>
+    public class PostMovieHandler : IRequestHandler<PostMovieCommand, PostMovieSuccessResponse>
     {
         private readonly PostgreContext _context;
 
-        public AddMovieHandler(PostgreContext context)
+        public PostMovieHandler(PostgreContext context)
         {
             _context = context;
         }
 
-        public async Task<MovieAddSuccessResponse> Handle(CreateMovieCommand request,
+        public async Task<PostMovieSuccessResponse> Handle(PostMovieCommand request,
             CancellationToken cancellationToken)
         {
             var movieId = _context.Movies.Max(x => x.MovieId) + 1; // new id
@@ -34,7 +34,7 @@ namespace CqrsApi.Commands.Handlers
 
             await _context.Movies.AddAsync(movie, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
-            return new MovieAddSuccessResponse(request.Title);
+            return new PostMovieSuccessResponse(request.Title);
         }
     }
 }

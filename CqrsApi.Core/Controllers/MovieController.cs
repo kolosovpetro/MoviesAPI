@@ -33,11 +33,11 @@ namespace CqrsApi.Controllers
         {
             var request = new GetAllMoviesQuery();
             var response = await _mediator.Send(request);
+            
             if (response == null)
-            {
                 return NotFound();
-            }
-            var mappedResponse = _mapper.Map<IList<MovieGetResponse>>(response);
+            
+            var mappedResponse = _mapper.Map<IList<GetMovieByIdResponse>>(response);
             return mappedResponse != null ? (IActionResult) Ok(mappedResponse) : NotFound();
         }
 
@@ -53,10 +53,11 @@ namespace CqrsApi.Controllers
             
             var query = new GetMovieByIdQuery(id);
             var response = await _mediator.Send(query);
+            
             if (response == null)
                 return NotFound(new MovieNotFoundResponse(id));
 
-            var mappedResponse = _mapper.Map<MovieGetResponse>(response);
+            var mappedResponse = _mapper.Map<GetMovieByIdResponse>(response);
             return Ok(mappedResponse);
         }
 
@@ -65,7 +66,7 @@ namespace CqrsApi.Controllers
         /// </summary>
         [HttpPost]
         [SwaggerOperation(Summary = "Adds new movie to database. Returns response with report.")]
-        public async Task<IActionResult> PostMovieAsync(CreateMovieCommand command)
+        public async Task<IActionResult> PostMovieAsync(PostMovieCommand command)
         {
             if (command.Year < 1888)
                 return BadRequest(new InvalidYearResponse());
@@ -85,7 +86,7 @@ namespace CqrsApi.Controllers
         /// </summary>
         [HttpPatch]
         [SwaggerOperation(Summary = "Modifies an existing movie in database. Returns response.")]
-        public async Task<IActionResult> PatchMovieAsync(UpdateMovieCommand command)
+        public async Task<IActionResult> PatchMovieAsync(PatchMovieCommand command)
         {
             if (command.MovieId < 0)
                 return BadRequest(new InvalidIdResponse());
@@ -95,7 +96,7 @@ namespace CqrsApi.Controllers
             if (response == null)
                 return NotFound(new MovieNotFoundResponse(command.MovieId));
 
-            return Ok(new UpdateSuccessResponse(command.MovieId));
+            return Ok(new PatchMovieSuccessResponse(command.MovieId));
         }
 
         /// <summary>

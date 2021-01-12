@@ -1,11 +1,11 @@
 ﻿namespace CqrsApi.Responses.Responses
 {
-    public class UpdateSuccessResponse
+    public class PatchMovieSuccessResponse
     {
         public string Message { get; set; }
         public int StatusCode { get; set; }
 
-        public UpdateSuccessResponse(int id)
+        public PatchMovieSuccessResponse(int id)
         {
             Message = $"Movie with id {id} has been updated.";
             StatusCode = 200;

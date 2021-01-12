@@ -8,16 +8,16 @@ using MediatR;
 
 namespace CqrsApi.Commands.Handlers
 {
-    public class UpdateMovieHandler : IRequestHandler<UpdateMovieCommand, UpdateSuccessResponse>
+    public class PatchMovieHandler : IRequestHandler<PatchMovieCommand, PatchMovieSuccessResponse>
     {
         private readonly PostgreContext _context;
 
-        public UpdateMovieHandler(PostgreContext context)
+        public PatchMovieHandler(PostgreContext context)
         {
             _context = context;
         }
 
-        public async Task<UpdateSuccessResponse> Handle(UpdateMovieCommand request, CancellationToken cancellationToken)
+        public async Task<PatchMovieSuccessResponse> Handle(PatchMovieCommand request, CancellationToken cancellationToken)
         {
             var movie = _context.Movies.FirstOrDefault(x => x.MovieId == request.MovieId);
             if (movie == null)
@@ -28,7 +28,7 @@ namespace CqrsApi.Commands.Handlers
             movie.Year = request.Year;
             movie.AgeRestriction = request.AgeRestriction;
             await _context.SaveChangesAsync(cancellationToken);
-            return new UpdateSuccessResponse(request.MovieId);
+            return new PatchMovieSuccessResponse(request.MovieId);
         }
     }
 }

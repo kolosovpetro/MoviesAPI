@@ -1,9 +1,6 @@
-﻿using CqrsApi.Responses.Responses;
-using MediatR;
-
-namespace CqrsApi.Commands.Commands
+﻿namespace CqrsApi.Responses.Responses
 {
-    public class UpdateMovieCommand: IRequest<UpdateSuccessResponse>
+    public class GetMovieByIdResponse
     {
         public int MovieId { get; set; }
         public string Title { get; set; }

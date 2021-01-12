@@ -20,7 +20,7 @@ namespace CqrsApi.Tests.Controller
             // Arrange
             var mediator = new Mock<IMediator>();
             
-            var command = new CreateMovieCommand
+            var command = new PostMovieCommand
             {
                 Title = "Platoon",
                 Year = 1986,
@@ -28,9 +28,9 @@ namespace CqrsApi.Tests.Controller
                 AgeRestriction = 18
             };
 
-            mediator.Setup(m => m.Send(It.IsAny<CreateMovieCommand>(),
+            mediator.Setup(m => m.Send(It.IsAny<PostMovieCommand>(),
                     It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(new MovieAddSuccessResponse(command.Title)));
+                .Returns(Task.FromResult(new PostMovieSuccessResponse(command.Title)));
 
             var controller = new MovieController(mediator.Object, TestHelper.Mapper);
 
@@ -49,11 +49,11 @@ namespace CqrsApi.Tests.Controller
             // Arrange
             var mediator = new Mock<IMediator>();
             
-            var command = new CreateMovieCommand
+            var command = new PostMovieCommand
             {
                 Title = "Platoon",
                 Year = 1986,
-                Price = 5f,
+                Price = -5f,
                 AgeRestriction = 18
             };
 
@@ -65,7 +65,7 @@ namespace CqrsApi.Tests.Controller
             // Assert
             response.Should().NotBeNull();
             var objectResult = response as ObjectResult;
-            objectResult?.StatusCode.Should().Be(200);
+            objectResult?.StatusCode.Should().Be(400);
         }
     }
 }

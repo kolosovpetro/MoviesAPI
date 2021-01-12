@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CqrsApi.Commands.Commands
 {
-    public class DeleteMovieCommand : IRequest<DeleteSuccessResponse>
+    public class DeleteMovieCommand : IRequest<DeleteMovieSuccessResponse>
     {
         public int MovieId { get; set; }
 
