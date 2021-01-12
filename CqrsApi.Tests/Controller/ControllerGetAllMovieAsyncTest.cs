@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using CqrsApi.Controllers;
+using CqrsApi.Models.Models;
 using CqrsApi.Queries.Queries;
 using FluentAssertions;
 using MediatR;
@@ -11,7 +12,7 @@ using NUnit.Framework;
 namespace CqrsApi.Tests.Controller
 {
     [TestFixture]
-    public class ControllerGetAllTest
+    public class ControllerGetAllMovieAsyncTest
     {
         [Test]
         public async Task Controller_GetAllMoviesAsync_Test()
@@ -24,8 +25,8 @@ namespace CqrsApi.Tests.Controller
                 .Returns(() => Task.FromResult(TestHelper.AllMovies));
 
             var controller = new MovieController(mediator.Object, TestHelper.Mapper);
+            
             // Act
-
             var response = await controller.GetAllMoviesAsync();
 
             // Assert

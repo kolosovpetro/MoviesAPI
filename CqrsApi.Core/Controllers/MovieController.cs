@@ -33,6 +33,10 @@ namespace CqrsApi.Controllers
         {
             var request = new GetAllMoviesQuery();
             var response = await _mediator.Send(request);
+            if (response == null)
+            {
+                return NotFound();
+            }
             var mappedResponse = _mapper.Map<IList<MovieGetResponse>>(response);
             return mappedResponse != null ? (IActionResult) Ok(mappedResponse) : NotFound();
         }
@@ -40,14 +44,14 @@ namespace CqrsApi.Controllers
         /// <summary>
         /// Returns movie by Id.
         /// </summary>
-        [HttpGet("{id}", Name = "GetMovieById")]
+        [HttpGet("{id}", Name = "GetMovieByIdAsync")]
         [SwaggerOperation(Summary = "Returns movie by Id.")]
         public async Task<IActionResult> GetMovieByIdAsync(int id)
         {
-            var query = new GetMovieByIdQuery(id);
-            if (query.Id < 0)
+            if (id < 0)
                 return BadRequest(new InvalidIdResponse());
-
+            
+            var query = new GetMovieByIdQuery(id);
             var response = await _mediator.Send(query);
             if (response == null)
                 return NotFound(new MovieNotFoundResponse(id));
