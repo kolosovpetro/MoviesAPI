@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace CqrsApi.Tests.Controller
 {
     [TestFixture]
-    public class ControllerGetMovieByIdTest
+    public class ControllerGetMovieByIdAsyncTest
     {
         [Test]
         public async Task GetMovieByIdAsync_Success_Test()

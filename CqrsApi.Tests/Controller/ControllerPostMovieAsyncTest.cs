@@ -1,0 +1,71 @@
+﻿using System.Threading;
+using System.Threading.Tasks;
+using CqrsApi.Commands.Commands;
+using CqrsApi.Controllers;
+using CqrsApi.Responses.Responses;
+using FluentAssertions;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using NUnit.Framework;
+
+namespace CqrsApi.Tests.Controller
+{
+    [TestFixture]
+    public class ControllerPostMovieAsyncTest
+    {
+        [Test]
+        public async Task PostMovieAsync_Success_Test()
+        {
+            // Arrange
+            var mediator = new Mock<IMediator>();
+            
+            var command = new CreateMovieCommand
+            {
+                Title = "Platoon",
+                Year = 1986,
+                Price = 5f,
+                AgeRestriction = 18
+            };
+
+            mediator.Setup(m => m.Send(It.IsAny<CreateMovieCommand>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(new MovieAddSuccessResponse(command.Title)));
+
+            var controller = new MovieController(mediator.Object, TestHelper.Mapper);
+
+            // Act
+            var response = await controller.PostMovieAsync(command);
+
+            // Assert
+            response.Should().NotBeNull();
+            var objectResult = response as ObjectResult;
+            objectResult?.StatusCode.Should().Be(200);
+        }
+
+        [Test]
+        public async Task PostMovieAsync_BadRequest_Test()
+        {
+            // Arrange
+            var mediator = new Mock<IMediator>();
+            
+            var command = new CreateMovieCommand
+            {
+                Title = "Platoon",
+                Year = 1986,
+                Price = 5f,
+                AgeRestriction = 18
+            };
+
+            var controller = new MovieController(mediator.Object, TestHelper.Mapper);
+
+            // Act
+            var response = await controller.PostMovieAsync(command);
+
+            // Assert
+            response.Should().NotBeNull();
+            var objectResult = response as ObjectResult;
+            objectResult?.StatusCode.Should().Be(200);
+        }
+    }
+}
