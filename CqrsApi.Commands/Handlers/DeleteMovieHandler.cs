@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using CqrsApi.Commands.Commands;
 using CqrsApi.Data.Context;

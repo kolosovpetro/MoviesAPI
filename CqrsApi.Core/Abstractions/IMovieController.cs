@@ -6,11 +6,11 @@ namespace CqrsApi.Abstractions
 {
     public interface IMovieController
     {
-        Task<IActionResult> GetAllMoviesQuery();
+        Task<IActionResult> GetAllMoviesAsync();
 
-        Task<IActionResult> GetMovieByIdQuery(int movieId);
-        Task<IActionResult> AddMovie(CreateMovieCommand command);
-        Task<IActionResult> UpdateMovie(UpdateMovieCommand command);
-        Task<IActionResult> DeleteMovie(int id);
+        Task<IActionResult> GetMovieByIdAsync(int movieId);
+        Task<IActionResult> PostMovieAsync(CreateMovieCommand command);
+        Task<IActionResult> PatchMovieAsync(UpdateMovieCommand command);
+        Task<IActionResult> DeleteMovieAsync(int id);
     }
 }

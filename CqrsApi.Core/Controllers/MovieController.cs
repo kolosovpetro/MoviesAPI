@@ -29,7 +29,7 @@ namespace CqrsApi.Controllers
         /// </summary>
         [HttpGet]
         [SwaggerOperation(Summary = "Returns list of all the movies in database.")]
-        public async Task<IActionResult> GetAllMoviesQuery()
+        public async Task<IActionResult> GetAllMoviesAsync()
         {
             var request = new GetAllMoviesQuery();
             var response = await _mediator.Send(request);
@@ -42,7 +42,7 @@ namespace CqrsApi.Controllers
         /// </summary>
         [HttpGet("{id}", Name = "GetMovieById")]
         [SwaggerOperation(Summary = "Returns movie by Id.")]
-        public async Task<IActionResult> GetMovieByIdQuery(int id)
+        public async Task<IActionResult> GetMovieByIdAsync(int id)
         {
             var query = new GetMovieByIdQuery(id);
             if (query.Id < 0)
@@ -61,7 +61,7 @@ namespace CqrsApi.Controllers
         /// </summary>
         [HttpPost]
         [SwaggerOperation(Summary = "Adds new movie to database. Returns response with report.")]
-        public async Task<IActionResult> AddMovie(CreateMovieCommand command)
+        public async Task<IActionResult> PostMovieAsync(CreateMovieCommand command)
         {
             if (command.Year < 1888)
                 return BadRequest(new InvalidYearResponse());
@@ -81,7 +81,7 @@ namespace CqrsApi.Controllers
         /// </summary>
         [HttpPatch]
         [SwaggerOperation(Summary = "Modifies an existing movie in database. Returns response.")]
-        public async Task<IActionResult> UpdateMovie(UpdateMovieCommand command)
+        public async Task<IActionResult> PatchMovieAsync(UpdateMovieCommand command)
         {
             if (command.MovieId < 0)
                 return BadRequest(new InvalidIdResponse());
@@ -99,7 +99,7 @@ namespace CqrsApi.Controllers
         /// </summary>
         [HttpDelete]
         [SwaggerOperation(Summary = "Deletes movie from database by Id. Returns response.")]
-        public async Task<IActionResult> DeleteMovie(int id)
+        public async Task<IActionResult> DeleteMovieAsync(int id)
         {
             var command = new DeleteMovieCommand(id);
             var response = await _mediator.Send(command);

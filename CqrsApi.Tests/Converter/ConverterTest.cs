@@ -1,9 +1,8 @@
-﻿using CqrsApi.Auxiliaries;
-using CqrsApi.Auxiliaries.Auxiliaries;
+﻿using CqrsApi.Auxiliaries.Auxiliaries;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace CqrsApi.Tests.Tests
+namespace CqrsApi.Tests.Converter
 {
     [TestFixture]
     public class ConverterTest
@@ -11,8 +10,7 @@ namespace CqrsApi.Tests.Tests
         [Test]
         public void Converter_Test()
         {
-            var str =
-                "postgres://psajiwtsuypith:fd3e5f4a7c04871450bc608bb8451d00f63f654563a788df7ddfb0686679cc17@-203-165-126.compute-1.amazonaws.com:5432/deglced74b0i79";
+            const string str = "postgres://psajiwtsuypith:fd3e5f4a7c04871450bc608bb8451d00f63f654563a788df7ddfb0686679cc17@-203-165-126.compute-1.amazonaws.com:5432/deglced74b0i79";
 
             var connStr = StringParser.Convert(str);
             connStr.Should()
