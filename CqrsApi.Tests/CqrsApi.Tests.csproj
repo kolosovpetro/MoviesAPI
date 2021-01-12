@@ -2,7 +2,6 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
@@ -17,7 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CqrsApi.Auxiliaries\CqrsApi.Auxiliaries.csproj" />
       <ProjectReference Include="..\CqrsApi.Core\CqrsApi.Core.csproj" />
     </ItemGroup>
 

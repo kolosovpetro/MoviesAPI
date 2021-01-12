@@ -9,9 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CqrsApi.Data\CqrsApi.Data.csproj" />
-      <ProjectReference Include="..\CqrsApi.Queries\CqrsApi.Queries.csproj" />
       <ProjectReference Include="..\CqrsApi.Requests\CqrsApi.Requests.csproj" />
-      <ProjectReference Include="..\CqrsApi.Responses\CqrsApi.Responses.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -14,7 +14,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CqrsApi.Auxiliaries\CqrsApi.Auxiliaries.csproj" />
       <ProjectReference Include="..\CqrsApi.Models\CqrsApi.Models.csproj" />
     </ItemGroup>
 
