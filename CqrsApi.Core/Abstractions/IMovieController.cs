@@ -11,6 +11,6 @@ namespace CqrsApi.Core.Abstractions
         Task<IActionResult> GetMovieByIdAsync(int movieId);
         Task<IActionResult> PostMovieAsync(PostMovieCommand command);
         Task<IActionResult> PatchMovieAsync(PatchMovieCommand command);
-        Task<IActionResult> DeleteMovieAsync(int id);
+        Task<IActionResult> DeleteMovieByIdAsync(int id);
     }
 }

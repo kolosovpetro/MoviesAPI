@@ -25,7 +25,7 @@ namespace CqrsApi.Tests.Controller
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(movie));
 
-            var controller = new MovieController(mediator.Object, TestHelper.Mapper);
+            var controller = new MoviesController(mediator.Object, TestHelper.Mapper);
 
             // Act
             var response = await controller.GetMovieByIdAsync(1);
@@ -46,7 +46,7 @@ namespace CqrsApi.Tests.Controller
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult<Movie>(null));
 
-            var controller = new MovieController(mediator.Object, TestHelper.Mapper);
+            var controller = new MoviesController(mediator.Object, TestHelper.Mapper);
 
             // Act
             var response = await controller.GetMovieByIdAsync(1);
@@ -63,7 +63,7 @@ namespace CqrsApi.Tests.Controller
             // Arrange
             var mediator = new Mock<IMediator>();
             
-            var controller = new MovieController(mediator.Object, TestHelper.Mapper);
+            var controller = new MoviesController(mediator.Object, TestHelper.Mapper);
 
             // Act
             var response = await controller.GetMovieByIdAsync(-1);

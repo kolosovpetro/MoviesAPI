@@ -24,7 +24,7 @@ namespace CqrsApi.Tests.Controller
                     It.IsAny<CancellationToken>()))
                 .Returns(() => Task.FromResult(TestHelper.AllMovies));
 
-            var controller = new MovieController(mediator.Object, TestHelper.Mapper);
+            var controller = new MoviesController(mediator.Object, TestHelper.Mapper);
             
             // Act
             var response = await controller.GetAllMoviesAsync();
