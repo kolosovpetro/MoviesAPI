@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using CqrsApi.Data.Context;
-using CqrsApi.Requests.Command;
 using CqrsApi.Requests.CommandResponses;
+using CqrsApi.Requests.Commands;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

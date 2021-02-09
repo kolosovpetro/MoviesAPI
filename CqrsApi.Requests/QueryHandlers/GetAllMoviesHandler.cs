@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CqrsApi.Data.Context;
 using CqrsApi.Models.Models;
-using CqrsApi.Requests.Query;
+using CqrsApi.Requests.Queries;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

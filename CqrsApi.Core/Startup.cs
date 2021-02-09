@@ -1,7 +1,7 @@
 using System.Reflection;
 using AutoMapper;
 using CqrsApi.Core.Extensions;
-using CqrsApi.Requests.Command;
+using CqrsApi.Requests.Commands;
 using CqrsApi.Requests.QueryHandlers;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace CqrsApi
+namespace CqrsApi.Core
 {
     public class Startup
     {
@@ -32,7 +32,7 @@ namespace CqrsApi
             services.AddSwaggerGen(c =>
             {
                 c.EnableAnnotations();
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "CQRS API", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "CQRS Movies API", Version = "v1"});
             });
 
             // allows to connect from front end to api

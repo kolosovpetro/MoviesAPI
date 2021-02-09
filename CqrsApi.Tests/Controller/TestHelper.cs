@@ -9,9 +9,9 @@ namespace CqrsApi.Tests.Controller
 {
     public static class TestHelper
     {
-        public static Task<IList<GetMovieByIdResponse>> MappedMovies(IList<Movie> collection, IMapperBase mapper)
+        public static Task<IList<GetMovieResponse>> MappedMovies(IList<Movie> collection, IMapperBase mapper)
         {
-            return Task.FromResult(mapper.Map<IList<GetMovieByIdResponse>>(collection));
+            return Task.FromResult(mapper.Map<IList<GetMovieResponse>>(collection));
         }
 
         public static readonly IList<Movie> AllMovies = new List<Movie>

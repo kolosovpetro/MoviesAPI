@@ -1,6 +1,9 @@
-﻿namespace CqrsApi.Requests.QueryResponses
+﻿using CqrsApi.Requests.CommandResponses;
+using MediatR;
+
+namespace CqrsApi.Requests.Commands
 {
-    public class GetMovieByIdResponse
+    public class PatchMovieCommand: IRequest<PatchMovieSuccessResponse>
     {
         public int MovieId { get; set; }
         public string Title { get; set; }

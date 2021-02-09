@@ -1,7 +1,7 @@
 ﻿using CqrsApi.Models.Models;
 using MediatR;
 
-namespace CqrsApi.Requests.Query
+namespace CqrsApi.Requests.Queries
 {
     public class GetMovieByIdQuery : IRequest<Movie>
     {

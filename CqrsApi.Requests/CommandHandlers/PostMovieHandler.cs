@@ -1,10 +1,9 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using CqrsApi.Data.Context;
 using CqrsApi.Models.Models;
-using CqrsApi.Requests.Command;
 using CqrsApi.Requests.CommandResponses;
+using CqrsApi.Requests.Commands;
 using MediatR;
 
 namespace CqrsApi.Requests.CommandHandlers
@@ -21,11 +20,8 @@ namespace CqrsApi.Requests.CommandHandlers
         public async Task<PostMovieSuccessResponse> Handle(PostMovieCommand request,
             CancellationToken cancellationToken)
         {
-            var movieId = _context.Movies.Max(x => x.MovieId) + 1; // new id
-
             var movie = new Movie
             {
-                MovieId = movieId,
                 Title = request.Title,
                 Year = request.Year,
                 AgeRestriction = request.AgeRestriction,

@@ -1,9 +1,8 @@
 ﻿using CqrsApi.Requests.CommandResponses;
 using MediatR;
 
-namespace CqrsApi.Requests.Command
+namespace CqrsApi.Requests.Commands
 {
-    // POST
     public class PostMovieCommand : IRequest<PostMovieSuccessResponse>
     {
         public string Title { get; set; }

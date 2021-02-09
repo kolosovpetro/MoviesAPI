@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using CqrsApi.Core.Abstractions;
-using CqrsApi.Requests.Command;
 using CqrsApi.Requests.CommandResponses;
-using CqrsApi.Requests.Query;
+using CqrsApi.Requests.Commands;
+using CqrsApi.Requests.Queries;
 using CqrsApi.Requests.QueryResponses;
 using CqrsApi.Requests.ValidationResponses;
 using MediatR;
@@ -35,36 +35,36 @@ namespace CqrsApi.Core.Controllers
         {
             var request = new GetAllMoviesQuery();
             var response = await _mediator.Send(request);
-            
+
             if (response == null)
                 return NotFound();
-            
-            var mappedResponse = _mapper.Map<IList<GetMovieByIdResponse>>(response);
+
+            var mappedResponse = _mapper.Map<IList<GetMovieResponse>>(response);
             return mappedResponse != null ? (IActionResult) Ok(mappedResponse) : NotFound();
         }
 
         /// <summary>
-        /// Returns movie by Id.
+        /// Returns movie by id.
         /// </summary>
         [HttpGet("{id}", Name = "GetMovieByIdAsync")]
-        [SwaggerOperation(Summary = "Returns movie by Id.")]
+        [SwaggerOperation(Summary = "Returns movie by id.")]
         public async Task<IActionResult> GetMovieByIdAsync(int id)
         {
             if (id < 0)
                 return BadRequest(new InvalidIdResponse());
-            
+
             var query = new GetMovieByIdQuery(id);
             var response = await _mediator.Send(query);
-            
+
             if (response == null)
                 return NotFound(new MovieNotFoundResponse(id));
 
-            var mappedResponse = _mapper.Map<GetMovieByIdResponse>(response);
+            var mappedResponse = _mapper.Map<GetMovieResponse>(response);
             return Ok(mappedResponse);
         }
 
         /// <summary>
-        /// Adds new movie to database. Returns response with report.
+        /// Adds new movie to database. Returns response.
         /// </summary>
         [HttpPost]
         [SwaggerOperation(Summary = "Adds new movie to database. Returns response.")]
@@ -102,7 +102,7 @@ namespace CqrsApi.Core.Controllers
         }
 
         /// <summary>
-        /// Deletes movie from database by Id. Returns response.
+        /// Deletes movie from database by id. Returns response.
         /// </summary>
         [HttpDelete("{id}", Name = "DeleteMovieByIdAsync")]
         [SwaggerOperation(Summary = "Deletes movie from database by Id. Returns response.")]
