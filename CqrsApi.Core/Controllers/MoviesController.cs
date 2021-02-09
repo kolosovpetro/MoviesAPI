@@ -90,6 +90,9 @@ namespace CqrsApi.Core.Controllers
         [SwaggerOperation(Summary = "Modifies an existing movie in database. Returns response.")]
         public async Task<IActionResult> PatchMovieAsync(PatchMovieCommand command)
         {
+            var model = await _mediator.Send(new GetMovieByIdQuery(command.MovieId));
+            if (model.Title.Contains("F#"))
+                return BadRequest("F# best language");
             if (command.MovieId < 0)
                 return BadRequest(new InvalidIdResponse());
 
@@ -108,6 +111,10 @@ namespace CqrsApi.Core.Controllers
         [SwaggerOperation(Summary = "Deletes movie from database by Id. Returns response.")]
         public async Task<IActionResult> DeleteMovieByIdAsync(int id)
         {
+            var model = await _mediator.Send(new GetMovieByIdQuery(id));
+            if (model.Title.Contains("F#"))
+                return BadRequest("F# best language");
+            
             var command = new DeleteMovieCommand(id);
             var response = await _mediator.Send(command);
             if (response == null)
