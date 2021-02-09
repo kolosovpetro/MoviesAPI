@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace CqrsApi
+namespace CqrsApi.Core
 {
     public static class Program
     {

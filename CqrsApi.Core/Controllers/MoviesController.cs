@@ -35,10 +35,10 @@ namespace CqrsApi.Core.Controllers
         {
             var request = new GetAllMoviesQuery();
             var response = await _mediator.Send(request);
-            
+
             if (response == null)
                 return NotFound();
-            
+
             var mappedResponse = _mapper.Map<IList<GetMovieByIdResponse>>(response);
             return mappedResponse != null ? (IActionResult) Ok(mappedResponse) : NotFound();
         }
@@ -52,10 +52,10 @@ namespace CqrsApi.Core.Controllers
         {
             if (id < 0)
                 return BadRequest(new InvalidIdResponse());
-            
+
             var query = new GetMovieByIdQuery(id);
             var response = await _mediator.Send(query);
-            
+
             if (response == null)
                 return NotFound(new MovieNotFoundResponse(id));
 
