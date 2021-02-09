@@ -15,12 +15,12 @@ namespace CqrsApi.Core.Controllers
 {
     [ApiController]
     [Route("api/movies")]
-    public class MovieController : Controller, IMovieController
+    public class MoviesController : Controller, IMovieController
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public MovieController(IMediator mediator, IMapper mapper)
+        public MoviesController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
             _mapper = mapper;
@@ -67,7 +67,7 @@ namespace CqrsApi.Core.Controllers
         /// Adds new movie to database. Returns response with report.
         /// </summary>
         [HttpPost]
-        [SwaggerOperation(Summary = "Adds new movie to database. Returns response with report.")]
+        [SwaggerOperation(Summary = "Adds new movie to database. Returns response.")]
         public async Task<IActionResult> PostMovieAsync(PostMovieCommand command)
         {
             if (command.Year < 1888)
@@ -104,9 +104,9 @@ namespace CqrsApi.Core.Controllers
         /// <summary>
         /// Deletes movie from database by Id. Returns response.
         /// </summary>
-        [HttpDelete]
+        [HttpDelete("{id}", Name = "DeleteMovieByIdAsync")]
         [SwaggerOperation(Summary = "Deletes movie from database by Id. Returns response.")]
-        public async Task<IActionResult> DeleteMovieAsync(int id)
+        public async Task<IActionResult> DeleteMovieByIdAsync(int id)
         {
             var command = new DeleteMovieCommand(id);
             var response = await _mediator.Send(command);

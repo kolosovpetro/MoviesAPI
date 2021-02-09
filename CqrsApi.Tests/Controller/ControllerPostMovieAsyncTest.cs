@@ -32,7 +32,7 @@ namespace CqrsApi.Tests.Controller
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new PostMovieSuccessResponse(command.Title)));
 
-            var controller = new MovieController(mediator.Object, TestHelper.Mapper);
+            var controller = new MoviesController(mediator.Object, TestHelper.Mapper);
 
             // Act
             var response = await controller.PostMovieAsync(command);
@@ -57,7 +57,7 @@ namespace CqrsApi.Tests.Controller
                 AgeRestriction = 18
             };
 
-            var controller = new MovieController(mediator.Object, TestHelper.Mapper);
+            var controller = new MoviesController(mediator.Object, TestHelper.Mapper);
 
             // Act
             var response = await controller.PostMovieAsync(command);
