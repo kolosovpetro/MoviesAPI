@@ -9,7 +9,7 @@ namespace CqrsApi.Core.Profiles
         public MapperProfile()
         {
             // source -> target
-            CreateMap<Movie, GetMovieByIdResponse>();
+            CreateMap<Movie, GetMovieResponse>();
         }
     }
 }

@@ -2,8 +2,8 @@
 {
     public class MovieNotFoundResponse
     {
-        public string Message { get; set; }
-        public int StatusCode { get; set; }
+        public string Message { get; }
+        public int StatusCode { get; }
 
         public MovieNotFoundResponse(int movieId)
         {

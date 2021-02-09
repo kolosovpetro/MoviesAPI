@@ -39,15 +39,15 @@ namespace CqrsApi.Core.Controllers
             if (response == null)
                 return NotFound();
 
-            var mappedResponse = _mapper.Map<IList<GetMovieByIdResponse>>(response);
+            var mappedResponse = _mapper.Map<IList<GetMovieResponse>>(response);
             return mappedResponse != null ? (IActionResult) Ok(mappedResponse) : NotFound();
         }
 
         /// <summary>
-        /// Returns movie by Id.
+        /// Returns movie by id.
         /// </summary>
         [HttpGet("{id}", Name = "GetMovieByIdAsync")]
-        [SwaggerOperation(Summary = "Returns movie by Id.")]
+        [SwaggerOperation(Summary = "Returns movie by id.")]
         public async Task<IActionResult> GetMovieByIdAsync(int id)
         {
             if (id < 0)
@@ -59,12 +59,12 @@ namespace CqrsApi.Core.Controllers
             if (response == null)
                 return NotFound(new MovieNotFoundResponse(id));
 
-            var mappedResponse = _mapper.Map<GetMovieByIdResponse>(response);
+            var mappedResponse = _mapper.Map<GetMovieResponse>(response);
             return Ok(mappedResponse);
         }
 
         /// <summary>
-        /// Adds new movie to database. Returns response with report.
+        /// Adds new movie to database. Returns response.
         /// </summary>
         [HttpPost]
         [SwaggerOperation(Summary = "Adds new movie to database. Returns response.")]
