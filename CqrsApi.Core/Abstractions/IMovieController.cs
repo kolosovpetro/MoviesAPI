@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using CqrsApi.Requests.Command;
+using CqrsApi.Requests.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CqrsApi.Core.Abstractions

@@ -1,7 +1,7 @@
 ﻿using CqrsApi.Requests.CommandResponses;
 using MediatR;
 
-namespace CqrsApi.Requests.Command
+namespace CqrsApi.Requests.Commands
 {
     public class PatchMovieCommand: IRequest<PatchMovieSuccessResponse>
     {

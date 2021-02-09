@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using CqrsApi.Core.Controllers;
 using CqrsApi.Models.Models;
-using CqrsApi.Requests.Query;
+using CqrsApi.Requests.Queries;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

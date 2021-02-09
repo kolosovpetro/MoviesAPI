@@ -2,7 +2,7 @@
 using CqrsApi.Models.Models;
 using MediatR;
 
-namespace CqrsApi.Requests.Query
+namespace CqrsApi.Requests.Queries
 {
     public class GetAllMoviesQuery : IRequest<IList<Movie>>
     {

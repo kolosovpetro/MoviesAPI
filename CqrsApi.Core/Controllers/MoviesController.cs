@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using CqrsApi.Core.Abstractions;
-using CqrsApi.Requests.Command;
 using CqrsApi.Requests.CommandResponses;
-using CqrsApi.Requests.Query;
+using CqrsApi.Requests.Commands;
+using CqrsApi.Requests.Queries;
 using CqrsApi.Requests.QueryResponses;
 using CqrsApi.Requests.ValidationResponses;
 using MediatR;

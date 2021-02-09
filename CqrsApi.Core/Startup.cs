@@ -1,7 +1,7 @@
 using System.Reflection;
 using AutoMapper;
 using CqrsApi.Core.Extensions;
-using CqrsApi.Requests.Command;
+using CqrsApi.Requests.Commands;
 using CqrsApi.Requests.QueryHandlers;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
