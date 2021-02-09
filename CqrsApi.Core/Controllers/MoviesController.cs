@@ -102,7 +102,7 @@ namespace CqrsApi.Core.Controllers
         }
 
         /// <summary>
-        /// Deletes movie from database by Id. Returns response.
+        /// Deletes movie from database by id. Returns response.
         /// </summary>
         [HttpDelete("{id}", Name = "DeleteMovieByIdAsync")]
         [SwaggerOperation(Summary = "Deletes movie from database by Id. Returns response.")]
