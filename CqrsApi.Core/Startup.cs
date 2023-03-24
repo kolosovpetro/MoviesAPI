@@ -46,8 +46,10 @@ namespace CqrsApi.Core
             app.UseDeveloperExceptionPage();
             
             app.UseHttpsRedirection();
+            
+            var shouldMigrate = Configuration.GetValue<bool>("ShouldMigrate");
 
-            app.MigrateDatabase();
+            app.MigrateDatabase(shouldMigrate);
 
             app.UseRouting();
 

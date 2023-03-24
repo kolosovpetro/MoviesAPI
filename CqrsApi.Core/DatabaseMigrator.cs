@@ -8,8 +8,13 @@ namespace CqrsApi.Core;
 
 public static class DatabaseMigrator
 {
-    public static void MigrateDatabase(this IApplicationBuilder app)
+    public static void MigrateDatabase(this IApplicationBuilder app, bool shouldMigrate)
     {
+        if (!shouldMigrate)
+        {
+            return;
+        }
+
         using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
             .CreateScope();
 
