@@ -32,12 +32,10 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       NUGET_PACKAGES: ${{ github.workspace }}/.github/nuget-packages
       ProjectPath: './CqrsApi.Core/CqrsApi.Core.csproj'
-#      TestProjectPath: './DotnetTemplate.Tests/DotnetTemplate.Tests.csproj'
       Configuration: 'Release'
       Solution: 'CqrsApi.sln'
       ArtifactName: 'drop'
       ArtifactPath: 'publish'
-#      PathToTestCoverage: './DotnetTemplate.Tests/TestResults/coverage.info'
     
     steps:
       - name: Fetch Sources
@@ -71,28 +69,9 @@ jobs:
         run: |
           dotnet build ${{ env.Solution }} --configuration ${{ env.Configuration }} /p:ContinuousIntegrationBuild=true --no-restore
 
-#      - name: Run Unit Tests
-#        run: |
-#          dotnet test ${{ env.TestProjectPath }} --configuration ${{ env.Configuration }} --no-build
-#        env:
-#          CollectCoverage: true
-#          CoverletOutputFormat: lcov
-#          ThresholdStat: total
-#          ThresholdType: Line
-#          CoverletOutput: TestResults/
-#          SkipAutoProps: true
-#          Threshold: 80
-
-#      - name: Publish coverage report to Coveralls
-#        uses: coverallsapp/github-action@master
-#        with:
-#          github-token: ${{ secrets.GITHUB_TOKEN }}
-#          path-to-lcov: ${{ env.PathToTestCoverage }}
-
       - name: Run .NET Publish
         run: |
           dotnet publish ${{ env.ProjectPath }} --configuration ${{ env.Configuration }} --output ${{ env.ArtifactPath }}
-      #          dotnet publish "WebAppPath/WebAppProject.csproj" -r "linux-x64" -o "project-linux-build/src" --self-contained
 
       - name: Drop Artifact
         uses: actions/upload-artifact@v3

@@ -21,7 +21,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{AB02
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{F1E30713-11AD-40FD-8BF1-0B119F2CBCD8}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\main.yml = .github\workflows\main.yml
 		.github\workflows\run-build-and-test.yml = .github\workflows\run-build-and-test.yml
 	EndProjectSection
 EndProject
@@ -34,6 +33,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{59FD8C29-4E22-424C-A868-3F76476AC627}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines\templates\dotnet-build-steps-template.yml = azure-pipelines\templates\dotnet-build-steps-template.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{889E7444-C4BA-4528-B06A-82513880E1CA}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\GenerateSSLCert.ps1 = scripts\GenerateSSLCert.ps1
 	EndProjectSection
 EndProject
 Global

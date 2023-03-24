@@ -1,17 +1,21 @@
-# CQRS Api
+# CQRS-Movies-API
 
-ASP NET Core WEB API with CQRS Architecture.
+[![Build Test & Drop artifacts](https://github.com/kolosovpetro/CQRS-Movies-API/actions/workflows/run-build-and-test.yml/badge.svg)](https://github.com/kolosovpetro/CQRS-Movies-API/actions/workflows/run-build-and-test.yml)
 
-## Online
+ASP NET Core WEB API with CQRS Architecture. Example of IIS Azure VM deploy example via Azure pipelines. Contains SSL
+config for IIS using cert bot.
 
-- Github: https://github.com/kolosovpetro/CQRS-Api
-- Heroku: https://cqrs-movies-api.herokuapp.com/swagger
+PS. I'd never think that will come back to this demo project from long past.
 
-## To do
+## Required software
 
-- Encapsulate responses to entites
-- Validate input data
-- Implement connection string from heroku
-- Provide fake data to swagger for better testing
-- Configure serialization to be snake case fields in responses
-- Validate movie to be integer grater than first movie in the history
+- [Hosting Bundle on Windows Server](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+- [CertBot for Windows](https://certbot.eff.org/instructions?ws=other&os=windows&tab=standard)
+- OpenSSL (via choco)
+
+## Notes
+
+- [How to CertBot on Windows Server](https://medium.com/@nvbach91/how-to-create-lets-encrypt-s-free-wildcard-ssl-certificates-for-windows-server-iis-web-servers-aa01d939e0ad)
+- [How to Create Login, User and Grant Permissions in SQL Server](https://www.guru99.com/sql-server-create-user.html)
+- [Enable network protocols in SQL Server](https://stackoverflow.com/a/38641107)
+- [Azure DevOps IISWebAppManagementOnMachineGroup@0 SSL 183 error](https://stackoverflow.com/a/61822201)
