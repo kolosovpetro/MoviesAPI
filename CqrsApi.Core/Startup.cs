@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
 namespace CqrsApi.Core
@@ -23,7 +22,6 @@ namespace CqrsApi.Core
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            // services.AddDataLayerWithPostgreSql(Configuration);
 
             services.AddMediatR(cfg =>
                 cfg.RegisterServicesFromAssembly(typeof(GetAllMoviesHandler).GetTypeInfo().Assembly));
@@ -45,11 +43,8 @@ namespace CqrsApi.Core
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
+            app.UseDeveloperExceptionPage();
+            
             app.UseHttpsRedirection();
 
             app.MigrateDatabase();
