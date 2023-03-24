@@ -21,6 +21,7 @@ variables:
     value: 'moviesapi'
   - name: IISSitePhysicalPath
     value: '%SystemDrive%\inetpub\wwwroot\$(IISSiteName)'
+  - group: MoviesApi-Dev # keeps connection string
 
 stages:
   - stage: 'Build_Test'
@@ -91,4 +92,4 @@ stages:
                     WebSiteName: '$(IISSiteName)-$(Environment.Name)'
                     TakeAppOfflineFlag: true
                     Package: '$(Pipeline.Workspace)/drop/$(BuildConfiguration)/CqrsApi.Core.zip'
-#                    JSONFiles: '**/appsettings.json'
+                    JSONFiles: '**/appsettings.json'
