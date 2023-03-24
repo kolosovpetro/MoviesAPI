@@ -20,8 +20,10 @@ steps:
 
   - task: gitversion/execute@0
     displayName: 'GitVersion Execute'
-    inputs:
-      updateAssemblyInfo: true
+      
+  - script: |
+      echo "Upcoming semantic version: $(SemVer)"
+    displayName: 'Print semantic version'
 
   - bash: echo $Action$BuildVersion
     displayName: 'Set Build Version'
@@ -53,7 +55,7 @@ steps:
       command: 'publish'
       publishWebProjects: false
       projects: '$(projectPath)'
-      arguments: '--configuration $(buildConfiguration) -p:Version=$(GitVersion.SemVer) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
+      arguments: '--configuration $(buildConfiguration) -p:Version=$(SemVer) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifacts'
