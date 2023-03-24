@@ -10,9 +10,9 @@ namespace CqrsApi.Requests.QueryHandlers
 {
     public class GetMovieByIdHandler : IRequestHandler<GetMovieByIdQuery, Movie>
     {
-        private readonly PostgreContext _context;
+        private readonly MoviesContext _context;
 
-        public GetMovieByIdHandler(PostgreContext context)
+        public GetMovieByIdHandler(MoviesContext context)
         {
             _context = context;
         }

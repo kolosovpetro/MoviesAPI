@@ -10,9 +10,9 @@ namespace CqrsApi.Requests.CommandHandlers
 {
     public class DeleteMovieHandler : IRequestHandler<DeleteMovieCommand, DeleteMovieSuccessResponse>
     {
-        private readonly PostgreContext _context;
+        private readonly MoviesContext _context;
 
-        public DeleteMovieHandler(PostgreContext context)
+        public DeleteMovieHandler(MoviesContext context)
         {
             _context = context;
         }

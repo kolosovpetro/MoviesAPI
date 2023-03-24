@@ -3,154 +3,142 @@ using System;
 using CqrsApi.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+
+#nullable disable
 
 namespace CqrsApi.Data.Migrations
 {
-    [DbContext(typeof(PostgreContext))]
-    [Migration("20201024183916_PostgreSeedDataMigration")]
-    partial class PostgreSeedDataMigration
+    [DbContext(typeof(MoviesContext))]
+    [Migration("20230324113755_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityByDefaultColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.0-rc.2.20475.6");
+                .HasAnnotation("ProductVersion", "6.0.15")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("CqrsApi.Models.Models.Actor", b =>
                 {
                     b.Property<int>("ActorId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("actor_id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ActorId"), 1L, 1);
 
                     b.Property<DateTime?>("Birthday")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("birthday");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text")
-                        .HasColumnName("first_name");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text")
-                        .HasColumnName("last_name");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ActorId");
 
-                    b.ToTable("actors");
+                    b.ToTable("Actors");
                 });
 
             modelBuilder.Entity("CqrsApi.Models.Models.Client", b =>
                 {
                     b.Property<int>("ClientId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("client_id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"), 1L, 1);
 
                     b.Property<DateTime?>("Birthday")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("birthday");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text")
-                        .HasColumnName("first_name");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text")
-                        .HasColumnName("last_name");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ClientId");
 
-                    b.ToTable("clients");
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("CqrsApi.Models.Models.Copy", b =>
                 {
                     b.Property<int>("CopyId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("copy_id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CopyId"), 1L, 1);
 
                     b.Property<bool>("Available")
-                        .HasColumnType("boolean")
-                        .HasColumnName("available");
+                        .HasColumnType("bit");
 
                     b.Property<int>("MovieId")
-                        .HasColumnType("integer")
-                        .HasColumnName("movie_id");
+                        .HasColumnType("int");
 
                     b.HasKey("CopyId");
 
-                    b.HasIndex(new[] { "MovieId" }, "IX_copies_movie_id");
+                    b.HasIndex("MovieId");
 
-                    b.ToTable("copies");
+                    b.ToTable("Copies");
                 });
 
             modelBuilder.Entity("CqrsApi.Models.Models.Employee", b =>
                 {
                     b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("employee_id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeId"), 1L, 1);
 
                     b.Property<string>("City")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("first_name");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("last_name");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float?>("Salary")
-                        .HasColumnType("real")
-                        .HasColumnName("salary");
+                        .HasColumnType("real");
 
                     b.HasKey("EmployeeId");
 
-                    b.ToTable("employees");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("CqrsApi.Models.Models.Movie", b =>
                 {
                     b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("movie_id")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieId"), 1L, 1);
 
                     b.Property<int>("AgeRestriction")
-                        .HasColumnType("integer")
-                        .HasColumnName("age_restriction");
+                        .HasColumnType("int");
 
                     b.Property<float>("Price")
-                        .HasColumnType("real")
-                        .HasColumnName("price");
+                        .HasColumnType("real");
 
                     b.Property<string>("Title")
-                        .HasColumnType("text")
-                        .HasColumnName("title");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Year")
-                        .HasColumnType("integer")
-                        .HasColumnName("year");
+                        .HasColumnType("int");
 
                     b.HasKey("MovieId");
 
-                    b.ToTable("movies");
+                    b.ToTable("Movies");
 
                     b.HasData(
                         new
@@ -238,44 +226,37 @@ namespace CqrsApi.Data.Migrations
             modelBuilder.Entity("CqrsApi.Models.Models.Rental", b =>
                 {
                     b.Property<int>("ClientId")
-                        .HasColumnType("integer")
-                        .HasColumnName("client_id");
+                        .HasColumnType("int");
 
                     b.Property<int>("CopyId")
-                        .HasColumnType("integer")
-                        .HasColumnName("copy_id");
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DateOfRental")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("date_of_rental");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DateOfReturn")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("date_of_return");
+                        .HasColumnType("datetime2");
 
-                    b.HasKey("ClientId", "CopyId")
-                        .HasName("rentals_pkey");
+                    b.HasKey("ClientId", "CopyId");
 
-                    b.HasIndex(new[] { "CopyId" }, "IX_rentals_copy_id");
+                    b.HasIndex("CopyId");
 
-                    b.ToTable("rentals");
+                    b.ToTable("Rentals");
                 });
 
             modelBuilder.Entity("CqrsApi.Models.Models.Starring", b =>
                 {
                     b.Property<int>("ActorId")
-                        .HasColumnType("integer")
-                        .HasColumnName("actor_id");
+                        .HasColumnType("int");
 
                     b.Property<int>("MovieId")
-                        .HasColumnType("integer")
-                        .HasColumnName("movie_id");
+                        .HasColumnType("int");
 
                     b.HasKey("ActorId", "MovieId");
 
-                    b.HasIndex(new[] { "MovieId" }, "IX_starring_movie_id");
+                    b.HasIndex("MovieId");
 
-                    b.ToTable("starring");
+                    b.ToTable("Starrings");
                 });
 
             modelBuilder.Entity("CqrsApi.Models.Models.Copy", b =>

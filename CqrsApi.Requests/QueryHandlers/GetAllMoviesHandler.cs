@@ -11,9 +11,9 @@ namespace CqrsApi.Requests.QueryHandlers
 {
     public class GetAllMoviesHandler : IRequestHandler<GetAllMoviesQuery, IList<Movie>>
     {
-        private readonly PostgreContext _context;
+        private readonly MoviesContext _context;
 
-        public GetAllMoviesHandler(PostgreContext context)
+        public GetAllMoviesHandler(MoviesContext context)
         {
             _context = context;
         }

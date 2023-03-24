@@ -1,11 +1,9 @@
 using System.Reflection;
-using AutoMapper;
-using CqrsApi.Core.Extensions;
-using CqrsApi.Requests.Commands;
+using CqrsApi.Data.Context;
 using CqrsApi.Requests.QueryHandlers;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,17 +23,23 @@ namespace CqrsApi.Core
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDataLayerWithPostgreSql(Configuration);
-            services.AddMediatR(typeof(GetAllMoviesHandler).GetTypeInfo().Assembly);
-            services.AddMediatR(typeof(PostMovieCommand).GetTypeInfo().Assembly);
+            // services.AddDataLayerWithPostgreSql(Configuration);
+
+            services.AddMediatR(cfg =>
+                cfg.RegisterServicesFromAssembly(typeof(GetAllMoviesHandler).GetTypeInfo().Assembly));
+
+            var connectionString = Configuration.GetConnectionString("SqlServerConnectionString");
+
+            services.AddDbContext<MoviesContext>(opt => opt.UseSqlServer(connectionString));
+
             services.AddAutoMapper(typeof(Startup));
+
             services.AddSwaggerGen(c =>
             {
                 c.EnableAnnotations();
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "CQRS Movies API", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CQRS Movies API", Version = "v1" });
             });
 
-            // allows to connect from front end to api
             services.AddCors();
         }
 
@@ -48,11 +52,12 @@ namespace CqrsApi.Core
 
             app.UseHttpsRedirection();
 
+            app.MigrateDatabase();
+
             app.UseRouting();
 
             app.UseAuthorization();
 
-            // allows to connect from front end to api
             app.UseCors(builder =>
             {
                 builder

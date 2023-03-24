@@ -10,9 +10,9 @@ namespace CqrsApi.Requests.CommandHandlers
 {
     public class PatchMovieHandler : IRequestHandler<PatchMovieCommand, PatchMovieSuccessResponse>
     {
-        private readonly PostgreContext _context;
+        private readonly MoviesContext _context;
 
-        public PatchMovieHandler(PostgreContext context)
+        public PatchMovieHandler(MoviesContext context)
         {
             _context = context;
         }
