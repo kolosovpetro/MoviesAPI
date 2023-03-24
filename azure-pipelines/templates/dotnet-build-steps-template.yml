@@ -53,7 +53,7 @@ steps:
       command: 'publish'
       publishWebProjects: false
       projects: '$(projectPath)'
-      arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
+      arguments: '--configuration $(buildConfiguration) -p:Version=$(GitVersion.SemVer) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifacts'

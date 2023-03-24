@@ -8,66 +8,69 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace CqrsApi.Core
+namespace CqrsApi.Core;
+
+public class Startup
 {
-    public class Startup
+    private const string DefaultVersion = "1.0.0.0";
+
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
+        Configuration = configuration;
+    }
+
+    private IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddControllers();
+
+        services.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssembly(typeof(GetAllMoviesHandler).GetTypeInfo().Assembly));
+
+        var connectionString = Configuration.GetConnectionString("SqlServerConnectionString");
+
+        services.AddDbContext<MoviesContext>(opt => opt.UseSqlServer(connectionString));
+
+        services.AddAutoMapper(typeof(Startup));
+
+        services.AddSwaggerGen(c =>
         {
-            Configuration = configuration;
-        }
+            var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? DefaultVersion;
 
-        private IConfiguration Configuration { get; }
+            c.EnableAnnotations();
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = $"CQRS Movies API {version}", Version = $"v{version}" });
+        });
 
-        public void ConfigureServices(IServiceCollection services)
+        services.AddCors();
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseDeveloperExceptionPage();
+
+        app.UseHttpsRedirection();
+
+        var shouldMigrate = Configuration.GetValue<bool>("ShouldMigrate");
+
+        app.MigrateDatabase(shouldMigrate);
+
+        app.UseRouting();
+
+        app.UseAuthorization();
+
+        app.UseCors(builder =>
         {
-            services.AddControllers();
-
-            services.AddMediatR(cfg =>
-                cfg.RegisterServicesFromAssembly(typeof(GetAllMoviesHandler).GetTypeInfo().Assembly));
-
-            var connectionString = Configuration.GetConnectionString("SqlServerConnectionString");
-
-            services.AddDbContext<MoviesContext>(opt => opt.UseSqlServer(connectionString));
-
-            services.AddAutoMapper(typeof(Startup));
-
-            services.AddSwaggerGen(c =>
-            {
-                c.EnableAnnotations();
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CQRS Movies API", Version = "v1" });
-            });
-
-            services.AddCors();
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseDeveloperExceptionPage();
-            
-            app.UseHttpsRedirection();
-            
-            var shouldMigrate = Configuration.GetValue<bool>("ShouldMigrate");
-
-            app.MigrateDatabase(shouldMigrate);
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseCors(builder =>
-            {
-                builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            });
+            builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
 
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
+        app.UseSwagger();
+        app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-        }
+        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }
 }
