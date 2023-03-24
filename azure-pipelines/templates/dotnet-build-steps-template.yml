@@ -7,7 +7,9 @@ parameters:
     default: 'Any CPU'
   - name: projectPath
     type: string
-    default: './DotnetTemplate/DotnetTemplate.csproj'
+  - name: version
+    type: string
+    default: '1.0.0.0'
 
 steps:
   - checkout: self
@@ -44,10 +46,10 @@ steps:
       arguments: '--verbosity minimal'
 
   - task: DotNetCoreCLI@2
-    displayName: 'Dotnet build $(buildConfiguration)'
+    displayName: 'Dotnet build ${{ parameters.buildConfiguration }}'
     inputs:
       command: 'build'
-      arguments: '--configuration $(buildConfiguration) --no-restore'
+      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore'
 
   - task: DotNetCoreCLI@2
     displayName: 'Dotnet Publish'
@@ -55,7 +57,7 @@ steps:
       command: 'publish'
       publishWebProjects: false
       projects: '$(projectPath)'
-      arguments: '--configuration $(buildConfiguration) -p:Version=$(SemVer) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
+      arguments: '-p:Version=$(SemVer) -c ${{ parameters.buildConfiguration }} -o $(Build.ArtifactStagingDirectory)/${{ parameters.buildConfiguration }} --no-build'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifacts'
