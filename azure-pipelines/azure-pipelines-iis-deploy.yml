@@ -19,7 +19,7 @@ variables:
     value: './CqrsApi.Core/CqrsApi.Core.csproj'
   - name: IISSiteName
     value: 'moviesapi'
-  - name: IISPhysicalPath
+  - name: IISSitePhysicalPath
     value: '%SystemDrive%\inetpub\wwwroot\$(IISSiteName)'
 
 stages:
@@ -91,4 +91,4 @@ stages:
                     WebSiteName: '$(IISSiteName)-$(Environment.Name)'
                     TakeAppOfflineFlag: true
                     Package: '$(Pipeline.Workspace)/drop/$(BuildConfiguration)/CqrsApi.Core.zip'
-                    JSONFiles: '**/appsettings.json'
+#                    JSONFiles: '**/appsettings.json'
