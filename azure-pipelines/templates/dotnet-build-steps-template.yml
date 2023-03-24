@@ -49,7 +49,7 @@ steps:
     displayName: 'Dotnet build ${{ parameters.buildConfiguration }}'
     inputs:
       command: 'build'
-      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore'
+      arguments: '-p:Version=$(SemVer) --configuration ${{ parameters.buildConfiguration }} --no-restore'
 
   - task: DotNetCoreCLI@2
     displayName: 'Dotnet Publish'
