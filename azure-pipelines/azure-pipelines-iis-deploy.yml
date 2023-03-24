@@ -24,6 +24,8 @@ variables:
   - group: MoviesApi-Dev # keeps connection string
   - name: CertThumbprint
     value: 'c4349cd17eb84815b504571079a40d756db02396'
+  - name: HostName
+    value: 'mangomesenger.company'
 
 stages:
   - stage: 'Build_Test'
