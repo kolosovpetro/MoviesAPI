@@ -47,11 +47,6 @@ stages:
         environment:
           name: dev
           resourceType: VirtualMachine
-          tags: app # only deploy to virtual machines with this tag
-        #        variables:
-        #          - group: PRS_Internal_Dev_Env_Vars
-        #          - group: mail_config_osds
-        #          - group: uatopenskydata_com_cert
         strategy:
           runOnce:
             deploy:
