@@ -1,0 +1,101 @@
+﻿name: Build Test & Drop artifacts
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - master
+      - main
+      - develop
+
+  workflow_dispatch:
+
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  build-test-drop-artifacts:
+    name: Build Test & Drop artifacts
+    runs-on: ${{ matrix.environment }}
+    strategy:
+      matrix:
+        environment:
+          - ubuntu-latest
+    
+    env:
+      DOTNET_NOLOGO: 1
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      NUGET_PACKAGES: ${{ github.workspace }}/.github/nuget-packages
+      ProjectPath: './CqrsApi.Core/CqrsApi.Core.csproj'
+#      TestProjectPath: './DotnetTemplate.Tests/DotnetTemplate.Tests.csproj'
+      Configuration: 'Release'
+      Solution: 'CqrsApi.sln'
+      ArtifactName: 'drop'
+      ArtifactPath: 'publish'
+#      PathToTestCoverage: './DotnetTemplate.Tests/TestResults/coverage.info'
+    
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.15
+        with:
+          versionSpec: '5.x'
+
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0.9.15
+
+      - name: Setup .NET 6.0 SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+
+      - name: NuGet Cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.NUGET_PACKAGES }}
+          key: ${{ runner.os }}.nuget.${{ hashFiles('**/*.csproj') }}
+
+      - name: Nuget Restore
+        run: dotnet restore
+
+      - name: Build Solution
+        run: |
+          dotnet build ${{ env.Solution }} --configuration ${{ env.Configuration }} /p:ContinuousIntegrationBuild=true --no-restore
+
+#      - name: Run Unit Tests
+#        run: |
+#          dotnet test ${{ env.TestProjectPath }} --configuration ${{ env.Configuration }} --no-build
+#        env:
+#          CollectCoverage: true
+#          CoverletOutputFormat: lcov
+#          ThresholdStat: total
+#          ThresholdType: Line
+#          CoverletOutput: TestResults/
+#          SkipAutoProps: true
+#          Threshold: 80
+
+#      - name: Publish coverage report to Coveralls
+#        uses: coverallsapp/github-action@master
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          path-to-lcov: ${{ env.PathToTestCoverage }}
+
+      - name: Run .NET Publish
+        run: |
+          dotnet publish ${{ env.ProjectPath }} --configuration ${{ env.Configuration }} --output ${{ env.ArtifactPath }}
+      #          dotnet publish "WebAppPath/WebAppProject.csproj" -r "linux-x64" -o "project-linux-build/src" --self-contained
+
+      - name: Drop Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.ArtifactName }}
+          path: ${{ env.ArtifactPath }}
