@@ -20,6 +20,16 @@ public static class DatabaseMigrator
             throw new InvalidOperationException("Database context is NULL at Migrator service.");
         }
 
-        context.Database.Migrate();
+        try
+        {
+            context.Database.Migrate();
+            LoggerToFile.PrintToLog("Migration successful.");
+        }
+        catch (Exception e)
+        {
+            LoggerToFile.PrintExceptionToFile(e);
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }
