@@ -22,6 +22,8 @@ variables:
   - name: IISSitePhysicalPath
     value: '%SystemDrive%\inetpub\wwwroot\$(IISSiteName)'
   - group: MoviesApi-Dev # keeps connection string
+  - name: CertThumbprint
+    value: 'c4349cd17eb84815b504571079a40d756db02396'
 
 stages:
   - stage: 'Build_Test'
@@ -54,6 +56,14 @@ stages:
               steps:
                 - download: current
                   artifact: drop
+                  
+                - task: PowerShell@2
+                  displayName: 'Delete SSL Cert If Exists'
+                  inputs:
+                    targetType: 'inline'
+                    script: |
+                      netsh http delete sslcert hostnameport=mangomesenger.company:443
+                  continueOnError: true
 
                 - task: IISWebAppManagementOnMachineGroup@0
                   inputs:
@@ -69,10 +79,18 @@ stages:
                             {
                               "protocol":"http",
                               "ipAddress":"*",
-                              "hostname":"",
+                              "hostname":"$(HostName)",
                               "port":"80",
                               "sslThumbprint":"",
                               "sniFlag":false
+                            },
+                            {
+                              "protocol":"https",
+                              "ipAddress":"*",
+                              "hostname":"$(HostName)",
+                              "port":"443",
+                              "sslThumbprint":"$(CertThumbprint)",
+                              "sniFlag":true
                             }
                           ]
                       }
