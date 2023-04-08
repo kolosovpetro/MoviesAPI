@@ -7,6 +7,8 @@ config for IIS using cert bot.
 
 PS. I'd never think that will come back to this demo project from long past.
 
+This is to test jenkins webhook.
+
 ## Required software
 
 - [Hosting Bundle on Windows Server](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
