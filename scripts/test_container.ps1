@@ -3,7 +3,7 @@ do
 {
     $count++
     Write-Output "[$env:STAGE_NAME] Stating container attempt $count"
-    $testStart = Invoke-WebRequest -Uri "http://localhost:8080/api/movies"
+    $testStart = Invoke-WebRequest -Uri "http://localhost:8090/api/movies"
 
     if ($testStart.StatusCode -eq 200)
     {

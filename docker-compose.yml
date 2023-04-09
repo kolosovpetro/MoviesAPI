@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "8090:80"
     environment:
       SqlServerConnectionString: "Server=db;Database=MOVIES_DOCKER;User Id=sa;Password=x2yiJt!Fs;TrustServerCertificate=true;"
       ShouldMigrate: "true"
