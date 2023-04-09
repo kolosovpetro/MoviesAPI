@@ -27,6 +27,7 @@ pipeline {
             steps {
                 pwsh(script: """
                     docker compose up -d
+                    Start-Sleep -Seconds 20
                     ./scripts/test_container.ps1
                 """)
             }
