@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{E0D60CEC
 		README.md = README.md
 		CqrsApi.sln.DotSettings = CqrsApi.sln.DotSettings
 		GitVersion.yml = GitVersion.yml
+		Jenkinsfile = Jenkinsfile
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{AB02E391-C07B-41D3-B2C3-4BF6B3421697}"
