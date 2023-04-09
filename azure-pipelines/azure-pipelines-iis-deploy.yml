@@ -59,13 +59,13 @@ stages:
                 - download: current
                   artifact: drop
                   
-#                - task: PowerShell@2
-#                  displayName: 'Delete SSL Cert If Exists'
-#                  inputs:
-#                    targetType: 'inline'
-#                    script: |
-#                      netsh http delete sslcert hostnameport=mangomesenger.company:443
-#                  continueOnError: true
+                - task: PowerShell@2
+                  displayName: 'Delete SSL Cert If Exists'
+                  inputs:
+                    targetType: 'inline'
+                    script: |
+                      netsh http delete sslcert ipport=0.0.0.0:443
+                  continueOnError: true
 
                 - task: IISWebAppManagementOnMachineGroup@0
                   inputs:
