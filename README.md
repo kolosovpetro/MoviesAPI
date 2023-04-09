@@ -15,6 +15,11 @@ This is to test jenkins webhook.
 - [CertBot for Windows](https://certbot.eff.org/instructions?ws=other&os=windows&tab=standard)
 - OpenSSL (via choco)
 
+## Docker commands
+
+- `docker build -t "movies:latest" .`
+- `docker run -d -p 9000:80 --name movies-test-run "movies:latest"`
+
 ## Notes
 
 - [How to CertBot on Windows Server](https://medium.com/@nvbach91/how-to-create-lets-encrypt-s-free-wildcard-ssl-certificates-for-windows-server-iis-web-servers-aa01d939e0ad)
