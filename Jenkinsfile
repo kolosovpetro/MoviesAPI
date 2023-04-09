@@ -8,19 +8,32 @@ pipeline {
             }
         }        
         
-        stage('Hello') {
+        stage('Docker build') {
             steps {
-                echo 'Hello World'
+                pwsh(script: 'docker images -a')
+                pwsh(script: 'docker build -t "movies:latest" .')
+            }
+            post {
+                success {
+                    echo 'Docker build success :)'
+                }
+                
+                failure {
+                    echo 'Docker build failed :('
+                }
             }
         }
-        stage('Goodbye') {
+        stage('Docker compose up & test') {
             steps {
-                echo 'Good bye World'
+                pwsh(script: """
+                    docker-compose up -d
+                    ./scripts/test_container.ps1
+                """)
             }
         }
-        stage('Powershell Core') {
+        stage('Docker compose down') {
             steps {
-                pwsh 'Write-Output "Hello from pwsh"'
+                pwsh(script: 'docker-compose down')
             }
         }
     }

@@ -41,6 +41,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{889E7444-C4BA-4528-B06A-82513880E1CA}"
 	ProjectSection(SolutionItems) = preProject
 		scripts\GenerateSSLCert.ps1 = scripts\GenerateSSLCert.ps1
+		scripts\test_container.ps1 = scripts\test_container.ps1
 	EndProjectSection
 EndProject
 Global
