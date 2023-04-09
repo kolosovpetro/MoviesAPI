@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using CqrsApi.Data.Context;
 using CqrsApi.Requests.QueryHandlers;
@@ -51,7 +52,11 @@ public class Startup
 
         app.UseHttpsRedirection();
 
-        var shouldMigrate = Configuration.GetValue<bool>("ShouldMigrate");
+        var envVar = Environment.GetEnvironmentVariable("ShouldMigrate");
+        
+        var shouldMigrate = envVar == null
+            ? Configuration.GetValue<bool>("ShouldMigrate")
+            : bool.Parse(envVar);
 
         app.MigrateDatabase(shouldMigrate);
 

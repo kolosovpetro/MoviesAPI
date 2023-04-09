@@ -18,7 +18,7 @@ This is to test jenkins webhook.
 ## Docker commands
 
 - `docker build -t "movies:latest" .`
-- `docker run -d -p 9000:80 --name movies-test-run "movies:latest"`
+- `docker run -d -p 9000:80 -e "ShouldMigrate=false" --name movies-test-run "movies:latest"`
 
 ## Notes
 
