@@ -59,6 +59,8 @@ stages:
                 - download: current
                   artifact: drop
                   
+                # https://github.com/microsoft/azure-pipelines-extensions/issues/1008
+                # https://stackoverflow.com/a/61822201
                 - task: PowerShell@2
                   displayName: 'Delete SSL Cert If Exists'
                   inputs:
