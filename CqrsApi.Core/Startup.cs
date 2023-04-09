@@ -29,7 +29,8 @@ public class Startup
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(GetAllMoviesHandler).GetTypeInfo().Assembly));
 
-        var connectionString = Configuration.GetConnectionString("SqlServerConnectionString");
+        var connectionString = Environment.GetEnvironmentVariable("SqlServerConnectionString")
+                               ?? Configuration.GetConnectionString("SqlServerConnectionString");
 
         services.AddDbContext<MoviesContext>(opt => opt.UseSqlServer(connectionString));
 
@@ -53,7 +54,7 @@ public class Startup
         app.UseHttpsRedirection();
 
         var envVar = Environment.GetEnvironmentVariable("ShouldMigrate");
-        
+
         var shouldMigrate = envVar == null
             ? Configuration.GetValue<bool>("ShouldMigrate")
             : bool.Parse(envVar);
