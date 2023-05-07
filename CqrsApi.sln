@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{E0D60CEC
 		Jenkinsfile = Jenkinsfile
 		docker-compose.yml = docker-compose.yml
 		Nginx_Config_Via_IP_Address = Nginx_Config_Via_IP_Address
+		DockerCompose.service = DockerCompose.service
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{AB02E391-C07B-41D3-B2C3-4BF6B3421697}"
@@ -43,6 +44,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{889E
 	ProjectSection(SolutionItems) = preProject
 		scripts\GenerateSSLCert.ps1 = scripts\GenerateSSLCert.ps1
 		scripts\test_container.ps1 = scripts\test_container.ps1
+		scripts\DockerComposeDown.sh = scripts\DockerComposeDown.sh
+		scripts\DockerComposeUp.sh = scripts\DockerComposeUp.sh
 	EndProjectSection
 EndProject
 Global

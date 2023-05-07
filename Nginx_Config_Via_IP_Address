@@ -1,18 +1,17 @@
 server {
-    server_name 20.223.128.46;
+  server_name 20.223.128.46;
+  location / {
+    include proxy_params;
+    proxy_pass http://127.0.0.1:8090;
+  }
 
-    location / {
-       include proxy_params;
-       proxy_pass http://127.0.0.1:8090;
-    }
+  location /swagger {
+    include proxy_params;
+    proxy_pass http://127.0.0.1:8090;
+  }
 
-    location /swagger {
-       include proxy_params;
-       proxy_pass http://127.0.0.1:8090;
-    }
-
-    location /api {
-       include proxy_params;
-       proxy_pass http://127.0.0.1:8090;
-    }
+  location /api {
+    include proxy_params;
+    proxy_pass http://127.0.0.1:8090;
+  }
 }
