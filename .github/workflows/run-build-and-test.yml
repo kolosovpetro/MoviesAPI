@@ -73,6 +73,18 @@ jobs:
         run: |
           dotnet publish ${{ env.ProjectPath }} --configuration ${{ env.Configuration }} --output ${{ env.ArtifactPath }}
 
+      - name: Docker compose build
+        run: |
+          docker compose build
+
+      - name: Docker compose up
+        run: |
+          docker compose up -d
+
+      - name: Docker compose down
+        run: |
+          docker compose down
+
       - name: Drop Artifact
         uses: actions/upload-artifact@v3
         with:
