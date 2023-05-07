@@ -8,6 +8,7 @@ WorkingDirectory=/home/razumovsky_r/RiderProjects/CQRS-Movies-API
 User=razumovsky_r
 Group=razumovsky_r
 ExecStart=/home/razumovsky_r/RiderProjects/CQRS-Movies-API/scripts/DockerComposeUp.sh
+ExecStop=/home/razumovsky_r/RiderProjects/CQRS-Movies-API/scripts/DockerComposeDown.sh
  
 [Install]
 WantedBy=multi-user.target
