@@ -26,3 +26,4 @@ This is to test jenkins webhook.
 - [How to Create Login, User and Grant Permissions in SQL Server](https://www.guru99.com/sql-server-create-user.html)
 - [Enable network protocols in SQL Server](https://stackoverflow.com/a/38641107)
 - [Azure DevOps IISWebAppManagementOnMachineGroup@0 SSL 183 error](https://stackoverflow.com/a/61822201)
+- [IIS Deployment using Azure pipelines YAML](https://medium.com/dvt-engineering/how-to-deploy-to-iis-using-azure-devops-yaml-pipelines-a5987f1b9b78)
