@@ -1,12 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsApi.Core", "CqrsApi.Core\CqrsApi.Core.csproj", "{16BAA7B7-12F6-4CA2-B7F6-2C58AAABA7CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviesAPI.Core", "MoviesAPI.Core\MoviesAPI.Core.csproj", "{16BAA7B7-12F6-4CA2-B7F6-2C58AAABA7CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsApi.Models", "CqrsApi.Models\CqrsApi.Models.csproj", "{0CBA284B-54D4-4209-8209-4079FD7DF540}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviesAPI.Models", "MoviesAPI.Models\MoviesAPI.Models.csproj", "{0CBA284B-54D4-4209-8209-4079FD7DF540}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsApi.Requests", "CqrsApi.Requests\CqrsApi.Requests.csproj", "{791480E5-DB8D-4DB1-87A8-F94770DA77B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviesAPI.Requests", "MoviesAPI.Requests\MoviesAPI.Requests.csproj", "{791480E5-DB8D-4DB1-87A8-F94770DA77B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsApi.Data", "CqrsApi.Data\CqrsApi.Data.csproj", "{52333D9B-0D11-4484-BE07-304DC4F5B021}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviesAPI.Data", "MoviesAPI.Data\MoviesAPI.Data.csproj", "{52333D9B-0D11-4484-BE07-304DC4F5B021}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{E0D60CEC-70B2-4DBE-B324-E7442680E13C}"
 	ProjectSection(SolutionItems) = preProject

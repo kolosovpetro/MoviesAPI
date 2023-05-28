@@ -1,4 +1,4 @@
-# CQRS-Movies-API
+# Movies API
 
 [![Build Test & Drop artifacts](https://github.com/kolosovpetro/CQRS-Movies-API/actions/workflows/run-build-and-test.yml/badge.svg)](https://github.com/kolosovpetro/CQRS-Movies-API/actions/workflows/run-build-and-test.yml)
 
