@@ -67,3 +67,13 @@ jobs:
 
       - name: List Images
         run: docker images
+        
+      - name: Docker Push
+        run: |
+          IMAGE_FULL_NAME="$USER/$REPOSITORY:$VERSION"
+          echo "Image full name: $IMAGE_FULL_NAME"
+          docker push "$IMAGE_FULL_NAME"
+        env:
+          REPOSITORY: ${{ env.dockerRepository }}
+          VERSION: ${{ env.GITVERSION_SEMVER }}
+          USER: ${{ env.dockerUser }}
