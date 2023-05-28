@@ -14,7 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{E0D60CEC
 		.dockerignore = .dockerignore
 		Dockerfile = Dockerfile
 		README.md = README.md
-		CqrsApi.sln.DotSettings = CqrsApi.sln.DotSettings
 		GitVersion.yml = GitVersion.yml
 		Jenkinsfile = Jenkinsfile
 		docker-compose.yml = docker-compose.yml
