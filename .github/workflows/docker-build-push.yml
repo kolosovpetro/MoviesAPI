@@ -64,3 +64,6 @@ jobs:
           REPOSITORY: ${{ env.dockerRepository }}
           VERSION: ${{ env.GITVERSION_SEMVER }}
           USER: ${{ env.dockerUser }}
+
+      - name: List Images
+        run: docker images
