@@ -46,8 +46,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{889E
 	ProjectSection(SolutionItems) = preProject
 		scripts\GenerateSSLCert.ps1 = scripts\GenerateSSLCert.ps1
 		scripts\test_container.ps1 = scripts\test_container.ps1
-		scripts\DockerComposeDown.sh = scripts\DockerComposeDown.sh
-		scripts\DockerComposeUp.sh = scripts\DockerComposeUp.sh
 		scripts\sed_docker_compose.sh = scripts\sed_docker_compose.sh
 	EndProjectSection
 EndProject

@@ -4,7 +4,7 @@ After=network.target
  
 [Service]
 Type=forking
-WorkingDirectory=/home/razumovsky_r/RiderProjects/CQRS-Movies-API
+WorkingDirectory=/home/razumovsky_r/RiderProjects/MoviesAPI
 User=razumovsky_r
 Group=razumovsky_r
 ExecStart=/usr/bin/docker-compose up -d
