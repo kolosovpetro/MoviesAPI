@@ -67,7 +67,7 @@ jobs:
 
       - name: List Images
         run: docker images
-        
+
       - name: Docker Push
         run: |
           IMAGE_FULL_NAME="$USER/$REPOSITORY:$VERSION"
@@ -77,3 +77,12 @@ jobs:
           REPOSITORY: ${{ env.dockerRepository }}
           VERSION: ${{ env.GITVERSION_SEMVER }}
           USER: ${{ env.dockerUser }}
+
+      - name: Write Version
+        run: echo ${{ env.GITVERSION_SEMVER }} > version.txt
+
+      - name: Drop Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: version
+          path: version.txt
