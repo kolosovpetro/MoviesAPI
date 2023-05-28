@@ -34,6 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "azure-pipelines", "azure-pi
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines\azure-pipelines.yml = azure-pipelines\azure-pipelines.yml
 		azure-pipelines\azure-pipelines-iis-deploy.yml = azure-pipelines\azure-pipelines-iis-deploy.yml
+		azure-pipelines\owasp-scan.yml = azure-pipelines\owasp-scan.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{59FD8C29-4E22-424C-A868-3F76476AC627}"

@@ -1,0 +1,82 @@
+trigger: none
+
+stages:
+  - stage: 'buildstage'
+    jobs:
+      - job: 'buildjob'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
+
+          - bash: docker compose build
+            displayName: 'Build compose'
+            
+          - bash: docker compose up -d
+            displayName: 'Run compose'
+
+          - task: owaspzap@1
+            inputs:
+              aggressivemode: true
+              threshold: '50'
+              port: '8090'
+            displayName: 'Owasp Scan'
+
+          - bash: |
+              sudo npm install -g handlebars-cmd
+              sudo cat <<EOF > owaspzap/nunit-template.hbs
+              {{#each site}}
+              <test-run
+                  id="2"
+                  name="Owasp test"
+                  start-time="{{../[@generated]}}"  >
+                  <test-suite
+                      id="{{@index}}"
+                      type="Assembly"
+                      name="{{[@name]}}"
+                      result="Failed"
+                      failed="{{alerts.length}}">
+                      <attachments>
+                          <attachment>
+                              <filePath>owaspzap/report.html</filePath>
+                          </attachment>
+                      </attachments>
+                  {{#each alerts}}<test-case
+                      id="{{@index}}"
+                      name="{{alert}}"
+                      result="Failed"
+                      fullname="{{alert}}"
+                      time="1">
+                          <failure>
+                                  <message>
+                                   <![CDATA[{{{desc}}}]]>
+                              </message>
+                              <stack-trace>
+                                  <![CDATA[
+              Solution:
+              {{{solution}}}
+              Reference:
+              {{{reference}}}
+              instances:{{#each instances}}
+              * {{uri}}
+                  - {{method}}
+                  {{#if evidence}}- {{{evidence}}}{{/if}}
+                                   {{/each}}]]>
+                               </stack-trace>
+                          </failure>
+                  </test-case>
+                  {{/each}}
+                  </test-suite>
+              </test-run>
+              {{/each}}
+              EOF
+            displayName: 'Owasp Nunit Template'
+          - bash: 'handlebars owaspzap/report.json < owaspzap/nunit-template.hbs > owaspzap/test-results.xml'
+            displayName: 'Generate Nunit type file'
+
+
+          - task: PublishTestResults@2
+            displayName: 'Publish Test Results'
+            inputs:
+              testResultsFormat: 'NUnit'
+              testResultsFiles: 'owaspzap/test-results.xml'
