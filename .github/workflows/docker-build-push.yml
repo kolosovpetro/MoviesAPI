@@ -58,4 +58,4 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           
       - name: Print SemVer
-        run: echo ${{ env.SemVer }}
+        run: echo ${{ env.GITVERSION_SEMVER }}
