@@ -1,0 +1,58 @@
+﻿name: Docker Build Push
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - master
+      - main
+      - develop
+
+  workflow_dispatch:
+
+#  schedule:
+#    - cron: '0 0 * * 0'
+
+jobs:
+  build-test-drop-artifacts:
+    name: Build Test & Drop artifacts
+    runs-on: ${{ matrix.environment }}
+    strategy:
+      matrix:
+        environment:
+          - ubuntu-latest
+    
+    env:
+      DOTNET_NOLOGO: 1
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      NUGET_PACKAGES: ${{ github.workspace }}/.github/nuget-packages
+      ProjectPath: './MoviesAPI.Core/MoviesAPI.Core.csproj'
+      Configuration: 'Release'
+      Solution: 'MoviesAPI.sln'
+      ArtifactName: 'drop'
+      ArtifactPath: 'publish'
+    
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.15
+        with:
+          versionSpec: '5.x'
+
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0.9.15
+        
+      - name: Docker Login
+        run: echo "$DOCKER_PASSWORD" | docker login docker.io -u "$DOCKER_USERNAME" --password-stdin
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

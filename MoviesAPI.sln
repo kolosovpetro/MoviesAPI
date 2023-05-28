@@ -27,6 +27,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{F1E30713-11AD-40FD-8BF1-0B119F2CBCD8}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\run-build-and-test.yml = .github\workflows\run-build-and-test.yml
+		.github\workflows\docker-build-push.yml = .github\workflows\docker-build-push.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "azure-pipelines", "azure-pipelines", "{36B782C0-AA27-437B-B7D3-0878C7F832D8}"
