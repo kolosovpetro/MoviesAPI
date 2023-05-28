@@ -15,8 +15,8 @@ on:
 
   workflow_dispatch:
 
-  schedule:
-    - cron: '0 0 * * 0'
+#  schedule:
+#    - cron: '0 0 * * 0'
 
 jobs:
   build-test-drop-artifacts:
@@ -92,8 +92,8 @@ jobs:
         run: |
           docker compose down
 
-      - name: Drop Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.ArtifactName }}
-          path: ${{ env.ArtifactPath }}
+#      - name: Drop Artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: ${{ env.ArtifactName }}
+#          path: ${{ env.ArtifactPath }}
