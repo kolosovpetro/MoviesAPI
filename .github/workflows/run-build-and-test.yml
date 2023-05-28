@@ -80,6 +80,13 @@ jobs:
       - name: Docker compose up
         run: |
           docker compose up -d
+          
+      - name: Wait container
+        run: sleep 30
+        
+      - name: Curl container
+        run: |
+          curl -v http://localhost:8090/api/movies
 
       - name: Docker compose down
         run: |
