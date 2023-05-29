@@ -116,6 +116,9 @@ jobs:
           SSH_USER: ${{ secrets.UBUNTU_SSH_USER }}
           SSH_ADDRESS: ${{ secrets.UBUNTU_SSH_ADDRESS }}
 
+      - name: 'Test SSH'
+        run: ssh staging -v "hostname"
+
       - name: 'List directory'
         run: ls -lsa
 
