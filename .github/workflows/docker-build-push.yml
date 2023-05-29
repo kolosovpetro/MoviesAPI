@@ -134,6 +134,7 @@ jobs:
         run: |
           VERSION=$(cat version.txt)
           echo "Version: $VERSION"
+          chmod u+x ./scripts/sed_docker_compose.sh
           ./scripts/sed_docker_compose.sh "./prod-compose/docker-compose.yml" "$VERSION"
 
       - name: 'Copy compose to VM'
