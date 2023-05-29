@@ -148,3 +148,17 @@ jobs:
           SSH_KEY: ${{ secrets.UBUNTU_SSH_KEY }}
           SSH_USER: ${{ secrets.UBUNTU_SSH_USER }}
           SSH_ADDRESS: ${{ secrets.UBUNTU_SSH_ADDRESS }}
+
+      - name: 'Deploy compose'
+        shell: bash
+        run: |
+          echo "Stop service"
+          ssh staging "sudo systemctl stop moviesapi.service"
+          sleep 10
+          echo "Copy compose"
+          ssh staging "cp ~/ComposeCopyTest/docker-compose.yml ~/RiderProjects/MoviesAPI/docker-compose.yml"
+          ssh staging "cd ~/RiderProjects/MoviesAPI && sudo docker-compose build"
+          ssh staging "sudo systemctl start moviesapi.service"
+        env:
+          SSH_USER: ${{ secrets.UBUNTU_SSH_USER }}
+          SSH_ADDRESS: ${{ secrets.UBUNTU_SSH_ADDRESS }}
