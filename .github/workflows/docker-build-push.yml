@@ -81,7 +81,7 @@ jobs:
       - name: Write Version
         run: echo ${{ env.GITVERSION_SEMVER }} > version.txt
 
-      - name: Drop Artifact
+      - name: Drop Artifact Version
         uses: actions/upload-artifact@v3
         with:
           name: version
@@ -93,6 +93,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
@@ -120,7 +125,7 @@ jobs:
         run: ssh staging -v "hostname"
 
       - name: 'List directory'
-        run: | 
+        run: |
           ls -lsa
           cat version.txt
 
