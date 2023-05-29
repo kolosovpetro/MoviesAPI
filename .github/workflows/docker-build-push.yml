@@ -91,6 +91,7 @@ jobs:
     name: Deploy
     needs: build-test-drop-artifacts
     runs-on: ubuntu-latest
+    environment: dev
     
     steps:
       - name: Fetch Sources
