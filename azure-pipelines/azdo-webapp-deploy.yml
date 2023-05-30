@@ -179,7 +179,7 @@ stages:
                     EnableIIS: true
                     IISDeploymentType: 'IISWebsite'
                     ActionIISWebsite: 'CreateOrUpdateWebsite'
-                    WebsiteName: '$(IISSiteName)-devtwo'
+                    WebsiteName: '$(IISSiteName)'
                     WebsitePhysicalPath: '$(IISSitePhysicalPath)'
                     AddBinding: true
                     Bindings: |
@@ -205,7 +205,7 @@ stages:
                       }
                     CreateOrUpdateAppPoolForWebsite: true
                     ConfigureAuthenticationForWebsite: true
-                    AppPoolNameForWebsite: '$(IISSiteName)-devtwo'
+                    AppPoolNameForWebsite: '$(IISSiteName)'
                     DotNetVersionForWebsite: 'No Managed Code'
                     PipeLineModeForWebsite: 'Integrated'
                     AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
@@ -216,7 +216,7 @@ stages:
                 - task: IISWebAppDeploymentOnMachineGroup@0
                   displayName: 'IIS Web App Deploy'
                   inputs:
-                    WebSiteName: '$(IISSiteName)-devtwo'
+                    WebSiteName: '$(IISSiteName)'
                     TakeAppOfflineFlag: true
                     Package: '$(Pipeline.Workspace)/drop/$(BuildConfiguration)/MoviesAPI.Core.zip'
                     JSONFiles: '**/appsettings.json'
