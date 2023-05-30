@@ -1,8 +1,12 @@
 trigger:
+  batch: true
   branches:
     include:
       - develop
       - master
+  paths:
+    include:
+      - '*'
 
 pr:
   branches:
@@ -17,15 +21,10 @@ variables:
     value: 'Release'
   - name: projectPath
     value: './MoviesAPI.Core/MoviesAPI.Core.csproj'
-  - name: IISSiteName
-    value: 'moviesapi'
-  - name: IISSitePhysicalPath
-    value: '%SystemDrive%\inetpub\wwwroot\$(IISSiteName)'
-  - group: MOVIES_SETTINGS
-#  - name: CertThumbprint
-#    value: 'c4349cd17eb84815b504571079a40d756db02396'
-#  - name: HostName
-#    value: 'movies.mangomesenger.company'
+#  - name: IISSiteName
+#    value: 'moviesapi'
+#  - name: IISSitePhysicalPath
+#    value: '%SystemDrive%\inetpub\wwwroot\$(IISSiteName)'
 
 stages:
   - stage: 'Build_Test'
@@ -97,6 +96,8 @@ stages:
     jobs:
       - deployment: Deploy_Movies_Dev
         displayName: 'Deploy Movies dev'
+        variables:
+          - group: MOVIES_SETTINGS
         environment:
           name: dev
           resourceType: VirtualMachine
@@ -106,16 +107,6 @@ stages:
               steps:
                 - download: current
                   artifact: drop
-                
-                # https://github.com/microsoft/azure-pipelines-extensions/issues/1008
-                # https://stackoverflow.com/a/61822201
-                # - task: PowerShell@2
-                #   displayName: 'Delete SSL Cert If Exists'
-                #   inputs:
-                #     targetType: 'inline'
-                #     script: |
-                #       netsh http delete sslcert ipport=0.0.0.0:443
-                #    continueOnError: true
 
                 - task: IISWebAppManagementOnMachineGroup@0
                   inputs:
