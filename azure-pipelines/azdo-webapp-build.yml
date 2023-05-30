@@ -1,0 +1,86 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - develop
+      - master  
+    paths:
+      include:
+        - '*'
+
+pr:
+  branches:
+    include:
+      - develop
+      - master
+
+variables:
+  - name: buildPlatform
+    value: 'Any CPU'
+  - name: buildConfiguration
+    value: 'Release'
+  - name: projectPath
+    value: './MoviesAPI.Core/MoviesAPI.Core.csproj'
+
+stages:
+  - stage: 'Build_Test'
+    jobs:
+      - job: "Build"
+        displayName: 'Build Test & Drop artifacts'
+        pool:
+          vmImage: 'ubuntu-latest'
+
+        steps:
+          - checkout: self
+            fetchDepth: 0
+
+          - task: gitversion/setup@0
+            displayName: 'GitVersion Setup'
+            inputs:
+              versionSpec: '5.9.x'
+
+          - task: gitversion/execute@0
+            displayName: 'GitVersion Execute'
+
+          - script: |
+              echo "Upcoming semantic version: $(SemVer)"
+            displayName: 'Print semantic version'
+
+          - bash: echo $Action$BuildVersion
+            displayName: 'Set Build Version'
+            env:
+              Action: '##vso[build.updatebuildnumber]'
+              BuildVersion: $(GitVersion.SemVer)
+
+          - task: UseDotNet@2
+            displayName: 'Install .NET 6.x SDK'
+            inputs:
+              packageType: sdk
+              version: 6.x
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Dotnet Restore'
+            inputs:
+              command: 'restore'
+              arguments: '--verbosity minimal'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Dotnet build $(buildConfiguration)'
+            inputs:
+              command: 'build'
+              arguments: '-p:Version=$(SemVer) --configuration $(buildConfiguration) --no-restore'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Dotnet Publish'
+            inputs:
+              command: 'publish'
+              publishWebProjects: false
+              projects: '$(projectPath)'
+              arguments: '-p:Version=$(SemVer) -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifacts'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
