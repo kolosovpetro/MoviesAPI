@@ -16,16 +16,16 @@ variables:
   - name: buildConfiguration
     value: 'Release'
   - name: projectPath
-    value: './CqrsApi.Core/CqrsApi.Core.csproj'
+    value: './MoviesAPI.Core/MoviesAPI.Core.csproj'
   - name: IISSiteName
     value: 'moviesapi'
   - name: IISSitePhysicalPath
     value: '%SystemDrive%\inetpub\wwwroot\$(IISSiteName)'
-  - group: MoviesApi-Dev # keeps connection string
-  - name: CertThumbprint
-    value: 'c4349cd17eb84815b504571079a40d756db02396'
-  - name: HostName
-    value: 'movies.mangomesenger.company'
+  - group: MOVIES_SETTINGS
+#  - name: CertThumbprint
+#    value: 'c4349cd17eb84815b504571079a40d756db02396'
+#  - name: HostName
+#    value: 'movies.mangomesenger.company'
 
 stages:
   - stage: 'Build_Test'
@@ -36,11 +36,59 @@ stages:
           vmImage: 'ubuntu-latest'
 
         steps:
-          - template: templates/dotnet-build-steps-template.yml
-            parameters:
-              buildConfiguration: $(buildConfiguration)
-              buildPlatform: $(buildPlatform)
-              projectPath: $(projectPath)
+          - checkout: self
+            fetchDepth: 0
+
+          - task: gitversion/setup@0
+            displayName: 'GitVersion Setup'
+            inputs:
+              versionSpec: '5.9.x'
+
+          - task: gitversion/execute@0
+            displayName: 'GitVersion Execute'
+
+          - script: |
+              echo "Upcoming semantic version: $(SemVer)"
+            displayName: 'Print semantic version'
+
+          - bash: echo $Action$BuildVersion
+            displayName: 'Set Build Version'
+            env:
+              Action: '##vso[build.updatebuildnumber]'
+              BuildVersion: $(GitVersion.SemVer)
+
+          - task: UseDotNet@2
+            displayName: 'Install .NET 6.x SDK'
+            inputs:
+              packageType: sdk
+              version: 6.x
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Dotnet Restore'
+            inputs:
+              command: 'restore'
+              arguments: '--verbosity minimal'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Dotnet build $(buildConfiguration)'
+            inputs:
+              command: 'build'
+              arguments: '-p:Version=$(SemVer) --configuration $(buildConfiguration) --no-restore'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Dotnet Publish'
+            inputs:
+              command: 'publish'
+              publishWebProjects: false
+              projects: '$(projectPath)'
+              arguments: '-p:Version=$(SemVer) -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifacts'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
 
   - stage: 'dev'
     displayName: 'Deploy Movies dev'
@@ -58,16 +106,16 @@ stages:
               steps:
                 - download: current
                   artifact: drop
-                  
+                
                 # https://github.com/microsoft/azure-pipelines-extensions/issues/1008
                 # https://stackoverflow.com/a/61822201
-                - task: PowerShell@2
-                  displayName: 'Delete SSL Cert If Exists'
-                  inputs:
-                    targetType: 'inline'
-                    script: |
-                      netsh http delete sslcert ipport=0.0.0.0:443
-                  continueOnError: true
+                # - task: PowerShell@2
+                #   displayName: 'Delete SSL Cert If Exists'
+                #   inputs:
+                #     targetType: 'inline'
+                #     script: |
+                #       netsh http delete sslcert ipport=0.0.0.0:443
+                #    continueOnError: true
 
                 - task: IISWebAppManagementOnMachineGroup@0
                   inputs:
@@ -113,5 +161,5 @@ stages:
                   inputs:
                     WebSiteName: '$(IISSiteName)-$(Environment.Name)'
                     TakeAppOfflineFlag: true
-                    Package: '$(Pipeline.Workspace)/drop/$(BuildConfiguration)/CqrsApi.Core.zip'
+                    Package: '$(Pipeline.Workspace)/drop/$(BuildConfiguration)/MoviesAPI.Core.zip'
                     JSONFiles: '**/appsettings.json'

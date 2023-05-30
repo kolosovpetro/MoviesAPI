@@ -9,6 +9,11 @@ PS. I'd never think that will come back to this demo project from long past.
 
 This is to test jenkins webhook.
 
+## DO NOT USE DATA CENTER 2022 WINDOWS IMAGE
+
+- https://github.com/microsoft/azure-pipelines-extensions/issues/1008
+- https://stackoverflow.com/a/61822201
+
 ## Required software
 
 - [Hosting Bundle on Windows Server](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
@@ -19,6 +24,10 @@ This is to test jenkins webhook.
 
 - `docker build -t "movies:latest" .`
 - `docker run -d -p 9000:80 -e "ShouldMigrate=false" --name movies-test-run "movies:latest"`
+
+## Azure DevOps Library Settings
+
+![./img/settings.png](./img/Library_settings.PNG)
 
 ## Notes
 
