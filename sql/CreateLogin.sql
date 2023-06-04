@@ -1,0 +1,1 @@
+CREATE LOGIN MoviesLogin WITH PASSWORD = '6I4l0b3PaOArOho7SzLl';

@@ -1,0 +1,3 @@
+USE MOVIES_DEV;
+GO
+CREATE USER MoviesUser FOR LOGIN MoviesLogin;

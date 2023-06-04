@@ -54,6 +54,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prod-compose", "prod-compos
 		prod-compose\docker-compose.yml = prod-compose\docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{998B547D-C5F4-434F-B31A-E2100C46E2F6}"
+	ProjectSection(SolutionItems) = preProject
+		sql\CreateLogin.sql = sql\CreateLogin.sql
+		sql\InitialMigration.sql = sql\InitialMigration.sql
+		sql\CreateUser.sql = sql\CreateUser.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
