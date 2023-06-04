@@ -59,6 +59,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{998B547D-C5F
 		sql\CreateLogin.sql = sql\CreateLogin.sql
 		sql\InitialMigration.sql = sql\InitialMigration.sql
 		sql\CreateUser.sql = sql\CreateUser.sql
+		sql\TablePermissions.sql = sql\TablePermissions.sql
 	EndProjectSection
 EndProject
 Global
