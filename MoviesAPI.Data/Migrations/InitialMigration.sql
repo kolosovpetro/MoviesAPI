@@ -1,3 +1,14 @@
+USE master
+GO
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'MOVIES_DEV')
+BEGIN
+  CREATE DATABASE MOVIES_DEV;
+END;
+GO
+
+USE MOVIES_DEV;
+GO
+
 IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
 BEGIN
     CREATE TABLE [__EFMigrationsHistory] (
