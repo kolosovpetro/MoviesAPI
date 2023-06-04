@@ -1,6 +1,7 @@
 # Movies API
 
-[![Build Test & Drop artifacts](https://github.com/kolosovpetro/CQRS-Movies-API/actions/workflows/run-build-and-test.yml/badge.svg)](https://github.com/kolosovpetro/CQRS-Movies-API/actions/workflows/run-build-and-test.yml)
+- How to setup SQL server and IIS deploy: https://trello.com/c/abEYNHOT
+- Windows VM with Terraform: https://trello.com/c/lEv89VzJ
 
 ASP NET Core WEB API with CQRS Architecture. Example of IIS Azure VM deploy example via Azure pipelines. Contains SSL
 config for IIS using cert bot.
