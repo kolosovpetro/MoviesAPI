@@ -10,6 +10,17 @@ PS. I'd never think that will come back to this demo project from long past.
 
 This is to test jenkins webhook.
 
+## Kubernetes commands
+
+- `kubectl apply -f .\mssql-pv.azure.yaml`
+- `kubectl get deployments`
+- `kubectl apply -f .\mssql-deployment.yaml`
+- `kubectl delete -f .\mssql-deployment.yaml`
+- `kubectl get services`
+- `kubectl apply -f .\movies-configmap.yaml`
+- `kubectl get pods -o wide`
+- `kubectl get endpoints`
+
 ## DO NOT USE DATA CENTER 2022 WINDOWS IMAGE
 
 - https://github.com/microsoft/azure-pipelines-extensions/issues/1008
