@@ -63,8 +63,17 @@ stages:
               sed -i "s|__TAG__|$newToken|" "$filePath"
             displayName: 'Replace TAG in api-deployment.yaml'
 
+          - bash: |
+              newToken='$(GitVersion.SemVer)'
+              filePath='kubernetes/api-deployment-aks-az-pipelines/api-configmap.yaml'
+              sed -i "s|__TAG__|$newToken|" "$filePath"
+            displayName: 'Replace TAG in api-configmap.yaml'
+
           - bash: cat kubernetes/api-deployment-aks-az-pipelines/api-deployment.yaml
             displayName: 'Print api-deployment.yaml'
+
+          - bash: cat kubernetes/api-deployment-aks-az-pipelines/api-configmap.yaml
+            displayName: 'Print api-configmap.yaml'
 
           - task: PublishBuildArtifacts@1
             inputs:
@@ -89,7 +98,7 @@ stages:
               steps:
                 - download: current
                   artifact: drop
-                  
+
                 - task: Kubernetes@1
                   displayName: Kubernetes Deploy
                   inputs:
