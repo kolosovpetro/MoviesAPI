@@ -49,12 +49,12 @@ stages:
           - bash: docker images
             displayName: 'List Docker Images'
 
-#          - task: Docker@2
-#            displayName: push
-#            inputs:
-#              containerRegistry: { service connection name }
-#              repository: { dockerhub_namespace/RepositoryName }
-#              command: push
+          - task: Docker@2
+            displayName: push
+            inputs:
+              containerRegistry: 'DockerHub_Connection'
+              repository: ${{ variables.dockerRepository }}
+              command: push
 
 #          - task: AzureCLI@2
 #            displayName: 'Push image to DockerHub'
