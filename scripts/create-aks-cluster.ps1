@@ -1,6 +1,9 @@
 # connect to Azure via Azure CLI
 az login
 
+# create service principal
+az ad sp create-for-rbac --role contributor --scopes "/subscriptions/f32f6566-8fa0-4198-9c91-a3b8ac69e89a" --name "Movies_AKS_SP" --sdk-auth
+
 # Create resource group
 az group create --location "northeurope" --subscription "f32f6566-8fa0-4198-9c91-a3b8ac69e89a" --name "aks-k8s-rg"
 

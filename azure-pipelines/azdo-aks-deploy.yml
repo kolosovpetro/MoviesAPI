@@ -82,9 +82,6 @@ stages:
         displayName: 'Deploy_To_AKS'
         pool:
           vmImage: ubuntu-latest
-        variables:
-          - name: tag
-            value: '$(Build.BuildId)'
         environment: aks
         strategy:
           runOnce:
@@ -92,3 +89,15 @@ stages:
               steps:
                 - download: current
                   artifact: drop
+                  
+                - task: Kubernetes@1
+                  displayName: Kubernetes Deploy
+                  inputs:
+                    connectionType: 'Azure Resource Manager'
+                    azureSubscriptionEndpoint: 'Movies_AKS_SP'
+                    azureResourceGroup: 'aks-k8s-rg'
+                    kubernetesCluster: 'aks-k8s'
+                    namespace: 'default'
+                    command: 'apply'
+                    useConfigurationFile: true
+                    configuration: '$(Pipeline.Workspace)/drop'
