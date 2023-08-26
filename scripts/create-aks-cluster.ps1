@@ -7,11 +7,15 @@ az ad sp create-for-rbac --role contributor --scopes "/subscriptions/f32f6566-8f
 # Create resource group
 az group create --location "northeurope" --subscription "f32f6566-8fa0-4198-9c91-a3b8ac69e89a" --name "aks-k8s-rg"
 
+# Create ACR
+az acr create --resource-group "aks-k8s-rg" --name "aksk8sacr" --sku "Basic"
+
 # create AKS cluster
 az aks create --generate-ssh-keys --subscription "f32f6566-8fa0-4198-9c91-a3b8ac69e89a" --node-count 3 --resource-group "aks-k8s-rg" --name "aks-k8s" --tier free
 az aks create --generate-ssh-keys --subscription "f32f6566-8fa0-4198-9c91-a3b8ac69e89a" --node-count 3 --resource-group "cars-island-c01" --name "cars-aks-k8s-c01" --attach-acr "acrcarsislandc01" --tier free
 
-az aks update -n "aks-k8s" -g "aks-k8s-rg" --attach-acr "acrcarsislandd01"
+# Update exising cluster with ACR
+az aks update -n "aks-k8s" -g "aks-k8s-rg" --attach-acr "aksk8sacr"
 az aks update -n "cars-aks-k8s-d01" -g "cars-island-d01" --attach-acr "acrcarsislandd01"
 
 # connect to cluster
