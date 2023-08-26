@@ -50,11 +50,16 @@ stages:
             displayName: 'List Docker Images'
 
           - task: Docker@2
-            displayName: push
+            displayName: 'Push to DockerHub'
             inputs:
               containerRegistry: 'DockerHub_Connection'
               repository: ${{ variables.dockerRepository }}
-              command: push
+              command: push "$USER/$REPOSITORY:$VERSION"
+              arguments:  
+            env:
+              REPOSITORY: ${{ variables.dockerRepository }}
+              VERSION: $(GitVersion.SemVer)
+              USER: ${{ variables.dockerUser }}
 
 #          - task: AzureCLI@2
 #            displayName: 'Push image to DockerHub'
