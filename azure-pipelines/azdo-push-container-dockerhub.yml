@@ -55,11 +55,7 @@ stages:
               containerRegistry: 'DockerHub_Connection'
               repository: ${{ variables.dockerRepository }}
               command: push 
-              arguments: '$USER/$REPOSITORY:$VERSION'
-            env:
-              REPOSITORY: ${{ variables.dockerRepository }}
-              VERSION: $(GitVersion.SemVer)
-              USER: ${{ variables.dockerUser }}
+              tags: '${{ variables.dockerUser }}/${{ variables.dockerRepository }}/$(GitVersion.SemVer)'
 
 #          - task: AzureCLI@2
 #            displayName: 'Push image to DockerHub'
