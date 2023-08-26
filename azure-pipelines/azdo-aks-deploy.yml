@@ -58,7 +58,7 @@ stages:
               tags: '$(GitVersion.SemVer)'
 
           - bash: |
-              newToken='$(Build.BuildId)'
+              newToken='$(GitVersion.SemVer)'
               filePath='kubernetes/api-deployment-aks-az-pipelines/api-deployment.yaml'
               sed -i "s|__TAG__|$newToken|" "$filePath"
             displayName: 'Replace TAG in api-deployment.yaml'
