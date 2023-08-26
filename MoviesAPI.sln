@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{E0D60CEC
 		moviesapi.service = moviesapi.service
 		Nginx_Config_Via_DNS.conf = Nginx_Config_Via_DNS.conf
 		Nginx_Config_Via_IP_Address.conf = Nginx_Config_Via_IP_Address.conf
+		.gitattributes = .gitattributes
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{AB02E391-C07B-41D3-B2C3-4BF6B3421697}"
@@ -63,12 +64,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{998B547D-C5F
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kubernetes", "kubernetes", "{785ABC94-A180-4060-9DCA-AE775DD49E42}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api-deployment", "api-deployment", "{F561B0A4-8299-41E2-B24E-A62B65EFA7B9}"
 	ProjectSection(SolutionItems) = preProject
-		kubernetes\api-deployment.azure.yaml = kubernetes\api-deployment.azure.yaml
-		kubernetes\movies-configmap.yaml = kubernetes\movies-configmap.yaml
-		kubernetes\mssql-deployment.yaml = kubernetes\mssql-deployment.yaml
-		kubernetes\mssql-pv.azure.yaml = kubernetes\mssql-pv.azure.yaml
-		kubernetes\mssql-secret.yaml = kubernetes\mssql-secret.yaml
+		kubernetes\api-deployment\api-configmap.yaml = kubernetes\api-deployment\api-configmap.yaml
+		kubernetes\api-deployment\api-deployment.yaml = kubernetes\api-deployment\api-deployment.yaml
+		kubernetes\api-deployment\api-service.yaml = kubernetes\api-deployment\api-service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mssql-deployment", "mssql-deployment", "{A9B5420D-1707-4F7A-B1FF-F4C6652BD828}"
+	ProjectSection(SolutionItems) = preProject
+		kubernetes\mssql-deployment\mssql-deployment.yaml = kubernetes\mssql-deployment\mssql-deployment.yaml
+		kubernetes\mssql-deployment\mssql-persistent-volume.yaml = kubernetes\mssql-deployment\mssql-persistent-volume.yaml
+		kubernetes\mssql-deployment\mssql-service.yaml = kubernetes\mssql-deployment\mssql-service.yaml
 	EndProjectSection
 EndProject
 Global
@@ -97,5 +105,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F1E30713-11AD-40FD-8BF1-0B119F2CBCD8} = {AB02E391-C07B-41D3-B2C3-4BF6B3421697}
 		{59FD8C29-4E22-424C-A868-3F76476AC627} = {36B782C0-AA27-437B-B7D3-0878C7F832D8}
+		{F561B0A4-8299-41E2-B24E-A62B65EFA7B9} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
+		{A9B5420D-1707-4F7A-B1FF-F4C6652BD828} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
 	EndGlobalSection
 EndGlobal

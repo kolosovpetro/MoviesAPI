@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -29,16 +30,3 @@ spec:
                 configMapKeyRef:
                   name: movies-configmap
                   key: ShouldMigrate
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: movies-api-service
-spec:
-  selector:
-    app: movies-api
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: LoadBalancer #NodePort
