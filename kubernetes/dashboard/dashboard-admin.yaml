@@ -1,0 +1,24 @@
+# dashboard-admin.yaml
+
+# Create a ServiceAccount that we can use to access the Dashboard
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+# This separates multiple resource definitions in a single file
+---
+# Bind the cluster-admin ClusterRole to the admin-user ServiceAccount
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
