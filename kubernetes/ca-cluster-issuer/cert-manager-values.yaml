@@ -1,0 +1,5 @@
+# cert-manager-values.yaml
+installCRDs: true # install custom resource definitions
+ingressShim:
+  defaultIssuerKind: ClusterIssuer
+  defaultIssuerName: letsencrypt-prod
