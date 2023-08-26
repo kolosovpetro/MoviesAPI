@@ -54,8 +54,8 @@ stages:
             inputs:
               containerRegistry: 'DockerHub_Connection'
               repository: ${{ variables.dockerRepository }}
-              command: push "$USER/$REPOSITORY:$VERSION"
-              arguments:  
+              command: push 
+              arguments: '$USER/$REPOSITORY:$VERSION'
             env:
               REPOSITORY: ${{ variables.dockerRepository }}
               VERSION: $(GitVersion.SemVer)
