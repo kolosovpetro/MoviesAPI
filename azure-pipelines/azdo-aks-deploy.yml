@@ -9,13 +9,13 @@ variables:
     value: 'moviesapi'
 
 stages:
-  - stage: "docker_webapi_build_push"
-    displayName: "Docker Web API build push"
+  - stage: 'Docker_Build_Push'
+    displayName: 'Docker_Build_Push'
     jobs:
-      - job: Build_Push_Docker_Image
-        displayName: "Build push docker image"
+      - job: Docker_Build_Push
+        displayName: 'Docker_Build_Push'
         pool:
-          vmImage: "ubuntu-latest"
+          vmImage: 'ubuntu-latest'
         steps:
           - checkout: self
             fetchDepth: 0
@@ -56,3 +56,39 @@ stages:
               repository: '${{ variables.dockerUser }}/${{ variables.dockerRepository }}'
               command: push
               tags: '$(GitVersion.SemVer)'
+
+          - bash: |
+              newToken='$(Build.BuildId)'
+              filePath='kubernetes/api-deployment-aks-az-pipelines/api-deployment.yaml'
+              sed -i "s|__TAG__|$newToken|" "$filePath"
+            displayName: 'Replace TAG in api-deployment.yaml'
+
+          - bash: cat kubernetes/api-deployment-aks-az-pipelines/api-deployment.yaml
+            displayName: 'Print api-deployment.yaml'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(System.DefaultWorkingDirectory)/kubernetes/api-deployment-aks-az-pipelines'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
+
+
+  - stage: 'Deploy_To_AKS'
+    displayName: 'Deploy_To_AKS'
+    dependsOn: 'Docker_Build_Push'
+    condition: succeeded('Docker_Build_Push')
+    jobs:
+      - deployment: 'Deploy_To_AKS'
+        displayName: 'Deploy_To_AKS'
+        pool:
+          vmImage: ubuntu-latest
+        variables:
+          - name: tag
+            value: '$(Build.BuildId)'
+        environment: aks
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: drop
