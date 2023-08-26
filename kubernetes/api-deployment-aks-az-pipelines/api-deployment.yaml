@@ -30,3 +30,9 @@ spec:
                 configMapKeyRef:
                   name: movies-configmap
                   key: ShouldMigrate
+
+            - name: MoviesVersion
+              valueFrom:
+                configMapKeyRef:
+                  name: movies-configmap
+                  key: MoviesVersion
