@@ -52,6 +52,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{889E
 		scripts\sed_docker_compose.sh = scripts\sed_docker_compose.sh
 		scripts\create-aks-cluster.ps1 = scripts\create-aks-cluster.ps1
 		scripts\import_cert_manager_images.sh = scripts\import_cert_manager_images.sh
+		scripts\provision_cluster.sh = scripts\provision_cluster.sh
+		scripts\ingress-config.sh = scripts\ingress-config.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prod-compose", "prod-compose", "{A740EC43-F8A3-4027-8BD5-FEFD0BA5BDF8}"
@@ -90,6 +92,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api-deployment-aks-az-pipel
 		kubernetes\api-deployment-aks-az-pipelines\api-service.yaml = kubernetes\api-deployment-aks-az-pipelines\api-service.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ca-cluster-issuer", "ca-cluster-issuer", "{92B25508-5417-46EE-B3EC-21E9FF31D300}"
+	ProjectSection(SolutionItems) = preProject
+		kubernetes\ca-cluster-issuer\cluster-issuer.yaml = kubernetes\ca-cluster-issuer\cluster-issuer.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ingress", "ingress", "{F13F30CF-4EA1-456D-9D22-5F759C355447}"
+	ProjectSection(SolutionItems) = preProject
+		kubernetes\ingress\movies-ingress.yaml = kubernetes\ingress\movies-ingress.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,5 +131,7 @@ Global
 		{F561B0A4-8299-41E2-B24E-A62B65EFA7B9} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
 		{A9B5420D-1707-4F7A-B1FF-F4C6652BD828} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
 		{6E58D4CC-472A-4AC2-ADCD-4E0E025EA119} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
+		{92B25508-5417-46EE-B3EC-21E9FF31D300} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
+		{F13F30CF-4EA1-456D-9D22-5F759C355447} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
 	EndGlobalSection
 EndGlobal

@@ -6,14 +6,14 @@ random=$(shuf -i 0-50 -n1)
 prefix="aks${random}"
 echo "Prefix is ${prefix}"
 
-k8sName="aks-$prefix"
-echo "Cluster name is ${k8sName}"
+aksName="aks-$prefix"
+echo "Cluster name is ${aksName}"
 
 location="northeurope"
 echo "Location is ${location}"
 
 # sub="f32f6566-8fa0-4198-9c91-a3b8ac69e89a"
-rgName="rg-$k8sName"
+rgName="rg-$aksName"
 acrName="k8smoviesacr${random}"
 
 if [ -z "$sub" ]
@@ -32,4 +32,4 @@ az acr create --resource-group $rgName --name $acrName --sku "Basic"
 # create AKS cluster
 az aks create --generate-ssh-keys --subscription $sub \
     --node-count 3 --resource-group $rgName \
-    --name $k8sName --attach-acr $acrName --tier free
+    --name $aksName --attach-acr $acrName --tier free
