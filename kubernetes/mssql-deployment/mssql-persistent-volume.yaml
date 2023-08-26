@@ -1,3 +1,4 @@
+---
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
@@ -11,7 +12,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mssql-pvc
-  annotations: 
+  annotations:
     volume.beta.kubernetes.io/storage-class: azure-disk
 spec:
   storageClassName: default

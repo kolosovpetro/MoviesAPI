@@ -1,0 +1,112 @@
+trigger: none
+
+variables:
+  - name: dockerRepository
+    value: 'movies-api-k8s'
+  - name: dockerUser
+    value: 'petrokolosov'
+  - name: dockerImage
+    value: 'moviesapi'
+
+stages:
+  - stage: 'Docker_Build_Push'
+    displayName: 'Docker_Build_Push'
+    jobs:
+      - job: Docker_Build_Push
+        displayName: 'Docker_Build_Push'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
+            fetchDepth: 0
+
+          - task: gitversion/setup@0
+            displayName: 'GitVersion Setup'
+            inputs:
+              versionSpec: '5.9.x'
+
+          - task: gitversion/execute@0
+            displayName: 'GitVersion Execute'
+            inputs:
+              updateAssemblyInfo: true
+
+          - bash: echo $Action$BuildVersion
+            displayName: 'Set Build Version'
+            env:
+              Action: '##vso[build.updatebuildnumber]'
+              BuildVersion: $(GitVersion.SemVer)
+
+          - bash: |
+              IMAGE_FULL_NAME="$USER/$REPOSITORY:$VERSION"
+              echo "Image full name: $IMAGE_FULL_NAME"
+              docker build -t "$IMAGE_FULL_NAME" .
+            env:
+              REPOSITORY: ${{ variables.dockerRepository }}
+              VERSION: $(GitVersion.SemVer)
+              USER: ${{ variables.dockerUser }}
+            displayName: 'Build Docker Image'
+
+          - bash: docker images
+            displayName: 'List Docker Images'
+
+          - task: Docker@2
+            displayName: 'Push to DockerHub'
+            inputs:
+              containerRegistry: 'DockerHub_Connection'
+              repository: '${{ variables.dockerUser }}/${{ variables.dockerRepository }}'
+              command: push
+              tags: '$(GitVersion.SemVer)'
+
+          - bash: |
+              newToken='$(GitVersion.SemVer)'
+              filePath='kubernetes/api-deployment-aks-az-pipelines/api-deployment.yaml'
+              sed -i "s|__TAG__|$newToken|" "$filePath"
+            displayName: 'Replace TAG in api-deployment.yaml'
+
+          - bash: |
+              newToken='$(GitVersion.SemVer)'
+              filePath='kubernetes/api-deployment-aks-az-pipelines/api-configmap.yaml'
+              sed -i "s|__TAG__|$newToken|" "$filePath"
+            displayName: 'Replace TAG in api-configmap.yaml'
+
+          - bash: cat kubernetes/api-deployment-aks-az-pipelines/api-deployment.yaml
+            displayName: 'Print api-deployment.yaml'
+
+          - bash: cat kubernetes/api-deployment-aks-az-pipelines/api-configmap.yaml
+            displayName: 'Print api-configmap.yaml'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(System.DefaultWorkingDirectory)/kubernetes/api-deployment-aks-az-pipelines'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
+
+
+  - stage: 'Deploy_To_AKS'
+    displayName: 'Deploy_To_AKS'
+    dependsOn: 'Docker_Build_Push'
+    condition: succeeded('Docker_Build_Push')
+    jobs:
+      - deployment: 'Deploy_To_AKS'
+        displayName: 'Deploy_To_AKS'
+        pool:
+          vmImage: ubuntu-latest
+        environment: aks
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: drop
+
+                - task: Kubernetes@1
+                  displayName: Kubernetes Deploy
+                  inputs:
+                    connectionType: 'Azure Resource Manager'
+                    azureSubscriptionEndpoint: 'Movies_AKS_SP'
+                    azureResourceGroup: 'aks-k8s-rg'
+                    kubernetesCluster: 'aks-k8s'
+                    namespace: 'default'
+                    command: 'apply'
+                    useConfigurationFile: true
+                    configuration: '$(Pipeline.Workspace)/drop'

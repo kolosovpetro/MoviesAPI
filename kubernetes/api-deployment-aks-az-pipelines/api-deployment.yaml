@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,7 +15,7 @@ spec:
     spec:
       containers:
         - name: movies-api
-          image: petrokolosov/movies-api:0.13.86
+          image: petrokolosov/movies-api-k8s:__TAG__
           ports:
             - containerPort: 80
           env:
@@ -29,16 +30,9 @@ spec:
                 configMapKeyRef:
                   name: movies-configmap
                   key: ShouldMigrate
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: movies-api-service
-spec:
-  selector:
-    app: movies-api
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: LoadBalancer #NodePort
+
+            - name: MoviesVersion
+              valueFrom:
+                configMapKeyRef:
+                  name: movies-configmap
+                  key: MoviesVersion

@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: movies-configmap
+  labels:
+    app: movies-api
+data:
+  SqlServerConnectionString: "Server=mssql-service;Database=MOVIES_DOCKER;User Id=sa;Password=x2yiJt!Fs;TrustServerCertificate=true;"
+  ShouldMigrate: "true"

@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movies-api-deployment
+spec:
+  selector:
+    matchLabels:
+      app: movies-api
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: movies-api
+    spec:
+      containers:
+        - name: movies-api
+          image: petrokolosov/movies-api:0.13.86
+          ports:
+            - containerPort: 80
+          env:
+            - name: SqlServerConnectionString
+              valueFrom:
+                configMapKeyRef:
+                  name: movies-configmap
+                  key: SqlServerConnectionString
+
+            - name: ShouldMigrate
+              valueFrom:
+                configMapKeyRef:
+                  name: movies-configmap
+                  key: ShouldMigrate
