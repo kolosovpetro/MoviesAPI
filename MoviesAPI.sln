@@ -48,6 +48,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{889E
 		scripts\GenerateSSLCert.ps1 = scripts\GenerateSSLCert.ps1
 		scripts\test_container.ps1 = scripts\test_container.ps1
 		scripts\sed_docker_compose.sh = scripts\sed_docker_compose.sh
+		scripts\create-aks-cluster.ps1 = scripts\create-aks-cluster.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prod-compose", "prod-compose", "{A740EC43-F8A3-4027-8BD5-FEFD0BA5BDF8}"
