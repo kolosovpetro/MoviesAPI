@@ -11,3 +11,4 @@
 - kubectl -n kubernetes-dashboard get secret
 - kubectl -n kubernetes-dashboard describe secret admin-user-token-smw2j
 - kubectl proxy
+- http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/

@@ -1,0 +1,13 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: movies-api-service
+spec:
+  selector:
+    app: movies-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP #LoadBalancer #NodePort #ClusterIP
