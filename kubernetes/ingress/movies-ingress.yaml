@@ -1,4 +1,3 @@
-# Content of file api-ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -13,7 +12,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: 20-82-173-182.nip.io # this should be replaced with YOUR OWN DOMAIN
+    - host: aksmovies.devtest.team
       http:
         paths:
           - path: /
