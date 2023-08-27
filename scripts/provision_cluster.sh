@@ -41,3 +41,7 @@ echo "Creating AKS cluster ${aksName} in ${rgName}..."
 az aks create --generate-ssh-keys --subscription $sub \
     --node-count 3 --resource-group $rgName \
     --name $aksName --attach-acr $acrName --tier free
+
+# Importing credentials
+echo "Importing cluster credentials..."
+az aks get-credentials --resource-group $rgName --name $aksName --subscription $sub

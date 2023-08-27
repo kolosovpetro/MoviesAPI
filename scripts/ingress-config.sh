@@ -6,7 +6,7 @@ publicIp=$(az network public-ip create --resource-group $nodeRg --name "ingress-
 
 ## install ingress
 
-## install ingress via Helm
+## install ingress via Helm: IT DOES NOT WORK
 DNS_LABEL="aksmovies.devtest.team"
 NAMESPACE="ingress-basic"
 STATIC_IP=4.210.95.219
@@ -22,7 +22,7 @@ helm upgrade ingress-nginx nginx-stable/nginx-ingress \
   --set controller.service.loadBalancerIP=$STATIC_IP \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"=/healthz
 
-# New try
+# New try: IT WORKS!!! (azure dev college)
 
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
@@ -31,6 +31,7 @@ helm upgrade my-ingress --install ingress-nginx --repo https://kubernetes.github
 
 kubectl --namespace ingress get services my-ingress-ingress-nginx-controller
 
+## From MS docs: IT DOES NOT WORK
 NAMESPACE=ingress-basic
 helm install ingress-nginx ingress-nginx/ingress-nginx \
   --create-namespace \
