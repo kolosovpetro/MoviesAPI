@@ -1,52 +1,30 @@
 trigger:
-  batch: true
-  branches:
-    include:
-      - develop
-      - master
-  paths:
-    include:
-      - '*'
+  - main
 
-pr:
-  branches:
-    include:
-      - develop
-      - master
+pool:
+  vmImage: 'ubuntu-latest'
 
-variables:
-  - name: buildPlatform
-    value: 'Any CPU'
-  - name: buildConfiguration
-    value: 'Release'
-  - name: projectPath
-    value: './MoviesAPI.Core/MoviesAPI.Core.csproj'
+jobs:
+  - job: PublishApp
+    steps:
+      - checkout: self
 
-stages:
-  - stage: 'Container_Job'
-    jobs:
-      - job: 'Container_Job'
-        displayName: 'Container_Job'
-        pool:
-          vmImage: 'ubuntu-latest'
+      - script: docker build -t my-dotnet-publish-container -f Dockerfile .
+        displayName: 'Build Docker Container'
 
-        steps:
-          - checkout: self
-            fetchDepth: 0
+      - script: docker volume create my-publish-volume
+        displayName: 'Create Docker Volume'
 
-          - task: UseDotNet@2
-            displayName: 'Install .NET 6.x SDK'
-            inputs:
-              packageType: sdk
-              version: 6.x
+      - script: docker run --name my-temp-container -v my-publish-volume:/app/publish my-dotnet-publish-container
+        displayName: 'Run Docker Container'
 
-          - script: docker build -t my-dotnet-build-container -f ContainerJob.Dockerfile .
-            displayName: 'Build Docker Container'
+      - script: docker cp my-temp-container:/app/publish $(Build.ArtifactStagingDirectory)/publish
+        displayName: 'Copy Published Files'
 
-          - script: docker run -v $(Build.ArtifactStagingDirectory):/app/publish my-dotnet-build-container
-            displayName: 'Run Docker Container'
+      - script: docker rm my-temp-container
+        displayName: 'Remove Temporary Container'
 
-          - task: PublishBuildArtifacts@1
-            inputs:
-              artifactName: 'build_output'
-              pathToPublish: $(Build.ArtifactStagingDirectory)
+      - task: PublishBuildArtifacts@1
+        inputs:
+          artifactName: 'published_app'
+          pathToPublish: $(Build.ArtifactStagingDirectory)/publish
