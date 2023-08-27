@@ -18,14 +18,16 @@ jobs:
       - script: docker run --name my-temp-container -v my-publish-volume:/app/publish my-dotnet-publish-container
         displayName: 'Run Docker Container'
 
-      - script: docker exec my-temp-container zip -r /app/publish/MoviesAPI.zip /app/publish
-        displayName: 'Zip Published Files'
-
-      - script: docker cp my-temp-container:/app/publish/MoviesAPI.zip $(Build.ArtifactStagingDirectory)/drop/Release
-        displayName: 'Copy Zip Archive to Artifact Staging Directory'
+      - script: docker cp my-temp-container:/app/publish $(Build.ArtifactStagingDirectory)/publish
+        displayName: 'Copy Published Files'
 
       - script: docker rm my-temp-container
         displayName: 'Remove Temporary Container'
+
+      - script: |
+          cd $(Build.ArtifactStagingDirectory)/publish
+          zip -r $(Build.ArtifactStagingDirectory)/drop/Release/MoviesAPI.zip .
+        displayName: 'Create Zip Archive'
 
       - task: PublishBuildArtifacts@1
         inputs:
