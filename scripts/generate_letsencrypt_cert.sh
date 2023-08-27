@@ -12,3 +12,5 @@ nslookup -type=txt _acme-challenge.$domain
 kubectl create secret tls tls-secret \
     --cert=/etc/letsencrypt/live/devtest.team/fullchain.pem \
     --key=/etc/letsencrypt/live/devtest.team/privkey.pem
+    
+kubectl create secret tls tls-secret --cert=live/devtest.team/fullchain.pem --key=live/devtest.team/privkey.pem
