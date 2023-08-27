@@ -25,6 +25,7 @@ jobs:
         displayName: 'Remove Temporary Container'
 
       - script: |
+          mkdir -p $(Build.ArtifactStagingDirectory)/drop/Release
           cd $(Build.ArtifactStagingDirectory)/publish
           zip -r $(Build.ArtifactStagingDirectory)/drop/Release/MoviesAPI.zip .
         displayName: 'Create Zip Archive'
