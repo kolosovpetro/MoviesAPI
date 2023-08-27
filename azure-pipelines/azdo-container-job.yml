@@ -1,0 +1,52 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - develop
+      - master
+  paths:
+    include:
+      - '*'
+
+pr:
+  branches:
+    include:
+      - develop
+      - master
+
+variables:
+  - name: buildPlatform
+    value: 'Any CPU'
+  - name: buildConfiguration
+    value: 'Release'
+  - name: projectPath
+    value: './MoviesAPI.Core/MoviesAPI.Core.csproj'
+
+stages:
+  - stage: 'Container_Job'
+    jobs:
+      - job: 'Container_Job'
+        displayName: 'Container_Job'
+        pool:
+          vmImage: 'ubuntu-latest'
+
+        steps:
+          - checkout: self
+            fetchDepth: 0
+
+          - task: UseDotNet@2
+            displayName: 'Install .NET 6.x SDK'
+            inputs:
+              packageType: sdk
+              version: 6.x
+
+          - script: docker build -t my-dotnet-build-container -f ContainerJob.Dockerfile .
+            displayName: 'Build Docker Container'
+
+          - script: docker run -v $(Build.ArtifactStagingDirectory):/app/publish my-dotnet-build-container
+            displayName: 'Run Docker Container'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              artifactName: 'build_output'
+              pathToPublish: $(Build.ArtifactStagingDirectory)

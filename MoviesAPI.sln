@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{E0D60CEC
 		Nginx_Config_Via_DNS.conf = Nginx_Config_Via_DNS.conf
 		Nginx_Config_Via_IP_Address.conf = Nginx_Config_Via_IP_Address.conf
 		.gitattributes = .gitattributes
+		ContainerJob.Dockerfile = ContainerJob.Dockerfile
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{AB02E391-C07B-41D3-B2C3-4BF6B3421697}"
@@ -38,6 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "azure-pipelines", "azure-pi
 		azure-pipelines\azdo-webapp-deploy.yml = azure-pipelines\azdo-webapp-deploy.yml
 		azure-pipelines\azdo-push-container-dockerhub.yml = azure-pipelines\azdo-push-container-dockerhub.yml
 		azure-pipelines\azdo-aks-deploy.yml = azure-pipelines\azdo-aks-deploy.yml
+		azure-pipelines\azdo-container-job.yml = azure-pipelines\azdo-container-job.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{59FD8C29-4E22-424C-A868-3F76476AC627}"
