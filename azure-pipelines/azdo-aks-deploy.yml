@@ -1,4 +1,5 @@
 trigger: none
+pr: none
 
 variables:
   - name: dockerRepository
@@ -104,8 +105,8 @@ stages:
                   inputs:
                     connectionType: 'Azure Resource Manager'
                     azureSubscriptionEndpoint: 'Movies_AKS_SP'
-                    azureResourceGroup: 'aks-k8s-rg'
-                    kubernetesCluster: 'aks-k8s'
+                    azureResourceGroup: 'rg-aks-aks42'
+                    kubernetesCluster: 'aks-aks42'
                     namespace: 'default'
                     command: 'apply'
                     useConfigurationFile: true

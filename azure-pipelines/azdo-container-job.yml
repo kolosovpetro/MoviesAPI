@@ -1,0 +1,36 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+  - job: PublishApp
+    steps:
+      - checkout: self
+
+      - script: docker build -t my-dotnet-publish-container -f ContainerJob.Dockerfile .
+        displayName: 'Build Docker Container'
+
+      - script: docker volume create my-publish-volume
+        displayName: 'Create Docker Volume'
+
+      - script: docker run --name my-temp-container -v my-publish-volume:/app/publish my-dotnet-publish-container
+        displayName: 'Run Docker Container'
+
+      - script: docker cp my-temp-container:/app/publish $(Build.ArtifactStagingDirectory)/publish
+        displayName: 'Copy Published Files'
+
+      - script: docker rm my-temp-container
+        displayName: 'Remove Temporary Container'
+
+      - script: |
+          mkdir -p $(Build.ArtifactStagingDirectory)/drop/Release
+          cd $(Build.ArtifactStagingDirectory)/publish
+          zip -r $(Build.ArtifactStagingDirectory)/drop/Release/MoviesAPI.zip .
+        displayName: 'Create Zip Archive'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          artifactName: 'drop'
+          pathToPublish: $(Build.ArtifactStagingDirectory)/drop
