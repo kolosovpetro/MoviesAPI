@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout: self
 
-      - script: docker build -t my-dotnet-publish-container -f Dockerfile .
+      - script: docker build -t my-dotnet-publish-container -f ContainerJob.Dockerfile .
         displayName: 'Build Docker Container'
 
       - script: docker volume create my-publish-volume
