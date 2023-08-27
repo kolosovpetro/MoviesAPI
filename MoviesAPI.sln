@@ -95,11 +95,28 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ca-cluster-issuer", "ca-cluster-issuer", "{92B25508-5417-46EE-B3EC-21E9FF31D300}"
 	ProjectSection(SolutionItems) = preProject
 		kubernetes\ca-cluster-issuer\cluster-issuer.yaml = kubernetes\ca-cluster-issuer\cluster-issuer.yaml
+		kubernetes\ca-cluster-issuer\cert-manager-values.yaml = kubernetes\ca-cluster-issuer\cert-manager-values.yaml
+		kubernetes\ca-cluster-issuer\letsencrypt-prod-cluster-issuer.yaml = kubernetes\ca-cluster-issuer\letsencrypt-prod-cluster-issuer.yaml
+		kubernetes\ca-cluster-issuer\README.md = kubernetes\ca-cluster-issuer\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ingress", "ingress", "{F13F30CF-4EA1-456D-9D22-5F759C355447}"
 	ProjectSection(SolutionItems) = preProject
 		kubernetes\ingress\movies-ingress.yaml = kubernetes\ingress\movies-ingress.yaml
+		kubernetes\ingress\movies-https-ingress.yaml = kubernetes\ingress\movies-https-ingress.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api-deployment-cluster-ip", "api-deployment-cluster-ip", "{F2C0B8C5-ACD5-4A72-B2CC-BA4B2C517DF7}"
+	ProjectSection(SolutionItems) = preProject
+		kubernetes\api-deployment-cluster-ip\api-configmap.yaml = kubernetes\api-deployment-cluster-ip\api-configmap.yaml
+		kubernetes\api-deployment-cluster-ip\api-deployment.yaml = kubernetes\api-deployment-cluster-ip\api-deployment.yaml
+		kubernetes\api-deployment-cluster-ip\api-service.yaml = kubernetes\api-deployment-cluster-ip\api-service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dashboard", "dashboard", "{F437CAA5-E01C-438D-AC6A-811560846852}"
+	ProjectSection(SolutionItems) = preProject
+		kubernetes\dashboard\dashboard-admin.yaml = kubernetes\dashboard\dashboard-admin.yaml
+		kubernetes\dashboard\README.md = kubernetes\dashboard\README.md
 	EndProjectSection
 EndProject
 Global
@@ -133,5 +150,7 @@ Global
 		{6E58D4CC-472A-4AC2-ADCD-4E0E025EA119} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
 		{92B25508-5417-46EE-B3EC-21E9FF31D300} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
 		{F13F30CF-4EA1-456D-9D22-5F759C355447} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
+		{F2C0B8C5-ACD5-4A72-B2CC-BA4B2C517DF7} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
+		{F437CAA5-E01C-438D-AC6A-811560846852} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
 	EndGlobalSection
 EndGlobal
