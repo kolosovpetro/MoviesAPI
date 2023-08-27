@@ -9,6 +9,6 @@ nslookup -type=txt _acme-challenge.$domain
 
 ## Create AKS secret with SSL cert
 
-sudo kubectl create secret tls tls-secret \
-    --cert=Certs/devtest.team/fullchain.pem \
-    --key=Certs/devtest.team/privkey.pem
+kubectl create secret tls tls-secret \
+    --cert=/etc/letsencrypt/live/devtest.team/fullchain.pem \
+    --key=/etc/letsencrypt/live/devtest.team/privkey.pem
