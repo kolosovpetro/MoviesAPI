@@ -15,6 +15,8 @@ pr:
       - master
 
 variables:
+  - name: solution
+    value: 'MoviesAPI.sln'
   - name: buildPlatform
     value: 'Any CPU'
   - name: buildConfiguration
@@ -42,10 +44,6 @@ stages:
           - task: gitversion/execute@0
             displayName: 'GitVersion Execute'
 
-          - script: |
-              echo "Upcoming semantic version: $(SemVer)"
-            displayName: 'Print semantic version'
-
           - bash: echo $Action$BuildVersion
             displayName: 'Set Build Version'
             env:
@@ -62,13 +60,16 @@ stages:
             displayName: 'Dotnet Restore'
             inputs:
               command: 'restore'
+              projects: '$(solution)'
+              restoreArguments: '--locked-mode'
               arguments: '--verbosity minimal'
 
           - task: DotNetCoreCLI@2
             displayName: 'Dotnet build $(buildConfiguration)'
             inputs:
               command: 'build'
-              arguments: '-p:Version=$(SemVer) --configuration $(buildConfiguration) --no-restore'
+              projects: '$(solution)'
+              arguments: '-p:Version=$(GitVersion.SemVer) --configuration $(buildConfiguration) --no-restore'
 
           - task: DotNetCoreCLI@2
             displayName: 'Dotnet Publish'
@@ -76,7 +77,7 @@ stages:
               command: 'publish'
               publishWebProjects: false
               projects: '$(projectPath)'
-              arguments: '-p:Version=$(SemVer) -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
+              arguments: '-c $(buildConfiguration) -p:Version=$(GitVersion.SemVer) -o $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
 
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifacts'
