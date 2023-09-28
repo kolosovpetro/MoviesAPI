@@ -27,7 +27,7 @@ namespace MoviesAPI.Core.Controllers
         private const string
             SectionName = "Application"; // it is reference to the Application event log section, not app name
 
-        private const string SourceName = "EventLogEntryDemo.API.SourceNew";
+        private const string SourceName = "MoviesAPI";
 
         public MoviesController(IMediator mediator, IMapper mapper)
         {
