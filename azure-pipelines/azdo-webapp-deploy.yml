@@ -2,16 +2,14 @@ trigger: none
 pr: none
 
 variables:
+  - name: solution
+    value: 'MoviesAPI.sln'
   - name: buildPlatform
     value: 'Any CPU'
   - name: buildConfiguration
     value: 'Release'
   - name: projectPath
-    value: './MoviesAPI.Core/MoviesAPI.Core.csproj'
-#  - name: IISSiteName
-#    value: 'moviesapi'
-#  - name: IISSitePhysicalPath
-#    value: '%SystemDrive%\inetpub\wwwroot\$(IISSiteName)'
+    value: 'MoviesAPI.Core/MoviesAPI.Core.csproj'
 
 stages:
   - stage: 'Build_Test'
@@ -33,10 +31,6 @@ stages:
           - task: gitversion/execute@0
             displayName: 'GitVersion Execute'
 
-          - script: |
-              echo "Upcoming semantic version: $(SemVer)"
-            displayName: 'Print semantic version'
-
           - bash: echo $Action$BuildVersion
             displayName: 'Set Build Version'
             env:
@@ -53,13 +47,16 @@ stages:
             displayName: 'Dotnet Restore'
             inputs:
               command: 'restore'
+              projects: '$(solution)'
+              restoreArguments: '--locked-mode'
               arguments: '--verbosity minimal'
 
           - task: DotNetCoreCLI@2
             displayName: 'Dotnet build $(buildConfiguration)'
             inputs:
               command: 'build'
-              arguments: '-p:Version=$(SemVer) --configuration $(buildConfiguration) --no-restore'
+              projects: '$(solution)'
+              arguments: '-p:Version=$(GitVersion.SemVer) --configuration $(buildConfiguration) --no-restore'
 
           - task: DotNetCoreCLI@2
             displayName: 'Dotnet Publish'
@@ -67,7 +64,7 @@ stages:
               command: 'publish'
               publishWebProjects: false
               projects: '$(projectPath)'
-              arguments: '-p:Version=$(SemVer) -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
+              arguments: '-c $(buildConfiguration) -p:Version=$(GitVersion.SemVer) -o $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
 
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifacts'
@@ -76,7 +73,7 @@ stages:
               ArtifactName: 'drop'
               publishLocation: 'Container'
 
-  - stage: 'dev'
+  - stage: 'yaml_env'
     displayName: 'Deploy Movies dev'
     dependsOn: Build_Test
     condition: succeeded('Build_Test')
@@ -85,8 +82,10 @@ stages:
         displayName: 'Deploy Movies dev'
         variables:
           - group: MOVIES_SETTINGS
+          - group: devtest.team_wildcard_certificate
+          - group: Movies_IIS_YAML_Settings
         environment:
-          name: dev
+          name: yaml
           resourceType: VirtualMachine
         strategy:
           runOnce:
@@ -100,8 +99,8 @@ stages:
                     EnableIIS: true
                     IISDeploymentType: 'IISWebsite'
                     ActionIISWebsite: 'CreateOrUpdateWebsite'
-                    WebsiteName: '$(IISSiteName)-$(Environment.Name)'
-                    WebsitePhysicalPath: '$(IISSitePhysicalPath)'
+                    WebsiteName: '$(IISSiteName)'
+                    WebsitePhysicalPath: '$(IISPhysicalPath)'
                     AddBinding: true
                     Bindings: |
                       {
@@ -109,7 +108,7 @@ stages:
                             {
                               "protocol":"http",
                               "ipAddress":"*",
-                              "hostname":"$(HostName)",
+                              "hostname":"$(IISSiteHostName)",
                               "port":"80",
                               "sslThumbprint":"",
                               "sniFlag":false
@@ -117,16 +116,16 @@ stages:
                             {
                               "protocol":"https",
                               "ipAddress":"*",
-                              "hostname":"$(HostName)",
+                              "hostname":"$(IISSiteHostName)",
                               "port":"443",
-                              "sslThumbprint":"$(CertThumbprint)",
+                              "sslThumbprint":"$(certificate_thumbprint)",
                               "sniFlag":false
                             }
                           ]
                       }
                     CreateOrUpdateAppPoolForWebsite: true
                     ConfigureAuthenticationForWebsite: true
-                    AppPoolNameForWebsite: '$(IISSiteName)-$(Environment.Name)'
+                    AppPoolNameForWebsite: '$(IISSiteName)'
                     DotNetVersionForWebsite: 'No Managed Code'
                     PipeLineModeForWebsite: 'Integrated'
                     AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
@@ -137,7 +136,7 @@ stages:
                 - task: IISWebAppDeploymentOnMachineGroup@0
                   displayName: 'IIS Web App Deploy'
                   inputs:
-                    WebSiteName: '$(IISSiteName)-$(Environment.Name)'
+                    WebSiteName: '$(IISSiteName)'
                     TakeAppOfflineFlag: true
-                    Package: '$(Pipeline.Workspace)/drop/$(BuildConfiguration)/MoviesAPI.Core.zip'
+                    Package: '$(Pipeline.Workspace)/drop/Release/*.zip'
                     JSONFiles: '**/appsettings.json'
