@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -18,7 +18,6 @@ namespace MoviesAPI.Core.Controllers
 {
     [ApiController]
     [Route("api/movies")]
-    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
     public class MoviesController : Controller, IMovieController
     {
         private readonly IMediator _mediator;
@@ -194,6 +193,8 @@ namespace MoviesAPI.Core.Controllers
 
         private static void WriteToWindowsEventLog(string message, EventLogEntryType type)
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return;
+
             var appLog = new EventLog(SectionName);
             var sourceName = CreateEventSource(SectionName);
             appLog.Source = sourceName;
@@ -205,6 +206,12 @@ namespace MoviesAPI.Core.Controllers
 
         private static string CreateEventSource(string currentAppName)
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Console.WriteLine("Not windows");
+                return SourceName;
+            }
+            
             var sourceExists = EventLog.SourceExists(SourceName);
 
             if (!sourceExists)
