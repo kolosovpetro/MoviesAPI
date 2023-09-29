@@ -2,6 +2,8 @@
 
 - How to setup SQL server and IIS deploy: https://trello.com/c/abEYNHOT
 - Windows VM with Terraform: https://trello.com/c/lEv89VzJ
+- Docker https://hub.docker.com/r/petrokolosov/movies-api
+- Docker https://hub.docker.com/r/petrokolosov/movies-api-k8s
 
 ASP NET Core WEB API with CQRS Architecture. Example of IIS Azure VM deploy example via Azure pipelines. Contains SSL
 config for IIS using cert bot.

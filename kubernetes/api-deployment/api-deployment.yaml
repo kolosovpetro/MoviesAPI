@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: movies-api
-          image: petrokolosov/movies-api:0.13.86
+          image: petrokolosov/movies-api:latest
           ports:
             - containerPort: 80
           env:
