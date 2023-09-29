@@ -111,7 +111,7 @@ stages:
                               "hostname":"$(IISSiteHostName)",
                               "port":"80",
                               "sslThumbprint":"",
-                              "sniFlag":false
+                              "sniFlag":true
                             },
                             {
                               "protocol":"https",
@@ -119,7 +119,7 @@ stages:
                               "hostname":"$(IISSiteHostName)",
                               "port":"443",
                               "sslThumbprint":"$(certificate_thumbprint)",
-                              "sniFlag":false
+                              "sniFlag":true
                             }
                           ]
                       }
@@ -190,12 +190,12 @@ stages:
 # TO TEST SNI WITH DIFFERENT DOMAINS
 
   - stage: 'test_sni'
-    displayName: 'Deploy Movies dev'
+    displayName: 'Deploy Movies SNI'
     dependsOn: Build_Test
     condition: succeeded('Build_Test')
     jobs:
       - deployment: Deploy_Movies_Dev
-        displayName: 'Deploy Movies dev'
+        displayName: 'Deploy Movies SNI'
         variables:
           - group: MOVIES_SETTINGS
           - group: razumovsky.me_wildcard_certificate
@@ -227,7 +227,7 @@ stages:
                               "hostname":"$(IISSiteHostName)",
                               "port":"80",
                               "sslThumbprint":"",
-                              "sniFlag":false
+                              "sniFlag":true
                             },
                             {
                               "protocol":"https",
@@ -235,7 +235,7 @@ stages:
                               "hostname":"$(IISSiteHostName)",
                               "port":"443",
                               "sslThumbprint":"$(certificate_thumbprint)",
-                              "sniFlag":false
+                              "sniFlag":true
                             }
                           ]
                       }
