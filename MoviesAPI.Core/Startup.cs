@@ -38,7 +38,7 @@ public class Startup
 
         services.AddSwaggerGen(c =>
         {
-            var version = Environment.GetEnvironmentVariable("MoviesVersion") ?? DefaultVersion;
+            var version = Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? DefaultVersion;
 
             c.EnableAnnotations();
             c.SwaggerDoc("v1", new OpenApiInfo { Title = $"CQRS Movies API {version}", Version = $"v{version}" });
