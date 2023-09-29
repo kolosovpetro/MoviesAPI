@@ -3,7 +3,6 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-ARG VERSION
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
@@ -14,6 +13,8 @@ COPY ["MoviesAPI.Requests/MoviesAPI.Requests.csproj", "MoviesAPI.Requests/"]
 RUN dotnet restore "MoviesAPI.Core/MoviesAPI.Core.csproj"
 COPY . .
 WORKDIR "/src/MoviesAPI.Core"
+
+ARG VERSION
 RUN dotnet build "MoviesAPI.Core.csproj" -c Release -p:Version=$VERSION -o /app/build
 
 FROM build AS publish
