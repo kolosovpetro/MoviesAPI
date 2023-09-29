@@ -59,7 +59,8 @@ jobs:
         run: |
           IMAGE_FULL_NAME="$USER/$REPOSITORY:$VERSION"
           echo "Image full name: $IMAGE_FULL_NAME"
-          docker build -t "$IMAGE_FULL_NAME" .
+          docker build -t "$IMAGE_FULL_NAME" --build-arg VERSION=$VERSION .
+          docker build -t "$USER/$REPOSITORY:latest" --build-arg VERSION=$VERSION .
         env:
           REPOSITORY: ${{ env.dockerRepository }}
           VERSION: ${{ env.GITVERSION_SEMVER }}
@@ -73,6 +74,7 @@ jobs:
           IMAGE_FULL_NAME="$USER/$REPOSITORY:$VERSION"
           echo "Image full name: $IMAGE_FULL_NAME"
           docker push "$IMAGE_FULL_NAME"
+          docker push "$USER/$REPOSITORY:latest"
         env:
           REPOSITORY: ${{ env.dockerRepository }}
           VERSION: ${{ env.GITVERSION_SEMVER }}
