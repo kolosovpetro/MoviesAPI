@@ -140,3 +140,48 @@ stages:
                     TakeAppOfflineFlag: true
                     Package: '$(Pipeline.Workspace)/drop/Release/*.zip'
                     JSONFiles: '**/appsettings.json'
+                    
+  - stage: 'yaml_virtual_env'
+    displayName: 'Deploy Movies Virtual dev'
+    dependsOn: yaml_env
+    condition: succeeded('yaml_env')
+    jobs:
+      - deployment: Deploy_Movies_Virtual_Dev
+        displayName: 'Deploy Movies Virtual dev'
+        variables:
+          - group: MOVIES_SETTINGS
+          - group: devtest.team_wildcard_certificate
+          - group: Movies_IIS_Virtual_YAML_Settings
+        environment:
+          name: yaml
+          resourceType: VirtualMachine
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: drop
+                  
+                - task: IISWebAppManagementOnMachineGroup@0
+                  displayName: 'Manage IISWebApplication'
+                  inputs:
+                    IISDeploymentType: IISWebApplication
+                    WebsiteName: '$(IISSiteName)'
+                    WebsitePhysicalPath: '$(IISPhysicalPath)'
+                    CreateOrUpdateAppPoolForWebsite: true
+                    AppPoolNameForWebsite: '$(IISSiteName)'
+                    DotNetVersionForWebsite: 'No Managed Code'
+                    ParentWebsiteNameForApplication: '$(IISSiteName)'
+                    VirtualPathForApplication: '/$(VirtualApplicationName)'
+                    PhysicalPathForApplication: '$(IISPhysicalPath)'
+                    CreateOrUpdateAppPoolForApplication: true
+                    AppPoolNameForApplication: '$(VirtualApplicationPool)'
+                    DotNetVersionForApplication: 'No Managed Code'
+
+                - task: IISWebAppDeploymentOnMachineGroup@0
+                  displayName: 'Deploy IIS Website'
+                  inputs:
+                    WebSiteName: '$(IISSiteName)'
+                    VirtualApplication: '$(VirtualApplicationName)'
+                    TakeAppOfflineFlag: true
+                    JSONFiles: '**/appsettings.json'
