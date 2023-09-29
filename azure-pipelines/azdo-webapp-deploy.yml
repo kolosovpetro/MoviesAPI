@@ -189,7 +189,7 @@ stages:
                     
 # TO TEST SNI WITH DIFFERENT DOMAINS
 
-  - stage: 'yaml_env'
+  - stage: 'test_sni'
     displayName: 'Deploy Movies dev'
     dependsOn: Build_Test
     condition: succeeded('Build_Test')
