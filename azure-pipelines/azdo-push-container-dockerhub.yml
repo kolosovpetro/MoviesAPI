@@ -40,7 +40,8 @@ stages:
           - bash: |
               IMAGE_FULL_NAME="$USER/$REPOSITORY:$VERSION"
               echo "Image full name: $IMAGE_FULL_NAME"
-              docker build -t "$IMAGE_FULL_NAME" .
+              docker build -t "$IMAGE_FULL_NAME" --build-arg VERSION=$VERSION .
+              docker build -t "$USER/$REPOSITORY:latest"" --build-arg VERSION=$VERSION .
             env:
               REPOSITORY: ${{ variables.dockerRepository }}
               VERSION: $(GitVersion.SemVer)
