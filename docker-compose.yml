@@ -4,6 +4,8 @@ services:
   api:
     build:
       context: .
+      args:
+        VERSION: '1.2.3.4'
       dockerfile: Dockerfile
     ports:
       - "8090:80"
