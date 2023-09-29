@@ -183,5 +183,6 @@ stages:
                   inputs:
                     WebSiteName: '$(IISSiteName)'
                     VirtualApplication: '$(VirtualApplicationName)'
+                    Package: '$(Pipeline.Workspace)/drop/Release/*.zip'
                     TakeAppOfflineFlag: true
                     JSONFiles: '**/appsettings.json'
