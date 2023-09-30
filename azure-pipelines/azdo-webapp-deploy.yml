@@ -148,7 +148,7 @@ stages:
                     WindowsAuthenticationForWebsite: false
 
                 - task: IISWebAppDeploymentOnMachineGroup@0
-                  displayName: 'IIS WebSite Deploy'
+                  displayName: 'Deploy IIS Website'
                   inputs:
                     WebSiteName: '$(IISSiteName)'
                     TakeAppOfflineFlag: true
@@ -265,7 +265,7 @@ stages:
                     WindowsAuthenticationForWebsite: false
 
                 - task: IISWebAppDeploymentOnMachineGroup@0
-                  displayName: 'IIS WebSite Deploy'
+                  displayName: 'Deploy IIS Website'
                   inputs:
                     WebSiteName: '$(IISSiteName)'
                     TakeAppOfflineFlag: true
