@@ -22,6 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{E0D60CEC
 		Nginx_Config_Via_IP_Address.conf = Nginx_Config_Via_IP_Address.conf
 		.gitattributes = .gitattributes
 		ContainerJob.Dockerfile = ContainerJob.Dockerfile
+		Azure_DevOps_Library.xlsx = Azure_DevOps_Library.xlsx
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{AB02E391-C07B-41D3-B2C3-4BF6B3421697}"
@@ -119,6 +120,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dashboard", "dashboard", "{
 	ProjectSection(SolutionItems) = preProject
 		kubernetes\dashboard\dashboard-admin.yaml = kubernetes\dashboard\dashboard-admin.yaml
 		kubernetes\dashboard\README.md = kubernetes\dashboard\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{98BEA01E-0D05-4AF0-9681-09EA90B601F8}"
+	ProjectSection(SolutionItems) = preProject
+		img\01_Entire_Library.png = img\01_Entire_Library.png
+		img\02_IIS_UI_Release_Settings.png = img\02_IIS_UI_Release_Settings.png
+		img\03_IIS_UI_Release_VirtualApplication_Settings.png = img\03_IIS_UI_Release_VirtualApplication_Settings.png
+		img\04_IIS_YAML_Release_Settings.png = img\04_IIS_YAML_Release_Settings.png
+		img\05_IIS_YAML_Release_VirtualApplication_Settings.png = img\05_IIS_YAML_Release_VirtualApplication_Settings.png
+		img\06_Movies_Appsettings.png = img\06_Movies_Appsettings.png
+		img\07_devtest.team_wildcard_certificate.png = img\07_devtest.team_wildcard_certificate.png
+		img\08_razumovsky.me_wildcard_certificate.png = img\08_razumovsky.me_wildcard_certificate.png
+		img\09_SQL_server_login_settings1.png = img\09_SQL_server_login_settings1.png
+		img\10_SQL_server_login_settings2.png = img\10_SQL_server_login_settings2.png
+		img\11_SQL_server_configuration.png = img\11_SQL_server_configuration.png
 	EndProjectSection
 EndProject
 Global

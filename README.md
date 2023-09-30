@@ -1,16 +1,16 @@
 # Movies API
 
-- How to setup SQL server and IIS deploy: https://trello.com/c/abEYNHOT
-- Windows VM with Terraform: https://trello.com/c/lEv89VzJ
-- Docker https://hub.docker.com/r/petrokolosov/movies-api
-- Docker https://hub.docker.com/r/petrokolosov/movies-api-k8s
+- AZ400-7. Deploy .NET Core webapp to IIS on Windows VM: https://trello.com/c/abEYNHOT
+- AZ400-155. Automate Azure Windows VM creation using Terraform and custom script extensions: https://trello.com/c/lEv89VzJ
+- DevOps Project: https://dev.azure.com/PetroKolosovProjects/MoviesAPI
+- DockerHub: https://hub.docker.com/r/petrokolosov/movies-api
+- DockerHub: https://hub.docker.com/r/petrokolosov/movies-api-k8s
 
-ASP NET Core WEB API with CQRS Architecture. Example of IIS Azure VM deploy example via Azure pipelines. Contains SSL
-config for IIS using cert bot.
+ASP NET Core WEB API with CQRS Architecture. 
+Example of IIS Azure VM deploy example via Azure pipelines. 
+Contains SSL config for IIS using cert bot.
 
-PS. I'd never think that will come back to this demo project from long past.
-
-This is to test jenkins webhook.
+PS. I'd never think that I will come back to this demo project from long past.
 
 ## Kubernetes commands
 
@@ -38,10 +38,6 @@ This is to test jenkins webhook.
 
 - `docker build -t "movies:latest" .`
 - `docker run -d -p 9000:80 -e "ShouldMigrate=false" --name movies-test-run "movies:latest"`
-
-## Azure DevOps Library Settings
-
-![./img/settings.png](./img/Library_settings.PNG)
 
 ## Notes
 
