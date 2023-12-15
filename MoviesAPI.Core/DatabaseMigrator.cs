@@ -28,11 +28,11 @@ public static class DatabaseMigrator
         try
         {
             context.Database.Migrate();
-            LoggerToFile.PrintToLog("Migration successful.");
+            //LoggerToFile.PrintToLog("Migration successful.");
         }
         catch (Exception e)
         {
-            LoggerToFile.PrintExceptionToFile(e);
+            //LoggerToFile.PrintExceptionToFile(e);
             Console.WriteLine(e);
             throw;
         }

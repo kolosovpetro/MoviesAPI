@@ -11,11 +11,11 @@ namespace MoviesAPI.Core
             try
             {
                 CreateHostBuilder(args).Build().Run();
-                LoggerToFile.PrintToLog("Main successful.");
+                //LoggerToFile.PrintToLog("Main successful.");
             }
             catch (Exception e)
             {
-                LoggerToFile.PrintExceptionToFile(e);
+                //LoggerToFile.PrintExceptionToFile(e);
                 Console.WriteLine(e);
                 throw;
             }
@@ -28,13 +28,13 @@ namespace MoviesAPI.Core
                 var result =  Host.CreateDefaultBuilder(args)
                     .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
 
-                LoggerToFile.PrintToLog("CreateHostBuilder successful.");
+                //LoggerToFile.PrintToLog("CreateHostBuilder successful.");
                 
                 return result;
             }
             catch (Exception e)
             {
-                LoggerToFile.PrintExceptionToFile(e);
+                //LoggerToFile.PrintExceptionToFile(e);
                 Console.WriteLine(e);
                 throw;
             }
