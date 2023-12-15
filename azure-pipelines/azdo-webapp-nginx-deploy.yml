@@ -119,5 +119,5 @@ stages:
                   displayName: 'Copy Artifacts to Site Folder'
                   
                 - script:
-                    unzip -o "$(NginxPhysicalPath)/$(artifactName)" -d "$(NginxPhysicalPath)"
+                    sudo unzip -o "$(NginxPhysicalPath)/$(artifactName)" -d "$(NginxPhysicalPath)"
                   displayName: 'Unzip Artifacts to Site Folder'
