@@ -18,8 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{E0D60CEC
 		Jenkinsfile = Jenkinsfile
 		docker-compose.yml = docker-compose.yml
 		moviesapi.service = moviesapi.service
-		Nginx_Config_Via_DNS.conf = Nginx_Config_Via_DNS.conf
-		Nginx_Config_Via_IP_Address.conf = Nginx_Config_Via_IP_Address.conf
 		.gitattributes = .gitattributes
 		ContainerJob.Dockerfile = ContainerJob.Dockerfile
 		Azure_DevOps_Library.xlsx = Azure_DevOps_Library.xlsx
@@ -135,6 +133,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{98BEA01E-0D0
 		img\09_SQL_server_login_settings1.png = img\09_SQL_server_login_settings1.png
 		img\10_SQL_server_login_settings2.png = img\10_SQL_server_login_settings2.png
 		img\11_SQL_server_configuration.png = img\11_SQL_server_configuration.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{C13F247F-D9EC-416B-821C-414C8A37B9B7}"
+	ProjectSection(SolutionItems) = preProject
+		nginx\Nginx_Config_Via_DNS.conf = nginx\Nginx_Config_Via_DNS.conf
+		nginx\Nginx_Config_Via_IP_Address.conf = nginx\Nginx_Config_Via_IP_Address.conf
 	EndProjectSection
 EndProject
 Global
