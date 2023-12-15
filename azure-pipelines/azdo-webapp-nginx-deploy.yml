@@ -23,6 +23,10 @@ variables:
     value: 'Release'
   - name: projectPath
     value: 'MoviesAPI.Core/MoviesAPI.Core.csproj'
+  - name: artifactFolder
+    value: 'drop'
+  - name: artifactName
+    value: 'MoviesAPI.Core.zip'
 
 stages:
   - stage: 'Build_Test'
@@ -83,7 +87,7 @@ stages:
             displayName: 'Publish Artifacts'
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-              ArtifactName: 'drop'
+              ArtifactName: '$(artifactFolder)'
               publishLocation: 'Container'
 
   - stage: 'Nginx_YAML_Release'
@@ -111,5 +115,9 @@ stages:
                   displayName: 'Create Site Folder'
                   
                 - script:
-                    sudo cp -r "$(Agent.BuildDirectory)/drop/$(buildConfiguration)/MoviesAPI.Core.zip" "$(NginxPhysicalPath)"
+                    sudo cp -r "$(Agent.BuildDirectory)/$(artifactFolder)/$(buildConfiguration)/$(artifactName)" "$(NginxPhysicalPath)"
                   displayName: 'Copy Artifacts to Site Folder'
+                  
+                - script:
+                    unzip -o "$(NginxPhysicalPath)/$(artifactName)" -d "$(NginxPhysicalPath)"
+                  displayName: 'Unzip Artifacts to Site Folder'
