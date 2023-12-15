@@ -1,0 +1,13 @@
+[Unit]
+Description=Movies API Backend Service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/razumovsky_r/mango-backend
+ExecStart=/home/razumovsky_r/mango-backend/MangoAPI.Presentation
+User=razumovsky_r
+Group=razumovsky_r
+
+[Install]
+WantedBy=multi-user.target
