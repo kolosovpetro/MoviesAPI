@@ -82,6 +82,13 @@ stages:
               publishWebProjects: false
               projects: '$(projectPath)'
               arguments: '-c $(buildConfiguration) -p:Version=$(GitVersion.SemVer) -o $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
+              
+          - task: CopyFiles@2
+            displayName: 'Copy Scripts'
+            inputs:
+              SourceFolder: '$(System.DefaultWorkingDirectory)/scripts'
+              Contents: '**'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
 
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifacts'
@@ -135,15 +142,21 @@ stages:
                     targetFiles: '**/appsettings.json'
                     
                 - script:
-                    port=$(lsof -t -i :5000 | head -n 1 | grep -v "PID")
+                    sudo chmod +x kill_port_if_used.sh
+                    ./kill_port_if_used.sh
+                  workingDirectory: '$(NginxPhysicalPath)'
+                  displayName: 'Kill port 5000 if used'
                     
-                    if [ -n "$port" ]; then
-                      echo "Port 5000 is not in use"
-                    else
-                      echo "Port 5000 is in use"
-                      kill -9 $port
-                    fi
-                  displayName: 'Kill Port 5000'
+#                - script:
+#                    port=$(lsof -t -i :5000 | head -n 1 | grep -v "PID")
+#                    
+#                    if [ -n "$port" ]; then
+#                      echo "Port 5000 is not in use"
+#                    else
+#                      echo "Port 5000 is in use"
+#                      kill -9 $port
+#                    fi
+#                  displayName: 'Kill Port 5000'
                   
                 - script:
                     dotnet "$(NginxPhysicalPath)/MoviesAPI.Core.dll"
