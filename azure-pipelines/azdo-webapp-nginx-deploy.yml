@@ -135,8 +135,9 @@ stages:
                     targetFiles: '**/appsettings.json'
                     
                 - script:
-                    port=$(lsof -t -i :5000 | head -n 1 | grep -v "PID")
-                    if [ -z "$port" ]
+                    port=$(lsof -t -i :5000 | head -n 1 | grep -v "PID");
+                    
+                    if [ -n "$port" ];
                     then
                       echo "Port 5000 is not in use"
                     else
