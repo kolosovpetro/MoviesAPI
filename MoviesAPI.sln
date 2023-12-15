@@ -35,15 +35,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "azure-pipelines", "azure-pi
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines\azdo-owasp-scan.yml = azure-pipelines\azdo-owasp-scan.yml
 		azure-pipelines\azdo-webapp-build.yml = azure-pipelines\azdo-webapp-build.yml
-		azure-pipelines\azdo-webapp-deploy.yml = azure-pipelines\azdo-webapp-deploy.yml
 		azure-pipelines\azdo-push-container-dockerhub.yml = azure-pipelines\azdo-push-container-dockerhub.yml
 		azure-pipelines\azdo-aks-deploy.yml = azure-pipelines\azdo-aks-deploy.yml
 		azure-pipelines\azdo-container-job.yml = azure-pipelines\azdo-container-job.yml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{59FD8C29-4E22-424C-A868-3F76476AC627}"
-	ProjectSection(SolutionItems) = preProject
-		azure-pipelines\templates\dotnet-build-steps-template.yml = azure-pipelines\templates\dotnet-build-steps-template.yml
+		azure-pipelines\azdo-webapp-nginx-deploy.yml = azure-pipelines\azdo-webapp-nginx-deploy.yml
+		azure-pipelines\azdo-webapp-iis-deploy.yml = azure-pipelines\azdo-webapp-iis-deploy.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{889E7444-C4BA-4528-B06A-82513880E1CA}"
@@ -166,7 +162,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F1E30713-11AD-40FD-8BF1-0B119F2CBCD8} = {AB02E391-C07B-41D3-B2C3-4BF6B3421697}
-		{59FD8C29-4E22-424C-A868-3F76476AC627} = {36B782C0-AA27-437B-B7D3-0878C7F832D8}
 		{F561B0A4-8299-41E2-B24E-A62B65EFA7B9} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
 		{A9B5420D-1707-4F7A-B1FF-F4C6652BD828} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
 		{6E58D4CC-472A-4AC2-ADCD-4E0E025EA119} = {785ABC94-A180-4060-9DCA-AE775DD49E42}
