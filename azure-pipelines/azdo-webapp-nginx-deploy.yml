@@ -110,19 +110,23 @@ stages:
               steps:
                 - download: current
                   artifact: drop
-                  
+
                 - script:
                     sudo mkdir -p "$(NginxPhysicalPath)"
                   displayName: 'Create Site Folder'
-                  
+
                 - script:
                     sudo cp -r "$(Agent.BuildDirectory)/$(artifactFolder)/$(buildConfiguration)/$(artifactName)" "$(NginxPhysicalPath)"
                   displayName: 'Copy Artifacts to Site Folder'
-                  
+
                 - script:
                     sudo unzip -o "$(NginxPhysicalPath)/$(artifactName)" -d "$(NginxPhysicalPath)"
                   displayName: 'Unzip Artifacts to Site Folder'
-                  
+
+                - script:
+                    sudo chmod -R 777 "$(NginxPhysicalPath)/appsettings.json"
+                  displayName: 'Change Permissions to appsettings.json'
+
                 - task: FileTransform@1
                   displayName: 'File Transform: appsettings.json'
                   inputs:
