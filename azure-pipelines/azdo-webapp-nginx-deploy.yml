@@ -81,7 +81,7 @@ stages:
               command: 'publish'
               publishWebProjects: false
               projects: '$(projectPath)'
-              arguments: '-c $(buildConfiguration) -p:Version=$(GitVersion.SemVer) -o $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
+              arguments: '-c $(buildConfiguration) -p:Version=$(GitVersion.SemVer) -o $(Build.ArtifactStagingDirectory)/$(buildConfiguration) -r linux-x64 --no-build'
 
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifacts'
