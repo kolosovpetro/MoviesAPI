@@ -100,6 +100,7 @@ stages:
         variables:
           - group: Movies_Appsettings
           - group: Nginx_YAML_Release_Settings
+          - group: Nginx_Movies_Appsettings
         environment:
           name: nginxyaml
           resourceType: VirtualMachine
@@ -121,3 +122,10 @@ stages:
                 - script:
                     sudo unzip -o "$(NginxPhysicalPath)/$(artifactName)" -d "$(NginxPhysicalPath)"
                   displayName: 'Unzip Artifacts to Site Folder'
+                  
+                - task: FileTransform@1
+                  displayName: 'File Transform: appsettings.json'
+                  inputs:
+                    fileType: json
+                    folderPath: '$(NginxPhysicalPath)'
+                    targetFiles: '**/appsettings.json'
