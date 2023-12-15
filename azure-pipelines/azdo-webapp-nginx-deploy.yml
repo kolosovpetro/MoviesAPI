@@ -105,3 +105,11 @@ stages:
               steps:
                 - download: current
                   artifact: drop
+                  
+                - script:
+                    sudo mkdir -p "$(NginxPhysicalPath)"
+                  displayName: 'Create Site Folder'
+                  
+                - script:
+                    sudo cp -r "$(Agent.BuildDirectory)/drop/$(buildConfiguration)/MoviesAPI.Core.zip" "$(NginxPhysicalPath)"
+                  displayName: 'Copy Artifacts to Site Folder'
