@@ -107,6 +107,7 @@ stages:
         variables:
           - group: Nginx_YAML_Release_Settings
           - group: Nginx_Movies_Appsettings
+          - group: devtest.team_wildcard_certificate
         environment:
           name: nginxyaml
           resourceType: VirtualMachine
@@ -175,3 +176,21 @@ stages:
                     ./idempotent_service_run.sh
                   workingDirectory: '$(NginxPhysicalPath)'
                   displayName: 'Start service'
+                  
+                - script: |
+                    sudo chmod 600 $(NginxConfigPath)
+                    sudo cat >>$(NginxConfigPath)/$(NginxConfigFileName) <<END
+                    server {
+                      server_name $(NginxSiteHostName);
+
+                      location / {
+                        include proxy_params;
+                        proxy_pass http://127.0.0.1:5000;
+                      }
+                    }
+                    END
+                  displayName: 'Create NGINX config'
+                  
+                - script: |
+                    sudo nginx -T
+                  displayName: 'Check NGINX config'
