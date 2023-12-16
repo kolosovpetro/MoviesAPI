@@ -171,8 +171,7 @@ stages:
                   displayName: 'Copy service'
                   
                 - script: |
-                    sudo systemctl daemon-reload
-                    sudo systemctl enable movies.service
-                    sudo systemctl start movies.service
-                    sudo systemctl status movies.service
+                    sudo chmod +x idempotent_service_run.sh
+                    ./idempotent_service_run.sh
+                  workingDirectory: '$(NginxPhysicalPath)'
                   displayName: 'Start service'
