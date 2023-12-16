@@ -141,14 +141,15 @@ stages:
                     folderPath: '$(NginxPhysicalPath)'
                     targetFiles: '**/appsettings.json'
                     
-                - script:
-                    sudo chmod +x kill_port_if_used.sh
-                    ./kill_port_if_used.sh
-                  workingDirectory: '$(NginxPhysicalPath)'
-                  displayName: 'Kill port 5000 if used'
+#                - script:
+#                    sudo chmod +x kill_port_if_used.sh
+#                    ./kill_port_if_used.sh
+#                  workingDirectory: '$(NginxPhysicalPath)'
+#                  displayName: 'Kill port 5000 if used'
 
                 - script: |
                     sudo chmod 777 $(NginxPhysicalPath)
+                    sudo rm -f $(NginxPhysicalPath)/movies.service
                     sudo cat >>$(NginxPhysicalPath)/movies.service <<END
                     [Unit]
                     Description=Movies API Backend Service
@@ -191,12 +192,12 @@ stages:
                     
                       location /swagger {
                         include proxy_params;
-                        proxy_pass http://127.0.0.1:8090;
+                        proxy_pass http://127.0.0.1:5000;
                       }
 
                       location /api {
                         include proxy_params;
-                        proxy_pass http://127.0.0.1:8090;
+                        proxy_pass http://127.0.0.1:5000;
                       }
                     }
                     END
