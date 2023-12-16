@@ -148,7 +148,7 @@ stages:
                   displayName: 'Kill port 5000 if used'
 
                 - script: |
-                    cat >>/etc/systemd/system/movies.service <<END
+                    sudo cat >>/etc/systemd/system/movies.service <<END
                     [Unit]
                     Description=Movies API Backend Service
                     After=network.target
