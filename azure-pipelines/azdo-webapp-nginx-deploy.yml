@@ -112,6 +112,8 @@ stages:
         environment:
           name: nginxyaml
           resourceType: VirtualMachine
+          resourceName: vm-ubuntu-p02
+          #tags: 'web'
         strategy:
           runOnce:
             deploy:
