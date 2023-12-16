@@ -127,11 +127,11 @@ stages:
                   displayName: 'Copy Artifacts to Site Folder'
 
                 - script:
-                    sudo unzip -o "$(NginxPhysicalPath)/$(artifactName)" -d "$(NginxPhysicalPath)"
+                    sudo unzip -o "$(NginxPhysicalPath)/$(buildConfiguration)/$(artifactName)" -d "$(NginxPhysicalPath)"
                   displayName: 'Unzip Artifacts to Site Folder'
 
                 - script:
-                    sudo chmod -R 777 "$(NginxPhysicalPath)/appsettings.json"
+                    sudo chmod -R 777 "$(NginxPhysicalPath)/$(buildConfiguration)/appsettings.json"
                   displayName: 'Change Permissions to appsettings.json'
 
                 - task: FileTransform@1
@@ -144,7 +144,7 @@ stages:
                 - script:
                     sudo chmod +x kill_port_if_used.sh
                     ./kill_port_if_used.sh
-                  workingDirectory: '$(NginxPhysicalPath)'
+                  workingDirectory: '$(NginxPhysicalPath)/$(buildConfiguration)'
                   displayName: 'Kill port 5000 if used'
                     
 #                - script:
@@ -159,5 +159,6 @@ stages:
 #                  displayName: 'Kill Port 5000'
                   
                 - script:
-                    dotnet "$(NginxPhysicalPath)/MoviesAPI.Core.dll"
+                    dotnet MoviesAPI.Core.dll
+                  workingDirectory: '$(NginxPhysicalPath)/$(buildConfiguration)'
                   displayName: 'Start MoviesAPI.Core'
