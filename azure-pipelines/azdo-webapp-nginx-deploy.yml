@@ -146,8 +146,33 @@ stages:
                     ./kill_port_if_used.sh
                   workingDirectory: '$(NginxPhysicalPath)'
                   displayName: 'Kill port 5000 if used'
+
+                - script: |
+                    cat >>/etc/systemd/system/movies.service <<END
+                    [Unit]
+                    Description=Movies API Backend Service
+                    After=network.target
+  
+                    [Service]
+                    Type=simple
+                    WorkingDirectory=$(NginxPhysicalPath)
+                    ExecStart=$(NginxPhysicalPath)/MoviesAPI.Core
+                    User=razumovsky_r
+                    Group=razumovsky_r
+  
+                    [Install]
+                    WantedBy=multi-user.target
+                    END
+                  displayName: 'Create service'
                   
-                - script:
-                    dotnet MoviesAPI.Core.dll
-                  workingDirectory: '$(NginxPhysicalPath)'
-                  displayName: 'Start MoviesAPI.Core'
+                - script: |
+                    sudo systemctl daemon-reload
+                    sudo systemctl enable movies.service
+                    sudo systemctl start movies.service
+                    sudo systemctl status movies.service
+                  displayName: 'Start service'
+                  
+#                - script:
+#                    dotnet MoviesAPI.Core.dll
+#                  workingDirectory: '$(NginxPhysicalPath)'
+#                  displayName: 'Start MoviesAPI.Core'
