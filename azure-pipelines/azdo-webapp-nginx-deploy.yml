@@ -148,6 +148,7 @@ stages:
                   displayName: 'Kill port 5000 if used'
 
                 - script: |
+                    sudo chmod 777 $(NginxPhysicalPath)
                     sudo cat >>$(NginxPhysicalPath)/movies.service <<END
                     [Unit]
                     Description=Movies API Backend Service
