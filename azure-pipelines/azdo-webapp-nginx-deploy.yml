@@ -148,7 +148,7 @@ stages:
                   displayName: 'Kill port 5000 if used'
 
                 - script: |
-                    sudo cat >>/etc/systemd/system/movies.service <<END
+                    sudo cat >>$(NginxPhysicalPath)/movies.service <<END
                     [Unit]
                     Description=Movies API Backend Service
                     After=network.target
@@ -164,6 +164,13 @@ stages:
                     WantedBy=multi-user.target
                     END
                   displayName: 'Create service'
+                  
+                - task: CopyFiles@2
+                  displayName: 'Copy service'
+                  inputs:
+                    SourceFolder: '$(NginxPhysicalPath)'
+                    Contents: 'movies.service'
+                    TargetFolder: '/etc/systemd/system/'
                   
                 - script: |
                     sudo systemctl daemon-reload
