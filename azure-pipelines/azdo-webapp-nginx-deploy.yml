@@ -4,6 +4,7 @@ trigger:
     include:
       - develop
       - master
+      - ubuntu-deploy-yaml
   paths:
     include:
       - '*'
