@@ -178,7 +178,7 @@ stages:
                   displayName: 'Start service'
                   
                 - script: |
-                    sudo chmod 600 $(NginxConfigPath)
+                    sudo chmod 777 $(NginxConfigPath)
                     sudo cat >>$(NginxConfigPath)/$(NginxConfigFileName) <<END
                     server {
                       server_name $(NginxSiteHostName);
