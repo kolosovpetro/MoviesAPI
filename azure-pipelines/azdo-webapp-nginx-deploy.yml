@@ -123,7 +123,7 @@ stages:
                   displayName: 'Create Site Folder'
 
                 - script:
-                    sudo cp -r "$(Agent.BuildDirectory)/$(artifactFolder)/$(buildConfiguration)/$(artifactName)" "$(NginxPhysicalPath)"
+                    sudo cp -r "$(Agent.BuildDirectory)/$(artifactFolder)/$(buildConfiguration)" "$(NginxPhysicalPath)"
                   displayName: 'Copy Artifacts to Site Folder'
 
                 - script:
