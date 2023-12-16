@@ -168,7 +168,7 @@ stages:
                   
                 - script: |
                     sudo chmod 600 /etc/systemd/system/
-                    cp $(NginxPhysicalPath)/movies.service /etc/systemd/system/
+                    sudo cp $(NginxPhysicalPath)/movies.service /etc/systemd/system/
                   displayName: 'Copy service'
                   
 #                - task: CopyFiles@2
