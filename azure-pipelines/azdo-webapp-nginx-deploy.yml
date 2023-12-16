@@ -187,6 +187,16 @@ stages:
                         include proxy_params;
                         proxy_pass http://127.0.0.1:5000;
                       }
+                    
+                      location /swagger {
+                        include proxy_params;
+                        proxy_pass http://127.0.0.1:8090;
+                      }
+
+                      location /api {
+                        include proxy_params;
+                        proxy_pass http://127.0.0.1:8090;
+                      }
                     }
                     END
                   displayName: 'Create NGINX config'
