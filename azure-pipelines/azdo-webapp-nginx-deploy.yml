@@ -179,6 +179,7 @@ stages:
                   
                 - script: |
                     sudo chmod 777 $(NginxConfigPath)
+                    sudo rm -f $(NginxConfigPath)/$(NginxConfigFileName)
                     sudo cat >>$(NginxConfigPath)/$(NginxConfigFileName) <<END
                     server {
                       server_name $(NginxSiteHostName);
