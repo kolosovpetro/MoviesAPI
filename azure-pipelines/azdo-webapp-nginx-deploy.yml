@@ -146,19 +146,8 @@ stages:
                     ./kill_port_if_used.sh
                   workingDirectory: '$(NginxPhysicalPath)'
                   displayName: 'Kill port 5000 if used'
-                    
-#                - script:
-#                    port=$(lsof -t -i :5000 | head -n 1 | grep -v "PID")
-#                    
-#                    if [ -n "$port" ]; then
-#                      echo "Port 5000 is not in use"
-#                    else
-#                      echo "Port 5000 is in use"
-#                      kill -9 $port
-#                    fi
-#                  displayName: 'Kill Port 5000'
                   
                 - script:
                     dotnet MoviesAPI.Core.dll
-                  workingDirectory: '$(NginxPhysicalPath)/$(buildConfiguration)'
+                  workingDirectory: '$(NginxPhysicalPath)'
                   displayName: 'Start MoviesAPI.Core'
