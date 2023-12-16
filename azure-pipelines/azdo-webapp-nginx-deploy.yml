@@ -140,12 +140,6 @@ stages:
                     fileType: json
                     folderPath: '$(NginxPhysicalPath)'
                     targetFiles: '**/appsettings.json'
-                    
-#                - script:
-#                    sudo chmod +x kill_port_if_used.sh
-#                    ./kill_port_if_used.sh
-#                  workingDirectory: '$(NginxPhysicalPath)'
-#                  displayName: 'Kill port 5000 if used'
 
                 - script: |
                     sudo chmod 777 $(NginxPhysicalPath)
@@ -204,5 +198,10 @@ stages:
                   displayName: 'Create NGINX config'
                   
                 - script: |
+                    sudo systemctl restart nginx
+                    sudo systemctl status nginx
+                  displayName: 'Restart NGINX'
+                  
+                - script: |
                     sudo nginx -T
-                  displayName: 'Check NGINX config'
+                  displayName: 'Test NGINX config'
