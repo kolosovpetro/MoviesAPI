@@ -123,15 +123,15 @@ stages:
                   displayName: 'Create Site Folder'
 
                 - script:
-                    sudo cp -r "$(Agent.BuildDirectory)/$(artifactFolder)/$(buildConfiguration)" "$(NginxPhysicalPath)"
+                    sudo cp -r "$(Agent.BuildDirectory)/$(artifactFolder)/$(buildConfiguration)/." "$(NginxPhysicalPath)"
                   displayName: 'Copy Artifacts to Site Folder'
 
                 - script:
-                    sudo unzip -o "$(NginxPhysicalPath)/$(buildConfiguration)/$(artifactName)" -d "$(NginxPhysicalPath)"
+                    sudo unzip -o "$(NginxPhysicalPath)/$(artifactName)" -d "$(NginxPhysicalPath)"
                   displayName: 'Unzip Artifacts to Site Folder'
 
                 - script:
-                    sudo chmod -R 777 "$(NginxPhysicalPath)/$(buildConfiguration)/appsettings.json"
+                    sudo chmod -R 777 "$(NginxPhysicalPath)/appsettings.json"
                   displayName: 'Change Permissions to appsettings.json'
 
                 - task: FileTransform@1
@@ -144,7 +144,7 @@ stages:
                 - script:
                     sudo chmod +x kill_port_if_used.sh
                     ./kill_port_if_used.sh
-                  workingDirectory: '$(NginxPhysicalPath)/$(buildConfiguration)'
+                  workingDirectory: '$(NginxPhysicalPath)'
                   displayName: 'Kill port 5000 if used'
                     
 #                - script:
