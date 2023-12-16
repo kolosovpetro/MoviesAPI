@@ -105,7 +105,6 @@ stages:
       - deployment: 'Nginx_YAML_Release'
         displayName: 'Nginx_YAML_Release'
         variables:
-          - group: Movies_Appsettings
           - group: Nginx_YAML_Release_Settings
           - group: Nginx_Movies_Appsettings
         environment:
