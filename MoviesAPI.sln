@@ -51,6 +51,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{889E
 		scripts\provision_cluster.sh = scripts\provision_cluster.sh
 		scripts\ingress-config.sh = scripts\ingress-config.sh
 		scripts\kill_port_if_used.sh = scripts\kill_port_if_used.sh
+		scripts\idempotent_service_run.sh = scripts\idempotent_service_run.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prod-compose", "prod-compose", "{A740EC43-F8A3-4027-8BD5-FEFD0BA5BDF8}"
