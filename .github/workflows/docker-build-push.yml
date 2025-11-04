@@ -84,7 +84,7 @@ jobs:
         run: echo ${{ env.GITVERSION_SEMVER }} > version.txt
 
       - name: Drop Artifact Version
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v5
         with:
           name: version
           path: version.txt
@@ -102,7 +102,7 @@ jobs:
           fetch-depth: 0
 
       - name: Download Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v6
         with:
           name: version
           path: './'
