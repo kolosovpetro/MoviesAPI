@@ -1,0 +1,210 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - develop
+      - master
+      - ubuntu-deploy-yaml
+  paths:
+    include:
+      - '*'
+
+pr:
+  branches:
+    include:
+      - develop
+      - master
+
+variables:
+  - name: solution
+    value: 'MoviesAPI.sln'
+  - name: buildPlatform
+    value: 'Any CPU'
+  - name: buildConfiguration
+    value: 'Release'
+  - name: projectPath
+    value: 'MoviesAPI.Core/MoviesAPI.Core.csproj'
+  - name: artifactFolder
+    value: 'drop'
+  - name: artifactName
+    value: 'MoviesAPI.Core.zip'
+
+stages:
+  - stage: 'Build_Test'
+    jobs:
+      - job: "Build"
+        displayName: 'Build Test & Drop artifacts'
+        pool:
+          vmImage: 'ubuntu-latest'
+
+        steps:
+          - checkout: self
+            fetchDepth: 0
+
+          - task: gitversion/setup@0
+            displayName: 'GitVersion Setup'
+            inputs:
+              versionSpec: '5.9.x'
+
+          - task: gitversion/execute@0
+            displayName: 'GitVersion Execute'
+
+          - bash: echo $Action$BuildVersion
+            displayName: 'Set Build Version'
+            env:
+              Action: '##vso[build.updatebuildnumber]'
+              BuildVersion: $(GitVersion.SemVer)
+
+          - task: UseDotNet@2
+            displayName: 'Install .NET 6.x SDK'
+            inputs:
+              packageType: sdk
+              version: 6.x
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Dotnet Restore'
+            inputs:
+              command: 'restore'
+              projects: '$(solution)'
+              restoreArguments: '--locked-mode'
+              arguments: '--verbosity minimal'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Dotnet build $(buildConfiguration)'
+            inputs:
+              command: 'build'
+              projects: '$(solution)'
+              arguments: '-p:Version=$(GitVersion.SemVer) --configuration $(buildConfiguration) --no-restore'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Dotnet Publish'
+            inputs:
+              command: 'publish'
+              publishWebProjects: false
+              projects: '$(projectPath)'
+              arguments: '-c $(buildConfiguration) -p:Version=$(GitVersion.SemVer) -o $(Build.ArtifactStagingDirectory)/$(buildConfiguration) --no-build'
+              
+          - task: CopyFiles@2
+            displayName: 'Copy Scripts'
+            inputs:
+              SourceFolder: '$(System.DefaultWorkingDirectory)/scripts'
+              Contents: '**'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifacts'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: '$(artifactFolder)'
+              publishLocation: 'Container'
+
+  - stage: 'Nginx_YAML_Release'
+    displayName: 'Nginx_YAML_Release'
+    dependsOn: Build_Test
+    condition: succeeded('Build_Test')
+    jobs:
+      - deployment: 'Nginx_YAML_Release'
+        displayName: 'Nginx_YAML_Release'
+        variables:
+          - group: Nginx_YAML_Release_Settings
+          - group: Nginx_Movies_Appsettings
+          - group: devtest.team_wildcard_certificate
+        environment:
+          name: nginxyaml
+          resourceType: VirtualMachine
+          resourceName: vm-ubuntu-p02
+          #tags: 'web'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: drop
+
+                - script:
+                    sudo mkdir -p "$(NginxPhysicalPath)"
+                  displayName: 'Create Site Folder'
+
+                - script:
+                    sudo cp -r "$(Agent.BuildDirectory)/$(artifactFolder)/$(buildConfiguration)/." "$(NginxPhysicalPath)"
+                  displayName: 'Copy Artifacts to Site Folder'
+
+                - script:
+                    sudo unzip -o "$(NginxPhysicalPath)/$(artifactName)" -d "$(NginxPhysicalPath)"
+                  displayName: 'Unzip Artifacts to Site Folder'
+
+                - script:
+                    sudo chmod -R 777 "$(NginxPhysicalPath)/appsettings.json"
+                  displayName: 'Change Permissions to appsettings.json'
+
+                - task: FileTransform@1
+                  displayName: 'File Transform: appsettings.json'
+                  inputs:
+                    fileType: json
+                    folderPath: '$(NginxPhysicalPath)'
+                    targetFiles: '**/appsettings.json'
+
+                - script: |
+                    sudo chmod 777 $(NginxPhysicalPath)
+                    sudo rm -f $(NginxPhysicalPath)/movies.service
+                    sudo cat >>$(NginxPhysicalPath)/movies.service <<END
+                    [Unit]
+                    Description=Movies API Backend Service
+                    After=network.target
+  
+                    [Service]
+                    Type=simple
+                    WorkingDirectory=$(NginxPhysicalPath)
+                    ExecStart=$(NginxPhysicalPath)/MoviesAPI.Core
+                    User=razumovsky_r
+                    Group=razumovsky_r
+  
+                    [Install]
+                    WantedBy=multi-user.target
+                    END
+                  displayName: 'Create service'
+                  
+                - script: |
+                    sudo chmod 600 /etc/systemd/system/
+                    sudo cp $(NginxPhysicalPath)/movies.service /etc/systemd/system/
+                  displayName: 'Copy service'
+                  
+                - script: |
+                    sudo chmod +x idempotent_service_run.sh
+                    ./idempotent_service_run.sh
+                  workingDirectory: '$(NginxPhysicalPath)'
+                  displayName: 'Start service'
+                  
+                - script: |
+                    sudo chmod 777 $(NginxConfigPath)
+                    sudo rm -f $(NginxConfigPath)/$(NginxConfigFileName)
+                    sudo cat >>$(NginxConfigPath)/$(NginxConfigFileName) <<END
+                    server {
+                      server_name $(NginxSiteHostName);
+
+                      location / {
+                        include proxy_params;
+                        proxy_pass http://127.0.0.1:5000;
+                      }
+                    
+                      location /swagger {
+                        include proxy_params;
+                        proxy_pass http://127.0.0.1:5000;
+                      }
+
+                      location /api {
+                        include proxy_params;
+                        proxy_pass http://127.0.0.1:5000;
+                      }
+                    }
+                    END
+                  displayName: 'Create NGINX config'
+                  
+                - script: |
+                    sudo systemctl restart nginx
+                    sudo systemctl status nginx
+                  displayName: 'Restart NGINX'
+                  
+                - script: |
+                    sudo nginx -T
+                  displayName: 'Test NGINX config'
