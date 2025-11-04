@@ -6,6 +6,8 @@ on:
       - master
       - main
       - develop
+    tags:
+      - v*
 
   pull_request:
     branches:
