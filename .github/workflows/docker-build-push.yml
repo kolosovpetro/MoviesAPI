@@ -88,11 +88,11 @@ jobs:
           docker push "$USER/$REPOSITORY:latest"
         env:
           REPOSITORY: ${{ env.dockerRepository }}
-          VERSION: ${{ env.GITVERSION_SEMVER }}
+          VERSION: ${{ env.GitVersion_SemVer }}
           USER: ${{ env.dockerUser }}
 
       - name: Write Version
-        run: echo ${{ env.GITVERSION_SEMVER }} > version.txt
+        run: echo ${{ env.GitVersion_SemVer }} > version.txt
 
       - name: Drop Artifact Version
         uses: actions/upload-artifact@v5
