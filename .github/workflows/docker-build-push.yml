@@ -38,13 +38,27 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.15
+      - name: '⬇️ Install GitVersion ⬇️'
+        if: ${{ inputs.enable_patch_version }}
+        uses: gittools/actions/gitversion/setup@v4.2.0
         with:
-          versionSpec: '5.x'
+          versionSpec: '6.x'
+          preferLatestVersion: true
 
-      - name: Determine Version
-        uses: gittools/actions/gitversion/execute@v0.9.15
+      - name: '🤔 Determine Version 🤔'
+        if: ${{ inputs.enable_patch_version }}
+        uses: gittools/actions/gitversion/execute@v4.2.0
+        with:
+          configFilePath: GitVersion.yml
+
+      - name: '📜 Print Version 📜'
+        if: ${{ inputs.enable_patch_version }}
+        run: |
+          echo "SemVer: ${{ env.GitVersion_SemVer }}"
+          echo "BranchName: ${{ env.GitVersion_BranchName }}"
+          echo "ShortSha: ${{ env.GitVersion_ShortSha }}"
+          newVersion="${{ env.GitVersion_SemVer }}+${{ env.GitVersion_BranchName }}.${{ env.GitVersion_ShortSha }}"
+          echo "Next version: $newVersion"
 
       - name: Docker Login
         run: echo "$DOCKER_PASSWORD" | docker login docker.io -u "$DOCKER_USERNAME" --password-stdin
