@@ -74,7 +74,7 @@ jobs:
           docker build -t "$USER/$REPOSITORY:latest" --build-arg VERSION=$VERSION .
         env:
           REPOSITORY: ${{ env.dockerRepository }}
-          VERSION: ${{ env.GITVERSION_SEMVER }}
+          VERSION: ${{ env.GitVersion_SemVer }}
           USER: ${{ env.dockerUser }}
 
       - name: List Images
