@@ -1,4 +1,4 @@
-﻿namespace MoviesAPI.Requests.CommandResponses
+namespace MoviesAPI.Requests.CommandResponses
 {
     public class PostMovieSuccessResponse
     {

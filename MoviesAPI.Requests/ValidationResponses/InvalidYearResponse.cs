@@ -1,4 +1,4 @@
-﻿namespace MoviesAPI.Requests.ValidationResponses
+namespace MoviesAPI.Requests.ValidationResponses
 {
     public class InvalidYearResponse
     {

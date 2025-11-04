@@ -1,4 +1,4 @@
-﻿name: Build Test & Drop artifacts
+name: Dotnet build test
 
 on:
   push:

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MoviesAPI.Models.Models;
 using MoviesAPI.Requests.QueryResponses;
 

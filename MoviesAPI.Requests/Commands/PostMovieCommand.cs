@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using MoviesAPI.Requests.CommandResponses;
 
 namespace MoviesAPI.Requests.Commands

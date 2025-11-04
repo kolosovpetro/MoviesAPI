@@ -1,4 +1,4 @@
-﻿namespace MoviesAPI.Requests.QueryResponses
+namespace MoviesAPI.Requests.QueryResponses
 {
     public class MovieNotFoundResponse
     {
