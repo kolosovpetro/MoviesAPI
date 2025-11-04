@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using MoviesAPI.Models.Models;
 
 namespace MoviesAPI.Requests.Queries

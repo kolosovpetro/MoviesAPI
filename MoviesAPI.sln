@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviesAPI.Core", "MoviesAPI.Core\MoviesAPI.Core.csproj", "{16BAA7B7-12F6-4CA2-B7F6-2C58AAABA7CF}"
 EndProject

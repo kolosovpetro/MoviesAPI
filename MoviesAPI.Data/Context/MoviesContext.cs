@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MoviesAPI.Models.Models;
 
 namespace MoviesAPI.Data.Context
