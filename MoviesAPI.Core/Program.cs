@@ -2,33 +2,32 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace MoviesAPI.Core
+namespace MoviesAPI.Core;
+
+public static class Program
 {
-    public static class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+        CreateHostBuilder(args).Build().Run();
+    }
 
-        private static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            var result = Host.CreateDefaultBuilder(args)
-                .ConfigureLogging(logging =>
+    private static IHostBuilder CreateHostBuilder(string[] args)
+    {
+        var result = Host.CreateDefaultBuilder(args)
+            .ConfigureLogging(logging =>
+            {
+                logging.ClearProviders();
+                logging.AddJsonConsole(options =>
                 {
-                    logging.ClearProviders();
-                    logging.AddJsonConsole(options =>
+                    options.UseUtcTimestamp = true;
+                    options.JsonWriterOptions = new System.Text.Json.JsonWriterOptions
                     {
-                        options.UseUtcTimestamp = true;
-                        options.JsonWriterOptions = new System.Text.Json.JsonWriterOptions
-                        {
-                            Indented = true // pretty-print JSON
-                        };
-                    });
-                })
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                        Indented = true // pretty-print JSON
+                    };
+                });
+            })
+            .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
 
-            return result;
-        }
+        return result;
     }
 }

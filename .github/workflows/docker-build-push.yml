@@ -22,7 +22,7 @@ on:
 
 jobs:
   build-test-drop-artifacts:
-    name: Build Test & Drop artifacts
+    name: Docker build push
     runs-on: ${{ matrix.environment }}
     strategy:
       matrix:
