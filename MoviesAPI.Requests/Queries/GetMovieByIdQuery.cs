@@ -1,15 +1,14 @@
-using MediatR;
+﻿using MediatR;
 using MoviesAPI.Models.Models;
 
-namespace MoviesAPI.Requests.Queries
-{
-    public class GetMovieByIdQuery : IRequest<Movie>
-    {
-        public int Id { get; }
+namespace MoviesAPI.Requests.Queries;
 
-        public GetMovieByIdQuery(int id)
-        {
-            Id = id;
-        }
+public class GetMovieByIdQuery : IRequest<Movie>
+{
+    public int Id { get; }
+
+    public GetMovieByIdQuery(int id)
+    {
+        Id = id;
     }
 }

@@ -1,15 +1,14 @@
-using AutoMapper;
+﻿using AutoMapper;
 using MoviesAPI.Models.Models;
 using MoviesAPI.Requests.QueryResponses;
 
-namespace MoviesAPI.Core.Profiles
+namespace MoviesAPI.Core.Profiles;
+
+public class MapperProfile : Profile
 {
-    public class MapperProfile : Profile
+    public MapperProfile()
     {
-        public MapperProfile()
-        {
-            // source -> target
-            CreateMap<Movie, GetMovieResponse>();
-        }
+        // source -> target
+        CreateMap<Movie, GetMovieResponse>();
     }
 }
