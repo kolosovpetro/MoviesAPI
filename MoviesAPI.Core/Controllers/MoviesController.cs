@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using MoviesAPI.Core.Abstractions;
 using MoviesAPI.Requests.CommandResponses;
 using MoviesAPI.Requests.Commands;
@@ -22,16 +20,16 @@ namespace MoviesAPI.Core.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
+        private readonly ILogger<MoviesController> _logger;
 
-        private const string
-            SectionName = "Application"; // it is reference to the Application event log section, not app name
-
-        private const string SourceName = "MoviesAPI";
-
-        public MoviesController(IMediator mediator, IMapper mapper)
+        public MoviesController(
+            IMediator mediator,
+            IMapper mapper,
+            ILogger<MoviesController> logger)
         {
             _mediator = mediator;
             _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -41,27 +39,24 @@ namespace MoviesAPI.Core.Controllers
         [SwaggerOperation(Summary = "Returns list of all the movies in database.")]
         public async Task<IActionResult> GetAllMoviesAsync()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                WriteToWindowsEventLog("GetAllMoviesAsync Invoked", EventLogEntryType.Information);
+            _logger.LogInformation("GetAllMoviesAsync Invoked.");
 
             var request = new GetAllMoviesQuery();
             var response = await _mediator.Send(request);
 
+
             if (response == null)
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    WriteToWindowsEventLog("GetAllMoviesAsync Not Found", EventLogEntryType.Error);
+                _logger.LogError("There are no movies in the Database.");
+
                 return NotFound();
             }
 
             var mappedResponse = _mapper.Map<IList<GetMovieResponse>>(response);
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                WriteToWindowsEventLog("GetAllMoviesAsync Success", EventLogEntryType.Information);
+            _logger.LogInformation("GetAllMoviesAsync: OK.");
 
-            return mappedResponse != null
-                ? Ok(mappedResponse)
-                : NotFound();
+            return Ok(mappedResponse);
         }
 
         /// <summary>
@@ -71,15 +66,13 @@ namespace MoviesAPI.Core.Controllers
         [SwaggerOperation(Summary = "Returns movie by id.")]
         public async Task<IActionResult> GetMovieByIdAsync(int id)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                WriteToWindowsEventLog("GetMovieByIdAsync Invoked", EventLogEntryType.Information);
-            }
+            _logger.LogInformation("GetMovieByIdAsync Invoked");
+
 
             if (id < 0)
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    WriteToWindowsEventLog($"GetMovieByIdAsync Not found {id}", EventLogEntryType.Error);
+                _logger.LogError($"GetMovieByIdAsync invalid ID: {id}.");
+
                 return BadRequest(new InvalidIdResponse());
             }
 
@@ -88,15 +81,12 @@ namespace MoviesAPI.Core.Controllers
 
             if (response == null)
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    WriteToWindowsEventLog($"GetMovieByIdAsync Not found {id}", EventLogEntryType.Error);
+                _logger.LogError($"GetMovieByIdAsync Not found {id}.");
+
                 return NotFound(new MovieNotFoundResponse(id));
             }
 
             var mappedResponse = _mapper.Map<GetMovieResponse>(response);
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                WriteToWindowsEventLog("GetMovieByIdAsync Success", EventLogEntryType.Information);
 
             return Ok(mappedResponse);
         }
@@ -108,32 +98,31 @@ namespace MoviesAPI.Core.Controllers
         [SwaggerOperation(Summary = "Adds new movie to database. Returns response.")]
         public async Task<IActionResult> PostMovieAsync(PostMovieCommand command)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                WriteToWindowsEventLog("PostMovieAsync Invoked", EventLogEntryType.Information);
+            _logger.LogInformation("PostMovieAsync Invoked");
 
             if (command.Year < 1888)
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    WriteToWindowsEventLog($"PostMovieAsync Year {command.Year}", EventLogEntryType.Error);
+                _logger.LogError($"PostMovieAsync invalid year: {command.Year}");
+
                 return BadRequest(new InvalidYearResponse());
             }
 
             if (command.Price <= 0)
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    WriteToWindowsEventLog($"PostMovieAsync Price {command.Price}", EventLogEntryType.Error);
+                _logger.LogInformation($"PostMovieAsync invalid price: {command.Price}");
+
                 return BadRequest(new InvalidPriceResponse());
             }
 
             if (command.AgeRestriction <= 0)
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    WriteToWindowsEventLog($"PostMovieAsync AgeRestriction {command.AgeRestriction}",
-                        EventLogEntryType.Error);
+                _logger.LogInformation($"PostMovieAsync invalid age restriction: {command.AgeRestriction}");
+
                 return BadRequest(new InvalidAgeRestrictionResponse());
             }
 
             var response = await _mediator.Send(command);
+
             return Ok(response);
         }
 
@@ -189,37 +178,6 @@ namespace MoviesAPI.Core.Controllers
             }
 
             return Ok(response);
-        }
-
-        private static void WriteToWindowsEventLog(string message, EventLogEntryType type)
-        {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return;
-
-            var appLog = new EventLog(SectionName);
-            var sourceName = CreateEventSource(SectionName);
-            appLog.Source = sourceName;
-
-            using var eventLog = new EventLog(SectionName);
-            eventLog.Source = sourceName;
-            eventLog.WriteEntry(message, type);
-        }
-
-        private static string CreateEventSource(string currentAppName)
-        {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                Console.WriteLine("Not windows");
-                return SourceName;
-            }
-            
-            var sourceExists = EventLog.SourceExists(SourceName);
-
-            if (!sourceExists)
-            {
-                EventLog.CreateEventSource(SourceName, currentAppName);
-            }
-
-            return SourceName;
         }
     }
 }
