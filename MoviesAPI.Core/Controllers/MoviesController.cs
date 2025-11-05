@@ -133,15 +133,12 @@ public class MoviesController : Controller, IMovieController
     [SwaggerOperation(Summary = "Modifies an existing movie in database. Returns response.")]
     public async Task<IActionResult> PatchMovieAsync(PatchMovieCommand command)
     {
-        var model = await _mediator.Send(new GetMovieByIdQuery(command.MovieId));
-
-        if (model.Title.Contains("F#"))
-        {
-            return BadRequest("F# best language");
-        }
+        _logger.LogInformation("PatchMovieAsync endpoint invoke.");
 
         if (command.MovieId < 0)
         {
+            _logger.LogError($"PatchMovieAsync endpoint: invalid movie ID: {command.MovieId}.");
+
             return BadRequest(new InvalidIdResponse());
         }
 
@@ -149,8 +146,12 @@ public class MoviesController : Controller, IMovieController
 
         if (response == null)
         {
+            _logger.LogError($"PatchMovieAsync endpoint: movie ID not found: {command.MovieId}.");
+
             return NotFound(new MovieNotFoundResponse(command.MovieId));
         }
+
+        _logger.LogInformation("PatchMovieAsync endpoint OK.");
 
         return Ok(new PatchMovieSuccessResponse(command.MovieId));
     }
@@ -162,20 +163,19 @@ public class MoviesController : Controller, IMovieController
     [SwaggerOperation(Summary = "Deletes movie from database by Id. Returns response.")]
     public async Task<IActionResult> DeleteMovieByIdAsync(int id)
     {
-        var model = await _mediator.Send(new GetMovieByIdQuery(id));
-
-        if (model.Title.Contains("F#"))
-        {
-            return BadRequest("F# best language");
-        }
+        _logger.LogInformation("DeleteMovieByIdAsync endpoint invoke.");
 
         var command = new DeleteMovieCommand(id);
         var response = await _mediator.Send(command);
 
         if (response == null)
         {
+            _logger.LogError($"DeleteMovieByIdAsync endpoint: movie ID not found: {command.MovieId}.");
+
             return NotFound(new MovieNotFoundResponse(command.MovieId));
         }
+
+        _logger.LogInformation("DeleteMovieByIdAsync endpoint OK.");
 
         return Ok(response);
     }
