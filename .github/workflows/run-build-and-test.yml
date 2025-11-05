@@ -64,10 +64,10 @@ jobs:
           newVersion="${{ env.GitVersion_SemVer }}+${{ env.GitVersion_BranchName }}.${{ env.GitVersion_ShortSha }}"
           echo "Next version: $newVersion"
 
-      - name: Setup .NET 6.0 SDK
+      - name: Setup .NET 6.x SDK
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 6.x
 
       - name: NuGet Cache
         uses: actions/cache@v4
