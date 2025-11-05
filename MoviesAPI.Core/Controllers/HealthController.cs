@@ -20,7 +20,7 @@ public class HealthController : Controller
     [SwaggerOperation(Summary = "Liveness probe.")]
     public async Task<IActionResult> Alive()
     {
-        _logger.LogInformation("Liveness probe executed.");
+        _logger.LogInformation("Liveness probe invoke.");
 
         var result = await Task.FromResult(Ok("Healthy."));
 
@@ -32,7 +32,7 @@ public class HealthController : Controller
     [SwaggerOperation(Summary = "Readiness probe.")]
     public async Task<IActionResult> Ready()
     {
-        _logger.LogInformation("Readiness probe executed.");
+        _logger.LogInformation("Readiness probe invoke.");
 
         var result = await Task.FromResult(Ok("Ready."));
 
