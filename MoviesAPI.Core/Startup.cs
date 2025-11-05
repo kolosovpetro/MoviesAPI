@@ -29,10 +29,16 @@ public class Startup
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(GetAllMoviesHandler).GetTypeInfo().Assembly));
 
-        var connectionString = Environment.GetEnvironmentVariable("SqlServerConnectionString")
-                               ?? Configuration.GetConnectionString("SqlServerConnectionString");
+        var useSqlServer = GetConfigurationValue<bool>(Configuration, "UseSqlServerDatabase");
 
-        services.AddDbContext<MoviesContext>(opt => opt.UseSqlServer(connectionString));
+        if (useSqlServer)
+        {
+            ConfigureSqlServer(services);
+        }
+        else
+        {
+            ConfigureInMemoryDatabase(services);
+        }
 
         services.AddAutoMapper(typeof(Startup));
 
@@ -47,19 +53,28 @@ public class Startup
         services.AddCors();
     }
 
+    private static void ConfigureInMemoryDatabase(IServiceCollection services)
+    {
+        services.AddDbContext<MoviesContext>(o => o.UseInMemoryDatabase("MoviesDatabase"));
+    }
+
+    private void ConfigureSqlServer(IServiceCollection services)
+    {
+        var connectionString = Environment.GetEnvironmentVariable("SqlServerConnectionString")
+                               ?? Configuration.GetConnectionString("SqlServerConnectionString");
+
+        services.AddDbContext<MoviesContext>(opt => opt.UseSqlServer(connectionString));
+    }
+
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         app.UseDeveloperExceptionPage();
 
         app.UseHttpsRedirection();
 
-        var envVar = Environment.GetEnvironmentVariable("ShouldMigrate");
+        var useSqlServer = GetConfigurationValue<bool>(Configuration, "UseSqlServerDatabase");
 
-        var shouldMigrate = envVar == null
-            ? Configuration.GetValue<bool>("ShouldMigrate")
-            : bool.Parse(envVar);
-
-        app.MigrateDatabase(shouldMigrate);
+        app.MigrateDatabase(useSqlServer);
 
         app.UseRouting();
 
@@ -78,5 +93,20 @@ public class Startup
         app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+    }
+
+    private static T GetConfigurationValue<T>(IConfiguration configuration, string key)
+    {
+        var fromEnvironment = Environment.GetEnvironmentVariable(key);
+
+        if (fromEnvironment != null && !string.IsNullOrEmpty(fromEnvironment))
+        {
+            var parseEnvironment = (T)Convert.ChangeType(fromEnvironment, typeof(T));
+            return parseEnvironment;
+        }
+
+        var fromConfiguration = configuration.GetValue<T>(key);
+
+        return fromConfiguration;
     }
 }
